@@ -47,6 +47,6 @@ The user will mostly ask for:
 
 ## What not to do
 
-- Don't try to install dependencies, run build commands, or set up a dev server — there's nothing to build here.
+- Don't try to install dependencies, run build commands, or set up a dev server — there's nothing to build here, yet.
 - Don't modify `.mcp.json` — the user's token lives there.
 - Don't commit anything unless the user explicitly asks.
