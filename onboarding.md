@@ -24,13 +24,16 @@
 - **Copper**
 - **LogRocket**
 - **Knock**
+- **Slack**
+- **Zoom** — two paths: (a) Google Calendar MCP + "Zoom as default meeting provider" in Calendar settings covers scheduling + auto-link (easy); (b) direct Zoom MCP (official at `developers.zoom.us/docs/mcp/` or community `echelon-ai-labs/zoom-mcp`) for recordings, transcripts, webinars — requires a Zoom Marketplace OAuth app, ~15 min setup
 
 ---
 
 ## File structure starting place
 
 - **`skills/`** — 4–5 starter skills for canonical tasks, each invokable as a slash command in Claude Code.
-  - `skills/invoice/` → `/invoice` <enter name>
+### Examples:
+  - `skills/invoice/` → `/invoice`
   - `skills/weekly-deal-digest/` → `/weekly-deal-digest`
   - `skills/sponsor-match-report/` → `/sponsor-match-report`
   - `skills/event-guest-analysis/` → `/event-guest-analysis`
@@ -46,7 +49,7 @@
 
 - **`archive/`** folder — convention: reports older than ~30 days get moved here. Keeps `reports/` clean once there are 20+ files.
 
-- **`DECISIONS.md`** — running log of conclusions he actually acted on (e.g. "2026-04-15: set sponsor tier pricing based on X report"). Gives future Claude sessions continuity the MCP can't provide.
+- **`DECISIONS.md`** — running log of conclusions actually acted on (e.g. "2026-04-15: set sponsor tier pricing based on X report"). Gives future Claude sessions continuity the MCP can't provide.
 
 ## Training
 
@@ -54,7 +57,8 @@
    - `/clear` between unrelated topics
    - `/compact` when a session gets long
    - `/resume` to pick up a prior thread
-   - Most new users don't know these; sessions get polluted and responses degrade.
+      - Most new users don't know these; sessions get polluted and responses degrade.
+   - Keep unneccesary data in it's proper location. If we have an API/MCP calling the data, we don't need to also store it here. The data becomes stale, the repo becomes bloated, and we overuse tokens to unneccesarily keep multiple sources of truth.
 2. **Always ask for sources**
    - "Cite the MCP query and filters you used."
    - LLMs hallucinate numbers. We should never accept a figure without the query that produced it. This is the single most important habit.

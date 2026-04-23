@@ -94,6 +94,28 @@ Use the per-connection playbooks below. If a connection appears in `onboarding.m
 2. Store in `.env` as `KNOCK_API_KEY=...`.
 3. If no MCP exists yet, flag it as "token stored, MCP pending" and move on.
 
+### Slack
+
+1. Confirm the user is a member of the 2n Slack workspace (ask which workspace URL, e.g. `2pwrn.slack.com`).
+2. In Claude Code, run `/mcp` and look for the Slack server.
+3. If not connected, trigger the auth flow — open the URL Claude outputs and approve the requested scopes (channels, messages, users).
+4. Confirm the workspace shown in the OAuth screen matches the 2n workspace before approving.
+5. Test: ask Claude to "list the channels I'm in" or "search Slack for the last message from {name}."
+
+### Zoom (optional — overlap with Granola)
+
+Before setup, tell the user: **Granola already covers meeting transcripts and summaries.** Zoom MCP is only worth adding if they need live meeting metadata, recordings, chat history, or Zoom Docs/Whiteboard access that Granola doesn't give them. Ask: "Do you still want it, or skip?"
+
+If yes:
+
+1. Zoom has official remote MCP servers (Zoom Workspace, Zoom Docs, Zoom Whiteboard) in Zoom's MCP registry. Pick **Zoom Workspace** unless the user specifies.
+2. In Claude Code, add the Zoom MCP as a custom connector — enter the Zoom Workspace MCP server URL and approve OAuth when the browser opens.
+   - If Zoom requires a Client ID / Secret, direct the user to `marketplace.zoom.us` → create an OAuth app (or use an existing 2n workspace app) and copy the credentials.
+   - Workspace admin may need to approve the app before it works.
+3. Approve scopes for meetings, recordings, chat, and users (only what's needed).
+4. Test: ask Claude to "list my Zoom meetings from the last 7 days" or "pull the recording summary for my last Zoom call."
+5. If Zoom blocks the OAuth app (admin policy) or the MCP fails to connect, flag as "blocked — needs admin" and move on. Don't spend more than ~10 minutes debugging.
+
 ## Rules
 
 - **Never skip the opt-in phase.** The user chooses what to connect; do not assume all connections are wanted.
