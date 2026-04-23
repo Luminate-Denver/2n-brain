@@ -1,6 +1,7 @@
 # Onboarding
 
 ## Initial Overview
+- *connecting Claude*
 - **cursor UI preferences**
 - **branches, changes, commits, and merges**
 - **intro to terminal**
@@ -10,6 +11,7 @@
 
 
 ## Connections
+- *Claude*
 - **Payload**
 - **Gmail**
 - **Granola**
