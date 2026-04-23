@@ -78,9 +78,6 @@
 - **Gmail / Drive / Granola MCPs** — wire these up the moment he says "can you email this to Matt?" or "save this to Drive" or "pull my last meeting transcript."
 - **ActiveCampaign MCP** — if he wants to action marketing copy directly into campaigns instead of hand-off to the team.
 
-## CJ's priority picks (if shipping tomorrow)
+## When In Doubt, Ask Claude
 
-1. 3–5 starter skills in `skills/` (`/weekly-deal-digest`, `/sponsor-match-report`, plus 1–2 more)
-2. `glossary.md`
-
-Skip the rest until he tells you what he's actually doing repeatedly — premature structure is noise.
+**You can and should always turn to Claude first for any questions that come up. Using Claude is the fastest way to troubleshoot, get answers, fix bugs, and generate new ideas.**
