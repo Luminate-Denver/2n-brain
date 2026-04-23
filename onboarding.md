@@ -1,5 +1,14 @@
 # Onboarding
 
+## Initial Overview
+- **cursor UI preferences**
+- **branches, changes, commits, and merges**
+- **intro to terminal**
+- **claude modes, models and effort levels**
+- **what is memory.md?**
+- **wispr**
+
+
 ## Connections
 - **Payload**
 - **Gmail**
@@ -11,7 +20,6 @@
 - **Knock**
 
 ---
-
 
 ## File structure starting place
 
@@ -42,7 +50,7 @@
    - Most new users don't know these; sessions get polluted and responses degrade.
 2. **Always ask for sources**
    - "Cite the MCP query and filters you used."
-   - LLMs hallucinate numbers. He should never accept a figure without the query that produced it. This is the single most important habit.
+   - LLMs hallucinate numbers. We should never accept a figure without the query that produced it. This is the single most important habit.
 3. **Iterate, don't restart**
    - "That's close, now filter to Q1 only" beats starting over.
    - Saves context and builds on what Claude already has loaded.
