@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__2n__findAdmins",
+      "mcp__2n__findCompanies",
+      "mcp__2n__findDealFeedback",
+      "mcp__2n__findDealVotes",
+      "mcp__2n__findDeals",
+      "mcp__2n__findEventGuests",
+      "mcp__2n__findEvents",
+      "mcp__2n__findMatchingCompanies",
+      "mcp__2n__findMatchingCompaniesForDeal",
+      "mcp__2n__findMatchingCompaniesForSponsor",
+      "mcp__2n__findMatchingDeals",
+      "mcp__2n__findMatchingSponsors",
+      "mcp__2n__findPodcasts",
+      "mcp__2n__findSectors",
+      "mcp__2n__findSegments",
+      "mcp__2n__findSponsors",
+      "mcp__2n__findUsers",
+      "mcp__2n__findVendors"
+    ]
+  }
+}
