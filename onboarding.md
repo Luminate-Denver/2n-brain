@@ -8,7 +8,7 @@
 - **basic hotkeys**
 - **branches, changes, commits, and merges**
 - **intro to terminal**
-- **toggle sounds**
+- **toggle sounds (task permissions + task completion)**
 - **claude modes, models and effort levels**
 - **what is memory.md?**
 - **wispr**
@@ -79,9 +79,10 @@
 ## Optional power-ups (not day one)
 
 - **Scheduled agents / cron** — auto-generate the weekly digest every Monday morning. Overkill until he has a rhythm; compelling once he does.
-- **Gmail / Drive / Granola MCPs** — wire these up the moment he says "can you email this to Matt?" or "save this to Drive" or "pull my last meeting transcript."
+- **Gmail / Drive / Granola MCPs** — wire these up the moment he says "can you email this to John?" or "save this to Drive" or "pull my last meeting transcript."
 - **ActiveCampaign MCP** — if he wants to action marketing copy directly into campaigns instead of hand-off to the team.
 
-## When In Doubt, Ask Claude
+
+# When In Doubt, Ask Claude
 
 **You can and should always turn to Claude first for any questions that come up. Using Claude is the fastest way to troubleshoot, get answers, fix bugs, and generate new ideas.**
