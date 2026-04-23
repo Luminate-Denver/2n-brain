@@ -1,10 +1,14 @@
 # Onboarding
 
+> **Windows users:** ***First***, install [WSL (Windows Subsystem for Linux)](https://learn.microsoft.com/en-us/windows/wsl/install), then install Claude Code inside WSL. Set Cursor's default terminal to WSL. This eliminates ~95% of cross-platform friction (bash hooks, path handling, MCP subprocesses). Mac users can skip this.
+
 ## Initial Overview
 - *connecting Claude*
 - **cursor UI preferences**
+- **basic hotkeys**
 - **branches, changes, commits, and merges**
 - **intro to terminal**
+- **toggle sounds**
 - **claude modes, models and effort levels**
 - **what is memory.md?**
 - **wispr**
@@ -26,6 +30,7 @@
 ## File structure starting place
 
 - **`skills/`** — 4–5 starter skills for canonical tasks, each invokable as a slash command in Claude Code.
+  - `skills/invoice/` → `/invoice` <enter name>
   - `skills/weekly-deal-digest/` → `/weekly-deal-digest`
   - `skills/sponsor-match-report/` → `/sponsor-match-report`
   - `skills/event-guest-analysis/` → `/event-guest-analysis`
