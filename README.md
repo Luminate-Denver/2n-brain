@@ -38,7 +38,7 @@ Claude will save outputs into `reports/` (written analyses) or `exports/` (raw d
 - `reports/` — written analyses, summaries, drafts (markdown)
 - `exports/` — raw data pulls (JSON / CSV)
 - `notes/` — your own scratch notes
-- `CLAUDE.md` — primes Claude on how to work in this repo. Edit freely.
+- `CLAUDE.md` — primes Claude on how to work in this repo. Edit freely. (contains `/skills`)
 - `.mcp.json` — your local MCP config with the bearer token. Gitignored.
 
 ## Adding Gmail / Drive / Granola later
