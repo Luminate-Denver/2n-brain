@@ -4,7 +4,7 @@ This is a **data analysis workspace** for 2pwrn.com leadership. It is not the ap
 
 ## What's here
 
-- `.mcp.json` — connects to the 2n MCP at `app.2pwrn.com/api/mcp`, which exposes read-only lookups over the full 2n data model.
+- `.mcp.json` — connects to the 2n MCP, which exposes read-only lookups over the full 2n data model.
 - `reports/` — finished analyses you write for the user.
 - `exports/` — raw data dumps pulled from the MCP.
 - `notes/` — the user's own scratch space. Don't edit unless asked.
