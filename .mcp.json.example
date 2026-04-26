@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "2n": {
-      "url": "https://app.2pwrn.com/api/mcp",
+      "url": "https://www.2pwrn.com/api/mcp",
       "headers": {
         "Authorization": "Bearer REPLACE_WITH_TOKEN"
       }

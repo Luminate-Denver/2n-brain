@@ -25,6 +25,7 @@ REPO_ROOT = Path(__file__).resolve().parents[4]
 ASSETS = REPO_ROOT / "assets"
 
 BRAND_GOLD = "#B8870A"
+NAME_NAVY = "#0A1A3A"
 
 ASSET_FILES = {
     "two_n_brand":      ASSETS / "2^n_Logo_withCircle_transparent-V2.png",
@@ -65,15 +66,27 @@ def load_assets() -> dict[str, str]:
 
 
 def pre_name_icons_html(guest: dict, assets: dict[str, str]) -> str:
-    """Founding caret first, then silver/gold check (caret sits left of check)."""
+    """Founding caret first, then silver/gold check (caret sits left of check).
+
+    Uses CSS background-image (instead of an <img>) so the icon is rendered
+    as a fixed square box with `background-size: contain`. This locks the
+    icon's aspect ratio regardless of how flex layout distributes space
+    around it.
+    """
     parts = []
     if guest.get("memberStatus") == "Founding Member":
-        parts.append(f'<img class="pre-icon" src="{assets["founding_caret"]}" alt=""/>')
+        parts.append(
+            f'<span class="pre-icon" style="background-image:url({assets["founding_caret"]})"></span>'
+        )
     amp = (guest.get("amplifierStatus") or "").lower()
     if amp == "silver":
-        parts.append(f'<img class="pre-icon" src="{assets["silver_check"]}" alt=""/>')
+        parts.append(
+            f'<span class="pre-icon" style="background-image:url({assets["silver_check"]})"></span>'
+        )
     elif amp == "gold":
-        parts.append(f'<img class="pre-icon" src="{assets["gold_check"]}" alt=""/>')
+        parts.append(
+            f'<span class="pre-icon" style="background-image:url({assets["gold_check"]})"></span>'
+        )
     return "".join(parts)
 
 
@@ -87,11 +100,11 @@ def title_text(guest: dict) -> str | None:
 
 
 def sponsor_logos_html(sponsors: list[dict], manifest_dir: Path, *, badge: bool = False) -> str:
-    cls = "sponsor-logo sponsor-logo--badge" if badge else "sponsor-logo"
+    slot_cls = "sponsor-slot sponsor-slot--badge" if badge else "sponsor-slot"
     tags = []
     for s in sponsors:
         uri = data_uri(manifest_dir / s["logoPath"])
-        tags.append(f'<img class="{cls}" src="{uri}" alt=""/>')
+        tags.append(f'<div class="{slot_cls}"><img class="sponsor-logo" src="{uri}" alt=""/></div>')
     return "".join(tags)
 
 
@@ -121,18 +134,26 @@ def table_card_pages(guest: dict, sponsors_html: str, qr_row_html: str, assets: 
             f'</div>'
         )
     company = guest.get("company") or ""
-    name_class = "name" if len(guest["name"]) <= 24 else "name name--long"
+    n = len(guest["name"])
+    if n <= 15:
+        name_class = "name"
+    elif n <= 19:
+        name_class = "name name--mid"
+    else:
+        name_class = "name name--long"
 
+    icons_block = f'<span class="pre-icons">{icons}</span>' if icons else ""
     front = f'''
       <section class="page card-front">
-        <img class="brand" src="{assets["two_n_brand"]}" alt=""/>
-        <div class="name-row">
-          {icons}
-          <h1 class="{name_class}">{guest["name"]}</h1>
+        <div class="stack">
+          <img class="brand" src="{assets["two_n_brand"]}" alt=""/>
+          <div class="name-row">
+            <h1 class="{name_class}">{icons_block}{guest["name"]}</h1>
+          </div>
+          {status}
+          <div class="company">{company}</div>
+          <div class="sponsors">{sponsors_html}</div>
         </div>
-        {status}
-        <div class="company">{company}</div>
-        <div class="sponsors">{sponsors_html}</div>
       </section>
     '''
     back = f'''
@@ -157,58 +178,99 @@ def name_badge_page(guest: dict, sponsors_html: str, assets: dict[str, str]) -> 
     company = guest.get("company") or ""
     name_class = "name" if len(guest["name"]) <= 22 else "name name--long"
 
+
+    icons_block = f'<span class="pre-icons">{icons}</span>' if icons else ""
     return f'''
       <section class="page badge">
-        <img class="brand" src="{assets["two_n_brand"]}" alt=""/>
-        <div class="name-row">
-          {icons}
-          <h1 class="{name_class}">{guest["name"]}</h1>
+        <div class="stack">
+          <img class="brand" src="{assets["two_n_brand"]}" alt=""/>
+          <div class="name-row">
+            <h1 class="{name_class}">{icons_block}{guest["name"]}</h1>
+          </div>
+          {status}
+          <div class="company">{company}</div>
+          <div class="sponsors">{sponsors_html}</div>
         </div>
-        {status}
-        <div class="company">{company}</div>
-        <div class="sponsors">{sponsors_html}</div>
       </section>
     '''
 
 
 TABLE_CSS = f"""
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
 @page {{ size: 6in 4in; margin: 0; }}
 * {{ box-sizing: border-box; }}
 html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -apple-system, 'Helvetica Neue', Arial, sans-serif; color: #111; }}
 .page {{
   width: 6in; height: 4in; page-break-after: always;
   position: relative; background: #fff;
-  display: flex; flex-direction: column; align-items: center;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
   padding: 0.3in 0.4in;
+  text-align: center;
 }}
 .page:last-child {{ page-break-after: auto; }}
-
-.card-front .brand {{ height: 0.55in; margin-top: 0.05in; }}
-.name-row {{
-  display: flex; align-items: center; gap: 0.1in;
-  margin-top: 0.15in;
+.card-front .stack {{
+  display: flex; flex-direction: column; align-items: center;
+  width: 100%;
 }}
-.pre-icon {{ height: 0.34in; width: 0.34in; object-fit: contain; }}
+.card-front .brand {{ height: 0.55in; }}
+.name-row {{
+  width: 100%;
+  text-align: center;
+  margin-top: 0.18in;
+}}
 .name {{
-  font-size: 40pt; font-weight: 300; letter-spacing: -0.01em;
+  display: inline-block;
+  position: relative;
+  color: {NAME_NAVY};
+  font-size: 40pt; font-weight: 400; letter-spacing: -0.07rem;
   margin: 0; line-height: 1.05; text-align: center;
 }}
-.name--long {{ font-size: 30pt; }}
+.name--mid {{ font-size: 36pt; }}
+.name--long {{ font-size: 32pt; }}
+.pre-icons {{
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(calc(-50% + 0.032in));
+  margin-right: 0.1in;
+  display: flex;
+  align-items: center;
+  gap: 0.08in;
+}}
+.pre-icon {{
+  display: inline-block;
+  height: 0.245in; width: 0.245in;
+  min-width: 0.245in; max-width: 0.245in;
+  min-height: 0.245in; max-height: 0.245in;
+  flex-shrink: 0; flex-grow: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}}
 .status {{
-  display: flex; align-items: center; gap: 0.07in;
+  display: inline-flex; align-items: center; gap: 0.07in;
   color: {BRAND_GOLD}; font-size: 14pt; font-weight: 400;
-  margin-top: 0.12in;
+  margin-top: 0.03in;
 }}
 .status .mini-2n {{ height: 0.22in; }}
 .company {{
-  color: {BRAND_GOLD}; font-size: 18pt; font-weight: 400;
-  margin-top: 0.22in; text-align: center;
+  font-family: 'Instrument Serif', 'Times New Roman', Georgia, serif;
+  color: {BRAND_GOLD}; font-size: 22pt; font-weight: 400;
+  margin-top: 0.25in; text-align: center;
 }}
 .sponsors {{
-  position: absolute; bottom: 0.38in; left: 0; right: 0;
-  display: flex; align-items: center; justify-content: center; gap: 0.4in;
+  margin-top: 0.35in;
+  display: flex; align-items: center; justify-content: center; gap: 0.5in;
 }}
-.sponsor-logo {{ height: 0.48in; object-fit: contain; }}
+.sponsor-slot {{
+  width: 1.4in; height: 0.55in;
+  display: flex; align-items: center; justify-content: center;
+}}
+.sponsor-logo {{
+  max-width: 100%; max-height: 100%;
+  object-fit: contain; filter: brightness(0) invert(20%);
+}}
 
 /* back */
 .card-back {{ justify-content: center; padding: 0.3in; }}
@@ -217,38 +279,78 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
 }}
 .qr-cell {{ display: flex; flex-direction: column; align-items: center; gap: 0.15in; }}
 .qr {{ height: 1.3in; width: 1.3in; }}
-.qr-cell .sponsor-logo {{ height: 0.42in; }}
+.qr-cell .sponsor-logo {{ width: 1.2in; height: 0.45in; max-width: 1.2in; max-height: 0.45in; }}
 """
 
 BADGE_CSS = f"""
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
 @page {{ size: 3.5in 2in; margin: 0; }}
 * {{ box-sizing: border-box; }}
 html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -apple-system, 'Helvetica Neue', Arial, sans-serif; color: #111; }}
 .page.badge {{
   width: 3.5in; height: 2in; page-break-after: always;
   position: relative; background: #fff;
-  display: flex; flex-direction: column; align-items: center;
-  padding: 0.12in 0.2in;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 0.1in 0.2in;
+  text-align: center;
 }}
 .page.badge:last-child {{ page-break-after: auto; }}
-.badge .brand {{ height: 0.28in; margin-top: 0.02in; }}
-.badge .name-row {{ display: flex; align-items: center; gap: 0.05in; margin-top: 0.05in; }}
-.badge .pre-icon {{ height: 0.18in; width: 0.18in; object-fit: contain; }}
-.badge .name {{ font-size: 18pt; font-weight: 300; margin: 0; line-height: 1.05; letter-spacing: -0.01em; text-align: center; }}
-.badge .name--long {{ font-size: 14pt; }}
+.badge .stack {{
+  display: flex; flex-direction: column; align-items: center;
+  width: 100%;
+}}
+.badge .brand {{ height: 0.28in; }}
+.badge .name-row {{ width: 100%; text-align: center; margin-top: 0.06in; }}
+.badge .name {{
+  display: inline-block;
+  position: relative;
+  color: {NAME_NAVY};
+  font-size: 22pt; font-weight: 400; margin: 0; line-height: 1.05;
+  letter-spacing: -0.038rem; text-align: center;
+}}
+.badge .name--long {{ font-size: 18pt; }}
+.badge .pre-icons {{
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(calc(-50% + 0.024in));
+  margin-right: 0.05in;
+  display: flex;
+  align-items: center;
+  gap: 0.04in;
+}}
+.badge .pre-icon {{
+  display: inline-block;
+  height: 0.11in; width: 0.11in;
+  min-width: 0.11in; max-width: 0.11in;
+  min-height: 0.11in; max-height: 0.11in;
+  flex-shrink: 0; flex-grow: 0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}}
 .badge .status {{
-  display: flex; align-items: center; gap: 0.04in;
-  color: {BRAND_GOLD}; font-size: 8pt; margin-top: 0.04in;
+  display: inline-flex; align-items: center; gap: 0.04in;
+  color: {BRAND_GOLD}; font-size: 8pt; margin-top: 0.015in;
 }}
 .badge .status .mini-2n {{ height: 0.12in; }}
 .badge .company {{
-  color: {BRAND_GOLD}; font-size: 10pt; margin-top: 0.06in; text-align: center;
+  font-family: 'Instrument Serif', 'Times New Roman', Georgia, serif;
+  color: {BRAND_GOLD}; font-size: 12pt; margin-top: 0.10in; text-align: center;
 }}
 .badge .sponsors {{
-  position: absolute; bottom: 0.14in; left: 0; right: 0;
+  margin-top: 0.14in;
   display: flex; align-items: center; justify-content: center; gap: 0.2in;
 }}
-.badge .sponsor-logo {{ height: 0.22in; object-fit: contain; }}
+.badge .sponsor-slot {{
+  width: 0.65in; height: 0.26in;
+  display: flex; align-items: center; justify-content: center;
+}}
+.badge .sponsor-logo {{
+  max-width: 100%; max-height: 100%;
+  object-fit: contain; filter: brightness(0) invert(20%);
+}}
 """
 
 
@@ -279,7 +381,8 @@ def render_pdf(html: str, out: Path, kind: str) -> None:
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
-        page.set_content(html, wait_until="load")
+        page.set_content(html, wait_until="networkidle")
+        page.evaluate("document.fonts.ready")
         page.pdf(
             path=str(out),
             width=width,
