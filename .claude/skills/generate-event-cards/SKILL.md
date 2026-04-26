@@ -109,17 +109,18 @@ python3 -m pip install -q -r requirements.txt
 python3 -m playwright install chromium
 ```
 
-Then render whichever were requested:
+Then render whichever were requested. **PDF filenames must include the city** — format `2N-<City>-<Type>-V<N>.pdf` (e.g. `2N-Chicago-TableCards-V1.pdf`, `2N-Chicago-NameBadges-V1.pdf`). Use the city verbatim from the event record (no slug lowercasing — keep "Chicago", "New York", etc.; just strip spaces if multi-word, e.g. `2N-NewYork-TableCards-V1.pdf`).
+
 ```bash
 python3 .claude/skills/generate-event-cards/scripts/render.py \
   --manifest exports/events/<folder>/manifest.json \
   --type table-cards \
-  --out exports/events/<folder>/2N-TableCards-V1.pdf
+  --out exports/events/<folder>/2N-<City>-TableCards-V1.pdf
 
 python3 .claude/skills/generate-event-cards/scripts/render.py \
   --manifest exports/events/<folder>/manifest.json \
   --type name-badges \
-  --out exports/events/<folder>/2N-NameBadges-V1.pdf
+  --out exports/events/<folder>/2N-<City>-NameBadges-V1.pdf
 ```
 
 ### 8. Local review (gate)
@@ -138,7 +139,7 @@ Create **one folder per event** inside the parent, named:
 <City> <EventType> - MM/YYYY
 ```
 
-Example: `Chicago Dinner - 04/2026`. Both approved PDFs go directly inside this single folder — no per-PDF subfolders, no version in the folder name. Versioning lives on the PDF filename (`2N-TableCards-V1.pdf`, `2N-NameBadges-V2.pdf`, etc.).
+Example: `Chicago Dinner - 04/2026`. Both approved PDFs go directly inside this single folder — no per-PDF subfolders, no version in the folder name. Versioning lives on the PDF filename (`2N-<City>-TableCards-V1.pdf`, `2N-<City>-NameBadges-V2.pdf`, etc.).
 
 If the folder already exists for this event (re-render after revisions), reuse it — search by name inside the parent and upload the new PDF version alongside the existing files. Do not delete prior versions unless asked.
 
@@ -161,7 +162,7 @@ Once **every** approved PDF has been uploaded and the user has the Drive links, 
 - **Question:** "Delete the local PDFs now that they're in Drive?"
 - **Options:** `Delete PDFs (Recommended)`, `Keep them`.
 
-If they confirm, delete both the rendered PDF files and their matching `.html` intermediates inside `exports/events/<folder>/` (e.g. `2N-TableCards-V*.pdf`, `2N-TableCards-V*.html`, `2N-NameBadges-V*.pdf`, `2N-NameBadges-V*.html`). The HTMLs are renderer byproducts and are usually larger than the PDFs themselves. Leave `manifest.json` and the `tmp/` folder in place — they're tiny and useful for re-rendering. Don't touch any other event folders.
+If they confirm, delete both the rendered PDF files and their matching `.html` intermediates inside `exports/events/<folder>/` (e.g. `2N-*-TableCards-V*.pdf`, `2N-*-TableCards-V*.html`, `2N-*-NameBadges-V*.pdf`, `2N-*-NameBadges-V*.html`). The HTMLs are renderer byproducts and are usually larger than the PDFs themselves. Leave `manifest.json` and the `tmp/` folder in place — they're tiny and useful for re-rendering. Don't touch any other event folders.
 
 ## Layout spec (for `render.py`)
 
