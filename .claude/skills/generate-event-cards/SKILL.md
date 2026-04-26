@@ -54,14 +54,18 @@ For each confirmed sponsor:
 
 ### 5. Pull guest data
 
-`mcp__2n__findEventGuests where={"event":{"equals":<eventId>}}` — paginate through all pages.
+`mcp__2n__findEventGuests where={"event":{"equals":<eventId>}}` — paginate through all pages. The eventGuest record already inlines a fully-expanded `user` object including `user.company`, so a separate `findUsers` call is usually unnecessary; only fall back to `findUsers` if a field you need is missing from the embedded user.
 
-For each guest:
-- If there's a linked `user` ref, fetch with `mcp__2n__findUsers` by ID.
-- Extract `name` (prefer `fullName`, else `firstName lastName`), `company` (primary affiliation), `memberStatus`, `amplifierStatus`.
-- Possible `memberStatus` values: `Founding Member`, `Member`, `null` (guest).
-- Possible `amplifierStatus` values: `silver`, `gold`, `null`.
-- If no linked user (rare — user confirmed everyone is registered), mark them as a plain guest (no status line).
+**Important — status fields are split across User and Company.** The Payload schema does not use `memberStatus` / `amplifierStatus`. The three real fields that drive the status line are:
+
+- **Founding Member** lives on Company: `user.company.foundingMember === true` → render the founding-caret + "Founding Member" status line. Treat `false` / `null` / missing as no founding badge. Founding Member always wins over plain Member.
+- **Member** lives on User: `user.type === "family-office"` (and not a Founding Member) → render the mini-2N logo + "Member" status line, no pre-icon caret. Sponsors (`user.type === "sponsor"`) and walk-ins (no linked user) do **not** get a Member badge — they render plain. Confirmed against the Chicago 2026 guest list on 2026-04-26.
+- **Amplifier (silver / gold) lives on User: `user.status`**. Values seen in Payload: `"gold"`, `"silver"`, `null`. → render the silver/gold check accordingly. Note: this is the same `status` field that's on every User record — do not confuse it with `eventGuest.status` (which is the registration approval state: `"approved"` / `"rejected"` / etc.). Confirmed against user id 152 (Benny Kay → `"gold"`) on 2026-04-26.
+- Exclude any guest whose **eventGuest** `status === "rejected"`.
+
+For each remaining guest, extract: `fullName`, `familyOfficeName` (the company string the guest used at registration — preferred for the card since it matches what they typed), `user.type` (`"family-office"` / `"sponsor"` / `null`), `user.status` (amplifier — `"silver"` / `"gold"` / `null`), `user.company.foundingMember` (boolean), `submissionType` (`userRegistration` / `sponsor` / `guest`).
+
+If there's no linked `user` ref (a pure walk-in), there's no member/founding/amplifier data — render as a plain guest (no status line) and flag them back to CJ before render.
 
 Append the Burskeys if confirmed attending.
 
@@ -126,17 +130,38 @@ Open each PDF locally with `open <path>` so the user can review before anything 
 
 ### 9. Upload to Google Drive (only after sign-off)
 
-Parent folder ID: `1pnVJvE13Ta-W_5IquP7eaj6iTlCya0nD`
+Parent folder ID: `1pnVJvE13Ta-W_5IquP7eaj6iTlCya0nD` — this lives on the **2N Shared Drive** (`driveId: 0AGlwTCCopkI1Uk9PVA`), so every Drive API call must include `supportsAllDrives=true`.
 
-For **each** approved PDF, create a subfolder inside the parent named:
+Create **one folder per event** inside the parent, named:
 
 ```
-YYYY_MM_DD-<City>_<EventType>-<PrintFileType>-V<N>
+<City> <EventType> - MM/YYYY
 ```
 
-Where `PrintFileType` is `TableCards` or `NameBadges` and `<N>` matches the approved local PDF version. Example: `2026_04_29-Chicago_Dinner-NameBadges-V2`.
+Example: `Chicago Dinner - 04/2026`. Both approved PDFs go directly inside this single folder — no per-PDF subfolders, no version in the folder name. Versioning lives on the PDF filename (`2N-TableCards-V1.pdf`, `2N-NameBadges-V2.pdf`, etc.).
 
-Use `mcp__claude_ai_Google_Drive__create_file` (or the nearest folder-create equivalent) to make the subfolder, then upload the PDF into it. Report the shareable link for each back to the user.
+If the folder already exists for this event (re-render after revisions), reuse it — search by name inside the parent and upload the new PDF version alongside the existing files. Do not delete prior versions unless asked.
+
+**Upload via the Drive REST API using gcloud ADC, not the MCP `create_file` tool.** The MCP tool requires the entire PDF as a base64 string parameter, and our PDFs (700KB–2MB) exceed practical tool-call sizes. The gcloud Application Default Credentials for `cj@przm.studio` already have the `https://www.googleapis.com/auth/drive` scope (set up via `gcloud auth login --enable-gdrive-access --update-adc`).
+
+Steps:
+
+1. Get a token: `TOKEN=$(gcloud auth application-default print-access-token)`
+2. Look up or create the event folder:
+   - Search: `GET https://www.googleapis.com/drive/v3/files?q=<urlencoded:name='<folder-name>' and '1pnVJvE13Ta-W_5IquP7eaj6iTlCya0nD' in parents and mimeType='application/vnd.google-apps.folder'>&supportsAllDrives=true&includeItemsFromAllDrives=true&fields=files(id,name)`. If a match is returned, reuse its `id`.
+   - Otherwise create: `POST https://www.googleapis.com/drive/v3/files?supportsAllDrives=true` with body `{"name": "<folder-name>", "parents": ["1pnVJvE13Ta-W_5IquP7eaj6iTlCya0nD"], "mimeType": "application/vnd.google-apps.folder"}`. Capture the returned `id`.
+3. Upload each approved PDF via multipart to `https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&supportsAllDrives=true&fields=id,name,webViewLink,parents` with the event folder `id` as the parent. Filename is the local PDF filename (e.g. `2N-TableCards-V1.pdf`).
+4. Report the `webViewLink` from each upload response back to the user.
+
+If the gcloud token comes back without the Drive scope, ask the user to run `gcloud auth login --enable-gdrive-access --update-adc` once, then retry.
+
+### 10. Local cleanup (after successful upload)
+
+Once **every** approved PDF has been uploaded and the user has the Drive links, ask via `AskUserQuestion`:
+- **Question:** "Delete the local PDFs now that they're in Drive?"
+- **Options:** `Delete PDFs (Recommended)`, `Keep them`.
+
+If they confirm, delete both the rendered PDF files and their matching `.html` intermediates inside `exports/events/<folder>/` (e.g. `2N-TableCards-V*.pdf`, `2N-TableCards-V*.html`, `2N-NameBadges-V*.pdf`, `2N-NameBadges-V*.html`). The HTMLs are renderer byproducts and are usually larger than the PDFs themselves. Leave `manifest.json` and the `tmp/` folder in place — they're tiny and useful for re-rendering. Don't touch any other event folders.
 
 ## Layout spec (for `render.py`)
 
@@ -200,7 +225,7 @@ All paths relative to repo root (`/Users/christopherjames/Desktop/2n-brain/2n-br
 
 Local: `exports/events/<YYYY_MM_DD>-<CitySlug>_<EventType>/` (one folder per event, both PDFs inside).
 
-Drive: one subfolder per PDF, named `YYYY_MM_DD-<City>_<EventType>-<TableCards|NameBadges>-V1`, created inside the parent folder ID above.
+Drive: one folder per event named `<City> <EventType> - MM/YYYY` (e.g. `Chicago Dinner - 04/2026`), created inside the parent folder ID above. Both PDFs land directly inside that one folder.
 
 ## Edge cases & notes
 
@@ -211,4 +236,4 @@ Drive: one subfolder per PDF, named `YYYY_MM_DD-<City>_<EventType>-<TableCards|N
 - **Visual balance across logos with different aspect ratios**: every sponsor logo renders inside a fixed-size `.sponsor-slot` (1.4in × 0.55in for table cards, 0.65in × 0.26in for badges). The `<img>` uses `object-fit: contain` with `max-width/max-height: 100%`, so each logo scales to fit the slot regardless of its native aspect ratio. This prevents wide wordmarks (e.g. ARCH at ~5:1) from dominating taller logos (e.g. BGA at ~2.6:1) when they sit at the same height.
 - **White-on-transparent sponsor logos**: many sponsor logos are designed for dark backgrounds and are invisible on the white card. The renderer applies `filter: brightness(0)` to every `.sponsor-logo` so these logos render as solid black silhouettes. If a sponsor supplies a dark or full-color logo that should keep its native colors, override the filter for that sponsor (e.g. add a `--colored` modifier class).
 - **Flag surprises**: if a user record is missing `company` or has an unexpected `memberStatus` value, list them back to the user for confirmation before rendering — don't silently render blank.
-- **Version bump**: if the Drive folder `...V1` already exists, bump to `V2`, `V3`, etc.
+- **Version bump**: versioning lives on the PDF filename (`-V1.pdf`, `-V2.pdf`, ...), not on the Drive folder. The event folder (`<City> <EventType> - MM/YYYY`) is reused across revisions — new versions sit alongside older ones in the same folder.

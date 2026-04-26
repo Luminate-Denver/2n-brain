@@ -1,6 +1,6 @@
 # Working in 2n Brain
 
-This is a **data analysis workspace** for 2pwrn.com leadership. It is not the application codebase.
+This is a **data analysis workspace** for 2pwrn.com leadership. It is not the application codebase, however the codebase can be read via 2n MCP.
 
 ## What's here
 

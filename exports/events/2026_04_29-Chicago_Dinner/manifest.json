@@ -1,0 +1,171 @@
+{
+  "event": {
+    "title": "2^n Family Office Dinner - Chicago 2026",
+    "city": "Chicago",
+    "date": "2026_04_29",
+    "eventType": "Dinner"
+  },
+  "sponsors": [
+    {
+      "name": "BGA",
+      "logoPath": "tmp/bga.svg",
+      "website": "https://bga.com/"
+    },
+    {
+      "name": "ARCH",
+      "logoPath": "tmp/arch.svg",
+      "website": "https://arch.co"
+    }
+  ],
+  "guests": [
+    {
+      "name": "Chad Broderick",
+      "company": "Alexander West Capital",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Ryan Brown",
+      "company": "Chaifetz Group",
+      "memberStatus": "Founding Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Matt Burskey",
+      "company": "",
+      "titleOverride": "Founder"
+    },
+    {
+      "name": "Omair Chaudhry",
+      "company": "Schwartz Capital Group",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Henry Curless",
+      "company": "BLG Capital Advisors",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Ted Fahey",
+      "company": "Mansueto Office Inc.",
+      "memberStatus": "Founding Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Rob Grimaldi",
+      "company": "Viscogliosi Brothers LLC",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Mac Hampden",
+      "company": "Fruition Partners, LLC",
+      "memberStatus": null,
+      "amplifierStatus": null
+    },
+    {
+      "name": "Ben Israel",
+      "company": "BOS Capital",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Daniel Jisa",
+      "company": "MBX Group",
+      "memberStatus": null,
+      "amplifierStatus": null
+    },
+    {
+      "name": "Benny Kay",
+      "company": "Gray Capital Investors",
+      "memberStatus": "Member",
+      "amplifierStatus": "gold"
+    },
+    {
+      "name": "Adam Koszyk",
+      "company": "Skydeck Capital",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Jason Kozin",
+      "company": "Fulton Asset Management",
+      "memberStatus": "Founding Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Jeff Lorden",
+      "company": "KF Partners",
+      "memberStatus": null,
+      "amplifierStatus": null
+    },
+    {
+      "name": "Daniel Miller",
+      "company": "ARCH",
+      "memberStatus": null,
+      "amplifierStatus": null
+    },
+    {
+      "name": "Jack Nicholson",
+      "company": "Bulletproof Capital",
+      "memberStatus": "Founding Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Chad Petherick",
+      "company": "BOS Capital",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Dan Rosenbloom",
+      "company": "Lafayette Street Capital",
+      "memberStatus": null,
+      "amplifierStatus": null
+    },
+    {
+      "name": "Brady Sarkon",
+      "company": "Henry Crown & Company",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Benjamin Slome",
+      "company": "New Vintage Partners",
+      "memberStatus": "Member",
+      "amplifierStatus": "silver"
+    },
+    {
+      "name": "Tair Tal",
+      "company": "Fulton Asset Management",
+      "memberStatus": "Founding Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Chinedu Udeogu",
+      "company": "The Pritzker Organization",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Jonathan Waitzer",
+      "company": "The Walsh Group",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Jack Washburn",
+      "company": "Henry Crown & Company",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Justin Weber",
+      "company": "West Coast Private Capital",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    }
+  ]
+}
