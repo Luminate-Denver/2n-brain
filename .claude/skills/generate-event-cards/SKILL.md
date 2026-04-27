@@ -49,21 +49,22 @@ For each confirmed sponsor:
 
 - Matt → title = `Founder`
 - Sydney → title = `Associate`
-- They render with no pre-name badges (no silver/gold/founding-caret) unless the user says otherwise.
+- They render with no pre-name badges (no silver/gold check) unless the user says otherwise.
 - Their company field should be left empty (or ask the user).
 
 ### 5. Pull guest data
 
 `mcp__2n__findEventGuests where={"event":{"equals":<eventId>}}` — paginate through all pages. The eventGuest record already inlines a fully-expanded `user` object including `user.company`, so a separate `findUsers` call is usually unnecessary; only fall back to `findUsers` if a field you need is missing from the embedded user.
 
-**Important — status fields are split across User and Company.** The Payload schema does not use `memberStatus` / `amplifierStatus`. The three real fields that drive the status line are:
+**Important — status fields are split across User and Company.** The Payload schema does not use `memberStatus` / `amplifierStatus`. The real fields that drive the status line are:
 
-- **Founding Member** lives on Company: `user.company.foundingMember === true` → render the founding-caret + "Founding Member" status line. Treat `false` / `null` / missing as no founding badge. Founding Member always wins over plain Member.
-- **Member** lives on User: `user.type === "family-office"` (and not a Founding Member) → render the mini-2N logo + "Member" status line, no pre-icon caret. Sponsors (`user.type === "sponsor"`) and walk-ins (no linked user) do **not** get a Member badge — they render plain. Confirmed against the Chicago 2026 guest list on 2026-04-26.
-- **Amplifier (silver / gold) lives on User: `user.status`**. Values seen in Payload: `"gold"`, `"silver"`, `null`. → render the silver/gold check accordingly. Note: this is the same `status` field that's on every User record — do not confuse it with `eventGuest.status` (which is the registration approval state: `"approved"` / `"rejected"` / etc.). Confirmed against user id 152 (Benny Kay → `"gold"`) on 2026-04-26.
+- **Founding Member** lives on Company: `user.company.foundingMember === true` → render the mini-2N logo + "Founding Member" status line. **No pre-name caret icon** (removed 2026-04-27 — the founding-caret asset is no longer used). Treat `false` / `null` / missing as no founding badge. Founding Member always wins over plain Member.
+- **Member** lives on User: `user.type === "family-office"` (and not a Founding Member) → render the mini-2N logo + "Member" status line. Walk-ins (no linked user) do **not** get a Member badge — they render plain. Confirmed against the Chicago 2026 guest list on 2026-04-26.
+- **Sponsor Member** lives on User: `user.type === "sponsor"` → render the mini-2N logo + "Sponsor Member" status line. The company line below the name should come from `user.sponsor.name` (e.g. Mac Hampden → "Fruition Partners, LLC"; Dan Rosenbloom → "Lafayette Street Capital"). Confirmed against the Chicago 2026 guest list on 2026-04-27.
+- **Amplifier (silver / gold) lives on User: `user.status`**. Values seen in Payload: `"gold"`, `"silver"`, `null`. → render the silver/gold check as a pre-name icon (this is now the **only** pre-name icon — founding-caret is gone). Note: this is the same `status` field that's on every User record — do not confuse it with `eventGuest.status` (which is the registration approval state: `"approved"` / `"rejected"` / etc.). Confirmed against user id 152 (Benny Kay → `"gold"`) on 2026-04-26.
 - Exclude any guest whose **eventGuest** `status === "rejected"`.
 
-For each remaining guest, extract: `fullName`, `familyOfficeName` (the company string the guest used at registration — preferred for the card since it matches what they typed), `user.type` (`"family-office"` / `"sponsor"` / `null`), `user.status` (amplifier — `"silver"` / `"gold"` / `null`), `user.company.foundingMember` (boolean), `submissionType` (`userRegistration` / `sponsor` / `guest`).
+For each remaining guest, extract: `fullName`, `familyOfficeName` (the company string the guest used at registration — preferred for `family-office` users since it matches what they typed), `user.type` (`"family-office"` / `"sponsor"` / `null`), `user.status` (amplifier — `"silver"` / `"gold"` / `null`), `user.company.foundingMember` (boolean), `user.sponsor.name` (sponsor firm name — used as the company line for sponsor-type users), `submissionType` (`userRegistration` / `sponsor` / `guest`).
 
 If there's no linked `user` ref (a pure walk-in), there's no member/founding/amplifier data — render as a plain guest (no status line) and flag them back to CJ before render.
 
@@ -92,6 +93,8 @@ Schema:
     {"name": "Brad Gates", "company": "Christopher Investment Company", "memberStatus": "Founding Member", "amplifierStatus": null},
     {"name": "Richard Kilby", "company": "Crain Family Office", "memberStatus": "Founding Member", "amplifierStatus": "silver"},
     {"name": "Kendall Childers", "company": "Rosewood Private Investments", "memberStatus": "Member", "amplifierStatus": null},
+    {"name": "Mac Hampden", "company": "Fruition Partners, LLC", "memberStatus": "Sponsor Member", "amplifierStatus": null},
+    {"name": "Dan Rosenbloom", "company": "Lafayette Street Capital", "memberStatus": "Sponsor Member", "amplifierStatus": null},
     {"name": "Matt Burskey", "company": "", "titleOverride": "Founder"},
     {"name": "Sydney Burskey", "company": "", "titleOverride": "Associate"}
   ]
@@ -174,19 +177,19 @@ If they confirm, delete both the rendered PDF files and their matching `.html` i
 - Name: navy, **weight 400 (regular)**, negative letter-spacing (`-0.07rem` table cards, `-0.038rem` name badges)
 - Status: brand gold, sans (Overused Grotesk), weight 400
 - Company: brand gold, **Instrument Serif**, weight 400
-- **Horizontal centering**: every block on the front of the card and on the badge (brand mark, name, status line, company, sponsor row) is horizontally centered. Pre-name icons (founding caret, silver/gold check) hang left of the name via absolute positioning (`right: 100%` relative to the inline-block `.name`) so the name itself stays optically centered on the card.
+- **Horizontal centering**: every block on the front of the card and on the badge (brand mark, name, status line, company, sponsor row) is horizontally centered. The silver/gold amplifier check (when present) hangs left of the name via absolute positioning (`right: 100%` relative to the inline-block `.name`) so the name itself stays optically centered on the card.
 - **Vertical centering**: the entire content group (`.stack` = brand mark + name-row + status + company + sponsors) is vertically centered on the page via page-level flex (`.page { display: flex; flex-direction: column; justify-content: center; align-items: center; }`). No absolute positioning of the brand mark or sponsor row — everything flows in the stack.
-- Pre-name badge order, left to right: **founding-member caret → silver/gold check** (so caret comes first, check comes closer to the name)
-- **Pre-icon rendering**: each icon is a `<span class="pre-icon">` with the asset set as `background-image`, locked square via min/max width+height, `flex-shrink: 0`. Table cards use `background-size: contain` (assets are 2818×2816, near-square). Name badges use `background-size: 100% 100%` because at the 0.11" badge size, Chromium's sub-pixel rounding under `contain` clips the right edge of the icon — `100% 100%` forces full fill (the assets are square enough that this introduces no visible distortion).
+- **Pre-name icon**: only the silver/gold amplifier check is rendered as a pre-name icon. **Founding members no longer carry a caret pre-icon** (removed 2026-04-27) — their tier shows up only in the status line below the name. So a guest who is both Founding Member *and* gold amplifier renders with one pre-icon (the gold check) and "Founding Member" in the status line.
+- **Pre-icon rendering**: the icon is a `<span class="pre-icon">` with the asset set as `background-image`, locked square via min/max width+height, `flex-shrink: 0`. Table cards use `background-size: contain` (assets are 2818×2816, near-square). Name badges use `background-size: 100% 100%` because at the 0.11" badge size, Chromium's sub-pixel rounding under `contain` clips the right edge of the icon — `100% 100%` forces full fill (the assets are square enough that this introduces no visible distortion).
 
 ### Table card — front (6in × 4in, landscape)
-All blocks are horizontally centered. The pre-icons sit absolutely positioned to the left of the centered name, so the name itself stays optically centered on the card.
+All blocks are horizontally centered. The silver/gold check (when present) sits absolutely positioned to the left of the centered name, so the name itself stays optically centered on the card.
 ```
           [2^n brand mark, centered, 0.55" tall]
 
-      [pre-icons 0.245"] [ NAME, 40pt, weight 400, navy #0A1A3A, letter-spacing -0.07rem, centered ]
+      [silver/gold check 0.245" (if any)] [ NAME, 40pt, weight 400, navy #0A1A3A, letter-spacing -0.07rem, centered ]
 
-                [2^n mini, 0.22"] Founding Member | Member | Founder | Associate
+                [2^n mini, 0.22"] Founding Member | Member | Sponsor Member | Founder | Associate
                               (14pt, gold sans)
 
                   Company Name (22pt, gold, Instrument Serif)
@@ -217,10 +220,10 @@ Same content as the front of the table card, scaled down. All blocks horizontall
 All paths relative to repo root (`/Users/christopherjames/Desktop/2n-brain/2n-brain/`):
 
 - `assets/2^n_Logo_withCircle_transparent-V2.png` → brand mark (top of card)
-- `assets/2^n_Logo_v2.svg` → inline mini mark (next to "Founding Member" / "Member" text)
-- `assets/Silver-Check-1.png` → amplifier silver
-- `assets/Gold-Check-1.png` → amplifier gold
-- `assets/Founding-Member-Caret-Icon.png` → founding-member marker
+- `assets/2^n_Logo_v2.svg` → inline mini mark (next to "Founding Member" / "Member" / "Sponsor Member" text)
+- `assets/Silver-Check-1.png` → amplifier silver (pre-name icon)
+- `assets/Gold-Check-1.png` → amplifier gold (pre-name icon)
+- ~~`assets/Founding-Member-Caret-Icon.png`~~ → **deprecated 2026-04-27**, no longer rendered. The founding-member tier is communicated via the status line only.
 
 ## Output folder naming
 

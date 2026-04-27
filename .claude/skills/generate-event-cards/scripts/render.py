@@ -32,7 +32,6 @@ ASSET_FILES = {
     "two_n_mini":       ASSETS / "2^n_Logo_v2.svg",
     "silver_check":     ASSETS / "Silver-Check-1.png",
     "gold_check":       ASSETS / "Gold-Check-1.png",
-    "founding_caret":   ASSETS / "Founding-Member-Caret-Icon.png",
 }
 
 
@@ -66,35 +65,24 @@ def load_assets() -> dict[str, str]:
 
 
 def pre_name_icons_html(guest: dict, assets: dict[str, str]) -> str:
-    """Founding caret first, then silver/gold check (caret sits left of check).
+    """Silver/gold amplifier check is the only pre-name icon.
 
-    Uses CSS background-image (instead of an <img>) so the icon is rendered
-    as a fixed square box with `background-size: contain`. This locks the
-    icon's aspect ratio regardless of how flex layout distributes space
-    around it.
+    The founding-member caret was retired 2026-04-27 — founding tier is now
+    communicated via the status line only.
     """
-    parts = []
-    if guest.get("memberStatus") == "Founding Member":
-        parts.append(
-            f'<span class="pre-icon" style="background-image:url({assets["founding_caret"]})"></span>'
-        )
     amp = (guest.get("amplifierStatus") or "").lower()
     if amp == "silver":
-        parts.append(
-            f'<span class="pre-icon" style="background-image:url({assets["silver_check"]})"></span>'
-        )
-    elif amp == "gold":
-        parts.append(
-            f'<span class="pre-icon" style="background-image:url({assets["gold_check"]})"></span>'
-        )
-    return "".join(parts)
+        return f'<span class="pre-icon" style="background-image:url({assets["silver_check"]})"></span>'
+    if amp == "gold":
+        return f'<span class="pre-icon" style="background-image:url({assets["gold_check"]})"></span>'
+    return ""
 
 
 def title_text(guest: dict) -> str | None:
     if guest.get("titleOverride"):
         return guest["titleOverride"]
     ms = guest.get("memberStatus")
-    if ms in ("Founding Member", "Member"):
+    if ms in ("Founding Member", "Member", "Sponsor Member"):
         return ms
     return None
 
