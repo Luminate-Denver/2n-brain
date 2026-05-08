@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2^n Trends & Topics — Direction C: Modern Minimal</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #F5F4F1; font-family: 'Inter', -apple-system, 'Helvetica Neue', Arial, sans-serif; color: #0A1A3A; -webkit-font-smoothing: antialiased; padding: 40px 0; }
+  .wrap { max-width: 640px; margin: 0 auto; background: #FFFFFF; }
+
+  /* Mast */
+  .mast { padding: 40px 48px 28px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #0A1A3A; }
+  .mast .logo { font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 600; letter-spacing: -0.04em; color: #0A1A3A; }
+  .mast .logo sup { font-size: 0.55em; color: #B8870A; }
+  .mast .meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6B6657; text-align: right; line-height: 1.5; }
+  .mast .meta b { color: #0A1A3A; font-weight: 500; }
+
+  /* Hero */
+  .hero { padding: 64px 48px 56px; }
+  .hero .tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: #B8870A; margin: 0 0 24px; }
+  .hero h1 { font-family: 'Inter', sans-serif; font-size: 40px; line-height: 1.1; font-weight: 500; letter-spacing: -0.03em; margin: 0 0 28px; color: #0A1A3A; }
+  .hero h1 .accent { color: #B8870A; }
+  .hero p { font-size: 16px; line-height: 1.65; color: #3A4360; margin: 0 0 14px; max-width: 520px; font-weight: 400; }
+  .hero p strong { font-weight: 600; color: #0A1A3A; }
+
+  /* Stats strip */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 40px 0 0; padding: 32px 0; border-top: 1px solid #E8E4DC; border-bottom: 1px solid #E8E4DC; }
+  .stat .n { font-family: 'Inter', sans-serif; font-size: 56px; font-weight: 300; line-height: 1; letter-spacing: -0.04em; color: #0A1A3A; }
+  .stat .n .pct { font-size: 20px; color: #B8870A; vertical-align: super; margin-left: 4px; }
+  .stat .l { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #6B6657; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* Section */
+  section { padding: 56px 48px; border-top: 1px solid #E8E4DC; }
+  .sec-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 28px; }
+  .sec-head .num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #B8870A; }
+  .sec-head .label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6B6657; text-transform: uppercase; letter-spacing: 0.04em; }
+  .sec-head .rule { flex: 1; height: 1px; background: #E8E4DC; }
+  h2 { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 500; letter-spacing: -0.025em; line-height: 1.15; margin: 0 0 16px; }
+  p { font-size: 15px; line-height: 1.65; color: #3A4360; margin: 0 0 14px; }
+  p strong { font-weight: 600; color: #0A1A3A; }
+
+  /* Members grid */
+  .members { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 8px 0 28px; border-top: 1px solid #F0EDE5; }
+  .members .m { padding: 16px 16px 16px 0; border-bottom: 1px solid #F0EDE5; display: flex; flex-direction: column; gap: 4px; }
+  .members .m:nth-child(even) { padding-left: 16px; padding-right: 0; border-left: 1px solid #F0EDE5; }
+  .members .nm { font-size: 15px; font-weight: 500; color: #0A1A3A; letter-spacing: -0.01em; }
+  .members .ct { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #B8870A; text-transform: uppercase; letter-spacing: 0.04em; }
+
+  /* Deals */
+  .deals { margin: 8px 0 24px; padding: 0; list-style: none; }
+  .deals li { padding: 18px 0; border-bottom: 1px solid #F0EDE5; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .deals li:first-child { border-top: 1px solid #F0EDE5; }
+  .deals .nm { font-size: 16px; font-weight: 500; color: #0A1A3A; letter-spacing: -0.015em; }
+  .deals .sec { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #B8870A; text-transform: uppercase; letter-spacing: 0.04em; }
+
+  /* Pod card */
+  .pod { background: #0A1A3A; color: #FFFFFF; padding: 48px; margin: 0; border-radius: 0; }
+  .pod .sec-head .num { color: #D9B863; }
+  .pod .sec-head .label { color: #99A0B8; }
+  .pod .sec-head .rule { background: #1F2D52; }
+  .pod h2 { color: #FFFFFF; font-weight: 500; }
+  .pod h2 .ep-num { color: #D9B863; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 400; display: block; margin-bottom: 8px; letter-spacing: 0.04em; }
+  .pod p { color: #C9CDD9; }
+  .pod .guests { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D9B863; text-transform: uppercase; letter-spacing: 0.06em; margin: -8px 0 24px; }
+
+  /* Events */
+  .evs { display: flex; flex-direction: column; gap: 0; margin: 8px 0 0; }
+  .evs .e { padding: 20px 0; border-top: 1px solid #F0EDE5; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 24px; }
+  .evs .e:last-child { border-bottom: 1px solid #F0EDE5; }
+  .evs .e.featured { background: #FAF7EE; padding-left: 16px; padding-right: 16px; margin: 0 -16px; border-color: #E8DDB8; }
+  .evs .e .city { font-size: 17px; font-weight: 500; color: #0A1A3A; letter-spacing: -0.015em; }
+  .evs .e .city .pin { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #B8870A; margin-left: 8px; font-weight: 400; }
+  .evs .e .date { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6B6657; text-align: right; }
+
+  /* Pull quote */
+  .pull { padding: 56px 48px; background: #FAF7EE; border-top: 1px solid #E8E4DC; border-bottom: 1px solid #E8E4DC; }
+  .pull .q { font-family: 'Instrument Serif', Georgia, serif; font-size: 30px; line-height: 1.25; font-weight: 400; margin: 0 0 16px; color: #0A1A3A; letter-spacing: -0.005em; }
+  .pull .q em { color: #B8870A; font-style: italic; }
+  .pull .attrib { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6B6657; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* Actions */
+  .actions { padding: 56px 48px; }
+  .actions ol { margin: 0; padding: 0; list-style: none; counter-reset: a; }
+  .actions li { counter-increment: a; padding: 22px 0; border-top: 1px solid #F0EDE5; display: grid; grid-template-columns: 64px 1fr; gap: 16px; align-items: baseline; }
+  .actions li:last-child { border-bottom: 1px solid #F0EDE5; }
+  .actions li::before { content: counter(a, decimal-leading-zero); font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #B8870A; }
+  .actions li .t { font-size: 15.5px; line-height: 1.55; }
+
+  /* CTA */
+  .cta { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: #0A1A3A; text-decoration: none; padding: 12px 0; border-bottom: 1px solid #0A1A3A; letter-spacing: -0.005em; }
+  .cta::after { content: '↗'; font-family: 'JetBrains Mono', monospace; font-size: 14px; }
+  .cta.gold { color: #B8870A; border-color: #B8870A; }
+  .cta.light { color: #D9B863; border-color: #D9B863; }
+
+  /* Footer */
+  footer { padding: 48px; background: #FFFFFF; border-top: 1px solid #0A1A3A; }
+  footer .sigs { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+  footer .sig .who { font-size: 16px; font-weight: 500; color: #0A1A3A; letter-spacing: -0.015em; }
+  footer .sig .role { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #6B6657; text-transform: uppercase; letter-spacing: 0.06em; margin: 4px 0 8px; }
+  footer .sig a { font-size: 12px; color: #B8870A; text-decoration: none; }
+  footer .smol { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6B6657; line-height: 1.7; padding-top: 24px; border-top: 1px solid #E8E4DC; }
+  footer .smol a { color: #0A1A3A; text-decoration: none; }
+
+  @media (max-width: 600px) {
+    body { padding: 0; }
+    .mast, .hero, section, .pod, .pull, .actions, footer { padding-left: 24px; padding-right: 24px; }
+    .hero h1 { font-size: 30px; }
+    .stats { grid-template-columns: 1fr 1fr 1fr; }
+    .stat .n { font-size: 36px; }
+    .members { grid-template-columns: 1fr; }
+    .members .m:nth-child(even) { padding-left: 0; border-left: 0; }
+    footer .sigs { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="mast">
+    <div class="logo">2<sup>n</sup> trends&amp;topics</div>
+    <div class="meta"><b>04 / 26</b><br>fam. office brief</div>
+  </header>
+
+  <section class="hero" style="border:0;">
+    <p class="tag">// April 2026 — Issue 04</p>
+    <h1>A record month, a first <span class="accent">Gold</span>, and a date for Denver.</h1>
+    <p>March was a milestone month. We welcomed a record <strong>14 new Family Offices</strong> — the 2^n community has now reached the Eastern hemisphere — celebrated the first <strong>Gold</strong> status in the Amplifier Program, and locked in the date for our inaugural <strong>Family Office Summit in Denver, June 10–11</strong>.</p>
+    <p>None of this happens without you. Every introduction, every deal shared, every conversation at a dinner — that's what makes this community compound.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="n">14</div><div class="l">New members</div></div>
+      <div class="stat"><div class="n">04</div><div class="l">Live deals</div></div>
+      <div class="stat"><div class="n">01<span class="pct">★</span></div><div class="l">First Gold</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="num">01</span><span class="label">Member Spotlight</span><span class="rule"></span></div>
+    <h2>Fourteen new family offices.</h2>
+    <p>Our biggest month yet. First member from the Eastern hemisphere.</p>
+    <div class="members">
+      <div class="m"><div class="nm">Muir Station Capital</div><div class="ct">Lexington · KY</div></div>
+      <div class="m"><div class="nm">Viscogliosi Brothers</div><div class="ct">New York · NY</div></div>
+      <div class="m"><div class="nm">Navigant Oak</div><div class="ct">Northville · MI</div></div>
+      <div class="m"><div class="nm">Raleigh Enterprises</div><div class="ct">Los Angeles · CA</div></div>
+      <div class="m"><div class="nm">Mt. Vernon Investments</div><div class="ct">Dallas · TX</div></div>
+      <div class="m"><div class="nm">Walsh</div><div class="ct">Chicago · IL</div></div>
+      <div class="m"><div class="nm">Sterry Capital</div><div class="ct">Denver · CO</div></div>
+      <div class="m"><div class="nm">Dom Capital Group</div><div class="ct">Chicago · IL</div></div>
+      <div class="m"><div class="nm">Buster Ward Capital</div><div class="ct">Castle Pines · CO</div></div>
+      <div class="m"><div class="nm">ArgoFO</div><div class="ct">Baltimore · MD</div></div>
+      <div class="m"><div class="nm">Geffen Ventures</div><div class="ct">Chicago · IL</div></div>
+      <div class="m"><div class="nm">Koalescent Capital</div><div class="ct">Prosper · TX</div></div>
+      <div class="m"><div class="nm">Neotis</div><div class="ct">Seoul · South Korea</div></div>
+      <div class="m"><div class="nm">BOS Capital</div><div class="ct">Southfield · MI</div></div>
+    </div>
+    <a href="#" class="cta">View profiles</a>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="num">02</span><span class="label">Sponsor Member Program</span><span class="rule"></span></div>
+    <h2>Driven by your referrals.</h2>
+    <p>No new sponsors in March — by design. The 2^n Sponsor/GP Program is referral-driven and merit-based. We maintain a strict <strong>5:1 family-office to sponsor ratio</strong>, so spots are limited and every admission has to be earned.</p>
+    <p>The strongest sponsor additions come from members who've worked with them directly. If there's a fund manager, GP, investment bank, or independent sponsor you'd personally vouch for, we want to hear about it.</p>
+    <p style="margin-top:18px;"><a href="#" class="cta">Sponsor program details</a></p>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="num">03</span><span class="label">Deal Spotlight</span><span class="rule"></span></div>
+    <h2>Recent on the Marketplace.</h2>
+    <ul class="deals">
+      <li><span class="nm">Windswept Royalties</span><span class="sec">Energy</span></li>
+      <li><span class="nm">Residential Propane Distribution — SE US</span><span class="sec">Industrials</span></li>
+      <li><span class="nm">BGA Real Estate Fund — 2026 Series</span><span class="sec">Real Estate</span></li>
+      <li><span class="nm">Centerline Biomedical</span><span class="sec">Healthcare</span></li>
+    </ul>
+    <a href="#" class="cta">Browse deal marketplace</a>
+  </section>
+
+  <div class="pod">
+    <div class="sec-head"><span class="num">04</span><span class="label">2^n Intelligence</span><span class="rule"></span></div>
+    <h2><span class="ep-num">// Episode · Fireside</span>W5 Group: building transatlantic, residential, AI-native.</h2>
+    <div class="guests">Celine Winter · Ryan Munoz</div>
+    <p>Kyle Shoemaker (Fifth Avenue Family Office) and Matt Burskey sit down with the leadership team at Miami-based W5 Group. Celine shares the firm's 2009 origin story in Zug, Switzerland — early conviction in then-non-mainstream sectors like student housing and micro-apartments. Ryan outlines his path to CEO/CIO, the firm's deliberate residential focus, and early integration of AI for due diligence and analytics.</p>
+    <p style="margin-top:20px;"><a href="#" class="cta light">Watch the episode</a></p>
+  </div>
+
+  <section>
+    <div class="sec-head"><span class="num">05</span><span class="label">Inside 2^n — Upcoming</span><span class="rule"></span></div>
+    <div class="evs">
+      <div class="e"><div class="city">Washington D.C. Lunch <span class="pin">DC</span></div><div class="date">Apr 15</div></div>
+      <div class="e"><div class="city">Chicago Dinner <span class="pin">IL</span></div><div class="date">Apr 29</div></div>
+      <div class="e"><div class="city">NYC Dinner <span class="pin">NY</span></div><div class="date">May 21</div></div>
+      <div class="e featured"><div class="city">Denver Summit <span class="pin">★ Inaugural</span></div><div class="date">Jun 10–11</div></div>
+    </div>
+    <p style="margin-top:24px; font-size:14px;"><strong>New on platform:</strong> event RSVP system; beta recommendation engine matching FOs by investment segment.</p>
+    <p style="margin-top:8px;"><a href="#" class="cta">RSVP for events</a></p>
+  </section>
+
+  <section class="pull">
+    <div class="sec-head" style="margin-bottom:20px;"><span class="num">06</span><span class="label">Amplifier Program</span><span class="rule"></span></div>
+    <p class="q"><em>Benny Kay</em> is the first member to reach <em>Gold</em>.</p>
+    <p>The Amplifier Program recognizes members who actively strengthen the platform — through introductions, shared opportunities, and meaningful engagement. Reaching Gold reflects sustained commitment.</p>
+    <p style="margin-top:16px;"><span class="attrib">Thank you, Benny — leading the charge.</span></p>
+    <p style="margin-top:20px;"><a href="#" class="cta gold">See amplifier status</a></p>
+  </section>
+
+  <section class="actions">
+    <div class="sec-head"><span class="num">07</span><span class="label">3 Things This Month</span><span class="rule"></span></div>
+    <ol>
+      <li><div class="t"><strong>Refer a family office.</strong> Know someone who belongs in this room? Send an intro to Matt or Sydney.</div></li>
+      <li><div class="t"><strong>Refer a sponsor member.</strong> If you work with a best-in-class GP, manager, or investment bank, make the introduction.</div></li>
+      <li><div class="t"><strong>Post a deal or RSVP for an event.</strong> The more you put into the platform, the more you get out of it.</div></li>
+    </ol>
+  </section>
+
+  <footer>
+    <div class="sigs">
+      <div class="sig">
+        <div class="who">Matt Burskey</div>
+        <div class="role">Founder</div>
+        <a href="mailto:mb@2pwrn.com">mb@2pwrn.com</a>
+      </div>
+      <div class="sig">
+        <div class="who">Sydney Burskey</div>
+        <div class="role">Associate</div>
+        <a href="mailto:sydneyb@2pwrn.com">sydneyb@2pwrn.com</a>
+      </div>
+    </div>
+    <div class="smol">
+      <a href="https://2pwrn.com">2pwrn.com</a> · <a href="https://linkedin.com/company/2-power-n">LinkedIn</a><br>
+      2 Power N, LLC · 3773 Cherry Creek North Drive · 8th Floor · Denver, CO 80209
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

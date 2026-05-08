@@ -96,21 +96,23 @@ def sponsor_logos_html(sponsors: list[dict], manifest_dir: Path, *, badge: bool 
     return "".join(tags)
 
 
-def sponsor_qr_cells_html(sponsors: list[dict], manifest_dir: Path) -> str:
+def sponsor_cells_html(sponsors: list[dict], manifest_dir: Path) -> str:
+    """Table-card front: each sponsor renders as a logo with its QR below."""
     cells = []
     for s in sponsors:
         logo = data_uri(manifest_dir / s["logoPath"])
         qr = qr_data_uri(s["website"])
         cells.append(
-            f'<div class="qr-cell">'
-            f'  <img class="qr" src="{qr}" alt=""/>'
-            f'  <img class="sponsor-logo" src="{logo}" alt=""/>'
+            f'<div class="sponsor-cell">'
+            f'  <div class="sponsor-slot"><img class="sponsor-logo" src="{logo}" alt=""/></div>'
+            f'  <img class="sponsor-qr" src="{qr}" alt=""/>'
             f'</div>'
         )
     return "".join(cells)
 
 
-def table_card_pages(guest: dict, sponsors_html: str, qr_row_html: str, assets: dict[str, str]) -> str:
+def table_card_page(guest: dict, sponsors_html: str, assets: dict[str, str]) -> str:
+    """One page per guest. Printer handles double-sided so back == front."""
     icons = pre_name_icons_html(guest, assets)
     t = title_text(guest)
     status = ""
@@ -131,7 +133,7 @@ def table_card_pages(guest: dict, sponsors_html: str, qr_row_html: str, assets: 
         name_class = "name name--long"
 
     icons_block = f'<span class="pre-icons">{icons}</span>' if icons else ""
-    front = f'''
+    return f'''
       <section class="page card-front">
         <div class="stack">
           <img class="brand" src="{assets["two_n_brand"]}" alt=""/>
@@ -144,12 +146,6 @@ def table_card_pages(guest: dict, sponsors_html: str, qr_row_html: str, assets: 
         </div>
       </section>
     '''
-    back = f'''
-      <section class="page card-back">
-        <div class="qr-row">{qr_row_html}</div>
-      </section>
-    '''
-    return front + back
 
 
 def name_badge_page(guest: dict, sponsors_html: str, assets: dict[str, str]) -> str:
@@ -248,26 +244,24 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
   margin-top: 0.25in; text-align: center;
 }}
 .sponsors {{
-  margin-top: 0.35in;
-  display: flex; align-items: center; justify-content: center; gap: 0.5in;
+  margin-top: 0.18in;
+  display: flex; align-items: flex-start; justify-content: center; gap: 0.4in;
+}}
+.sponsor-cell {{
+  display: flex; flex-direction: column; align-items: center; gap: 0.06in;
 }}
 .sponsor-slot {{
-  width: 1.4in; height: 0.55in;
+  width: 0.95in; height: 0.32in;
   display: flex; align-items: center; justify-content: center;
 }}
 .sponsor-logo {{
   max-width: 100%; max-height: 100%;
   object-fit: contain; filter: brightness(0) invert(20%);
 }}
-
-/* back */
-.card-back {{ justify-content: center; padding: 0.3in; }}
-.qr-row {{
-  display: flex; align-items: center; justify-content: center; gap: 0.7in;
+.sponsor-qr {{
+  width: 0.4in; height: 0.4in;
+  display: block;
 }}
-.qr-cell {{ display: flex; flex-direction: column; align-items: center; gap: 0.15in; }}
-.qr {{ height: 1.3in; width: 1.3in; }}
-.qr-cell .sponsor-logo {{ width: 1.2in; height: 0.45in; max-width: 1.2in; max-height: 0.45in; }}
 """
 
 BADGE_CSS = f"""
@@ -348,9 +342,8 @@ def build_html(manifest: dict, manifest_dir: Path, kind: str, assets: dict[str, 
 
     if kind == "table-cards":
         css = TABLE_CSS
-        s_html = sponsor_logos_html(sponsors, manifest_dir)
-        qr_row = sponsor_qr_cells_html(sponsors, manifest_dir)
-        body_parts = [table_card_pages(g, s_html, qr_row, assets) for g in guests]
+        s_html = sponsor_cells_html(sponsors, manifest_dir)
+        body_parts = [table_card_page(g, s_html, assets) for g in guests]
     elif kind == "name-badges":
         css = BADGE_CSS
         s_html = sponsor_logos_html(sponsors, manifest_dir, badge=True)

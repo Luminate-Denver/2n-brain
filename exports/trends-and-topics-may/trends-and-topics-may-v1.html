@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2^n Trends & Topics — Family Office Brief, May 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #0A1A3A; font-family: 'Inter', -apple-system, 'Helvetica Neue', Arial, sans-serif; color: #E8E4DC; -webkit-font-smoothing: antialiased; padding: 32px 0; }
+  .wrap { max-width: 640px; margin: 0 auto; background: #FFFFFF; color: #0A1A3A; border: 8px solid #0A1A3A; }
+  .inner { border: 1px solid #B8870A; margin: 12px; }
+
+  /* Masthead */
+  .mast { padding: 32px 32px 24px; border-bottom: 2px solid #0A1A3A; text-align: center; position: relative; }
+  .mast::before, .mast::after { content: ''; position: absolute; top: 50%; width: 32px; height: 1px; background: #B8870A; }
+  .mast::before { left: 32px; }
+  .mast::after { right: 32px; }
+  .mast .crest { font-family: 'Instrument Serif', Georgia, serif; font-size: 13px; letter-spacing: 0.32em; text-transform: uppercase; color: #B8870A; margin-bottom: 12px; }
+  .mast h1 { font-family: 'Instrument Serif', Georgia, serif; font-size: 38px; font-weight: 400; margin: 0 0 6px; letter-spacing: -0.01em; line-height: 1; }
+  .mast .vol { font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: #6B6657; margin-top: 12px; }
+  .mast .vol .sep { color: #B8870A; padding: 0 8px; }
+
+  /* Letter */
+  .letter { padding: 36px 40px 28px; border-bottom: 1px solid #E0D8C5; }
+  .letter .from { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #B8870A; margin: 0 0 16px; font-weight: 600; }
+  .letter p { font-size: 15px; line-height: 1.7; color: #2B3550; margin: 0 0 14px; }
+  .letter strong { color: #0A1A3A; font-weight: 600; }
+  .letter em { color: #0A1A3A; }
+  .drop { float: left; font-family: 'Instrument Serif', Georgia, serif; font-size: 64px; line-height: 0.85; padding: 6px 12px 0 0; color: #B8870A; }
+
+  /* Stats strip in lede */
+  .stat-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 24px 0 4px; padding: 20px 0; border-top: 1px dotted #D0C7B0; border-bottom: 1px dotted #D0C7B0; }
+  .stat-strip .s { padding: 0 12px; border-right: 1px dotted #D0C7B0; text-align: center; }
+  .stat-strip .s:last-child { border-right: 0; }
+  .stat-strip .n { font-family: 'Instrument Serif', Georgia, serif; font-size: 32px; line-height: 1; color: #0A1A3A; }
+  .stat-strip .l { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #6B6657; margin-top: 6px; }
+
+  /* Section block */
+  .block { padding: 28px 40px 28px; border-bottom: 1px solid #E0D8C5; }
+  .block:last-child { border-bottom: 0; }
+  .block .label { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .block .label .num { font-family: 'Instrument Serif', Georgia, serif; font-size: 22px; color: #B8870A; min-width: 36px; }
+  .block .label .name { font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase; color: #0A1A3A; font-weight: 600; flex: 1; }
+  .block .label .rule { height: 1px; background: #B8870A; flex: 1; max-width: 80px; }
+  .block h2 { font-family: 'Instrument Serif', Georgia, serif; font-size: 26px; font-weight: 400; margin: 0 0 12px; line-height: 1.15; letter-spacing: -0.01em; }
+  .block h3 { font-family: 'Instrument Serif', Georgia, serif; font-size: 19px; font-weight: 400; margin: 20px 0 10px; }
+  .block p { font-size: 14.5px; line-height: 1.65; color: #3A4360; margin: 0 0 12px; }
+  .block p strong { color: #0A1A3A; font-weight: 600; }
+  .block p em { color: #0A1A3A; font-style: italic; }
+
+  /* New members table */
+  .roster { width: 100%; border-collapse: collapse; margin: 4px 0 18px; font-size: 13px; }
+  .roster tr { border-bottom: 1px dotted #D0C7B0; }
+  .roster tr:last-child { border-bottom: 0; }
+  .roster td { padding: 10px 0; vertical-align: baseline; }
+  .roster .nm { font-family: 'Instrument Serif', Georgia, serif; font-size: 16px; color: #0A1A3A; }
+  .roster .ct { text-align: right; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #B8870A; }
+
+  /* Deals list */
+  .ledger { margin: 0 0 18px; padding: 0; list-style: none; border-top: 1px solid #B8870A; border-bottom: 1px solid #B8870A; }
+  .ledger li { padding: 12px 0; border-bottom: 1px dotted #D0C7B0; display: flex; align-items: baseline; gap: 12px; }
+  .ledger li:last-child { border-bottom: 0; }
+  .ledger .idx { font-family: 'Instrument Serif', Georgia, serif; font-size: 14px; color: #B8870A; min-width: 32px; }
+  .ledger .nm { font-family: 'Instrument Serif', Georgia, serif; font-size: 17px; color: #0A1A3A; flex: 1; }
+  .ledger .sec { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #6B6657; }
+
+  /* Pull-to-action box */
+  .callout { background: #F7F1E2; border: 1px solid #B8870A; padding: 22px 26px; margin: 16px 0; }
+  .callout p { margin: 0 0 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout em { font-style: italic; color: #0A1A3A; }
+  .callout strong { color: #0A1A3A; }
+
+  /* Pod card (kept for consistency though no episode this month) */
+  .pod { background: #F7F1E2; border: 1px solid #B8870A; padding: 28px; margin: 6px 0 18px; }
+  .pod .ep { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8870A; font-weight: 600; margin: 0 0 10px; }
+  .pod .ep-title { font-family: 'Instrument Serif', Georgia, serif; font-size: 22px; line-height: 1.15; margin: 0 0 14px; }
+  .pod p { font-size: 13.5px; line-height: 1.6; margin: 0 0 12px; }
+
+  /* Events */
+  .events { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 4px 0 18px; }
+  .events .ev { border: 1px solid #E0D8C5; padding: 16px 18px; }
+  .events .ev .city { font-family: 'Instrument Serif', Georgia, serif; font-size: 19px; line-height: 1.1; }
+  .events .ev .date { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #B8870A; margin-top: 6px; }
+  .events .ev .status { display: inline-block; margin-top: 10px; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; padding: 4px 8px; border: 1px solid #B8870A; color: #B8870A; font-weight: 600; }
+  .events .ev.featured { background: #0A1A3A; color: #FFFFFF; border-color: #0A1A3A; }
+  .events .ev.featured .city { color: #FFFFFF; }
+  .events .ev.featured .date { color: #D9B863; }
+  .events .ev.featured .status { color: #D9B863; border-color: #D9B863; }
+  .events .ev.soldout { background: #FAF7EE; }
+  .events .ev.soldout .status { background: #B8870A; color: #FFFFFF; }
+
+  /* Feature cards */
+  .feat { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0 0; }
+  .feat .f { border: 1px solid #E0D8C5; padding: 18px 20px; }
+  .feat .f .icon { width: 28px; height: 28px; border: 1px solid #B8870A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Instrument Serif', Georgia, serif; font-size: 14px; color: #B8870A; margin-bottom: 12px; }
+  .feat .f h4 { font-family: 'Instrument Serif', Georgia, serif; font-size: 18px; font-weight: 400; margin: 0 0 8px; line-height: 1.15; }
+  .feat .f p { font-size: 13px; line-height: 1.55; color: #3A4360; margin: 0; }
+
+  /* CTA pill */
+  .cta { display: inline-block; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #0A1A3A; text-decoration: none; border: 1px solid #0A1A3A; padding: 10px 18px; font-weight: 600; }
+  .cta::after { content: ' →'; }
+
+  /* Footer */
+  footer { background: #0A1A3A; color: #C9CDD9; padding: 32px 40px; }
+  footer .sigs { display: flex; gap: 36px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #1F2D52; }
+  footer .sig .who { font-family: 'Instrument Serif', Georgia, serif; font-size: 18px; color: #FFFFFF; }
+  footer .sig a { color: #D9B863; text-decoration: none; font-size: 12px; }
+  footer .smol { font-size: 11px; line-height: 1.7; opacity: 0.75; }
+  footer a.lnk { color: #D9B863; text-decoration: none; }
+
+  @media (max-width: 600px) {
+    body { padding: 0; }
+    .wrap { border-width: 4px; }
+    .inner { margin: 6px; }
+    .mast, .letter, .block, footer { padding-left: 22px; padding-right: 22px; }
+    .events, .feat { grid-template-columns: 1fr; }
+    .stat-strip { grid-template-columns: 1fr 1fr 1fr; }
+    .mast h1 { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap"><div class="inner">
+
+  <header class="mast">
+    <div class="crest">2 ⋅ Power ⋅ N</div>
+    <h1>Trends &amp; Topics</h1>
+    <div class="vol">Family Office Brief <span class="sep">◆</span> Volume V <span class="sep">◆</span> May 2026</div>
+  </header>
+
+  <section class="letter">
+    <div class="from">From the Founders</div>
+    <p><span class="drop">S</span>omething shifted in April. The Chicago dinner on the 29th was one of the best we've hosted — real camaraderie in the room, conversations that ran past closing time. Members are engaging on the platform more than ever — our busiest month of digital activity to date. Keep it up: the more you engage, the more value you and the community get out of 2^n.</p>
+    <p>The community is now <strong>127 family offices strong</strong>. The <strong>May 21st NYC dinner</strong> is already <strong>sold out</strong> — a signal this community is leaning in deeper than ever. We're also five weeks out from the first-ever <strong>2^n Family Office Summit in Denver</strong>. The room gets better with every right-fit family we add, so keep the referrals coming.</p>
+    <p>New platform features landed this month, including a refreshed Amplifier status tracker that lets you see your tier and progress the way you'd track airline status — all detailed below in <em>Inside 2^n</em>.</p>
+
+    <div class="stat-strip">
+      <div class="s"><div class="n">127</div><div class="l">Family Offices</div></div>
+      <div class="s"><div class="n">8</div><div class="l">New in April</div></div>
+      <div class="s"><div class="n">5</div><div class="l">Wks to Summit</div></div>
+    </div>
+
+    <p style="margin-top:20px;">Here's what moved in April and what to have on your radar heading into May.</p>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">I.</span><span class="name">Member Spotlight</span><span class="rule"></span></div>
+    <h2>Eight new family offices joined in April.</h2>
+    <p>Welcome to the community. The room continues to expand across geographies — including new additions in Ontario and London.</p>
+    <table class="roster">
+      <tr><td class="nm">JDA Investments</td><td class="ct">Phoenix, AZ</td></tr>
+      <tr><td class="nm">Five Points Family Ventures</td><td class="ct">Clearwater, FL</td></tr>
+      <tr><td class="nm">JAForlines Family Office</td><td class="ct">Locust Valley, NY</td></tr>
+      <tr><td class="nm">Hadley Family Office</td><td class="ct">Milton, Ontario</td></tr>
+      <tr><td class="nm">West Coast Private Capital</td><td class="ct">Chicago, IL</td></tr>
+      <tr><td class="nm">Southwestern Holdings, Inc.</td><td class="ct">Houston, TX</td></tr>
+      <tr><td class="nm">The Pritzker Organization</td><td class="ct">Chicago, IL</td></tr>
+      <tr><td class="nm">Wautier Family Office Limited</td><td class="ct">London, UK</td></tr>
+    </table>
+    <a href="https://app.2pwrn.com/dashboard" class="cta">View Member Profiles</a>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">II.</span><span class="name">Sponsor Member Program</span><span class="rule"></span></div>
+    <h2>No new sponsors in April — by design.</h2>
+    <p>We've been strategically slow while integrating and driving real engagement with our current GP/sponsor members, and that work has set us up to ramp.</p>
+    <p>The program is invitation- or referral-only: selected GPs join the directory and can engage à la carte (paid) via deals or event seats. If you know a strong GP or sponsor worth introducing — across any sector — send them our way. They'd genuinely appreciate the chance to be in front of this room, and it's an easy way to add Amplifier points and real value to the community. <strong>Referring is as simple as connecting them with Matt.</strong></p>
+    <p style="margin-top:16px;"><a href="mailto:mb@2pwrn.com" class="cta">Refer a Sponsor</a></p>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">III.</span><span class="name">Deal Spotlight</span><span class="rule"></span></div>
+    <h2>Recent on the Marketplace.</h2>
+    <ol class="ledger">
+      <li><span class="idx">01</span><span class="nm">NextKidney</span><span class="sec">Home Hemodialysis</span></li>
+      <li><span class="idx">02</span><span class="nm">Kodiak Fund I</span><span class="sec">SMB Buyout</span></li>
+      <li><span class="idx">03</span><span class="nm">Legacy Knight VC Access Fund I</span><span class="sec">Venture Access</span></li>
+    </ol>
+    <p>Deals are the catalyst. In 2^n, a co-investment opportunity isn't just a transaction — it's the fastest, most natural reason for two families to get on a call and compare notes. That's one way relationships form here.</p>
+    <p>It's also how every family in this room effectively expands their deal flow: when you co-invest alongside another member, you're leveraging their network, their diligence, their conviction — and they're leveraging yours.</p>
+    <p>Use the <strong>+ button</strong> to post a co-invest you'd like to share; 2^n reviews every deal before it goes live. And use the action buttons — they matter. A thumbs up on a deal isn't just a like; it's a <strong>signal</strong>. Tap it and 2^n will facilitate a call with the family or sponsor who posted it. The more you engage, the better the marketplace gets at surfacing the kinds of deals this room actually wants to see.</p>
+
+    <div class="callout">
+      <p><em>Access to deals you won't find through traditional channels is one of the most valuable parts of being in 2^n.</em></p>
+      <p><strong>Engagement is what unlocks it.</strong></p>
+    </div>
+
+    <p style="margin-top:18px;"><a href="https://app.2pwrn.com/dashboard/deals" class="cta">View Deal Marketplace</a></p>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">IV.</span><span class="name">2<sup>n</sup> Intelligence</span><span class="rule"></span></div>
+    <div class="pod">
+      <div class="ep">Exponential Episodes</div>
+      <div class="ep-title">No new episodes this month — but the back catalog has you covered.</div>
+      <p>A couple of strong episodes are on deck and will land in next month's brief. In the meantime, if you haven't worked through the back catalog yet, now's a good time.</p>
+      <p style="margin-top:14px;">If you'd like to join Matt and Kyle as a guest on a future episode, drop <a href="mailto:mb@2pwrn.com" style="color:#0A1A3A; font-weight:600;">Matt</a> or <a href="mailto:sydneyb@2pwrn.com" style="color:#0A1A3A; font-weight:600;">Sydney</a> a note.</p>
+      <p style="margin-top:18px;"><a href="https://www.2pwrn.com/exponential-podcast" class="cta">Listen to the Back Catalog</a></p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">V.</span><span class="name">Inside 2<sup>n</sup></span><span class="rule"></span></div>
+    <h2>Where we'll be.</h2>
+    <div class="events">
+      <div class="ev soldout">
+        <div class="city">NYC Dinner</div>
+        <div class="date">May 21, 2026</div>
+        <div class="status">Sold Out</div>
+      </div>
+      <div class="ev featured">
+        <div class="city">Denver Summit</div>
+        <div class="date">June 10–11</div>
+        <div class="status">★ Inaugural — Filling Up</div>
+      </div>
+    </div>
+    <p style="margin-top:8px;"><a href="https://app.2pwrn.com/dashboard/events/10" class="cta">RSVP for Denver Summit</a></p>
+
+    <h3 style="margin-top:32px;">New Platform Features</h3>
+    <div class="feat">
+      <div class="f">
+        <div class="icon">▶</div>
+        <h4>2<sup>n</sup> TV</h4>
+        <p>A private video channel for members, live in the sidebar. We're starting with Sponsor Member Spotlights — short, candid conversations with our sponsor GPs about how they think, what they look for, and how they work with family offices.</p>
+      </div>
+      <div class="f">
+        <div class="icon">★</div>
+        <h4>Amplifier Status</h4>
+        <p>Tap the gold medal icon in the sidebar to see how your contributions are shaping the network in real time. Every deal shared, event attended, referral made, and insight posted stacks toward Silver and Gold tiers — points reset each January.</p>
+      </div>
+    </div>
+    <p style="margin-top:18px; font-size:13px; color:#6B6657;">Tap the TV icon to watch, and read Sydney's full post in the feed for what's coming next and how to shape it.</p>
+    <p style="margin-top:14px;"><a href="https://www.2pwrn.com/dashboard/feed" class="cta">Open the Feed</a></p>
+  </section>
+
+  <footer>
+    <div class="sigs">
+      <div class="sig"><div class="who">Matt Burskey</div><a href="mailto:mb@2pwrn.com">mb@2pwrn.com</a></div>
+      <div class="sig"><div class="who">Sydney Burskey</div><a href="mailto:sydneyb@2pwrn.com">sydneyb@2pwrn.com</a></div>
+    </div>
+    <div class="smol">
+      <a class="lnk" href="https://2pwrn.com">2pwrn.com</a> &nbsp;·&nbsp; <a class="lnk" href="https://linkedin.com/company/2-power-n">LinkedIn</a><br>
+      2 Power N, LLC &nbsp;·&nbsp; 3773 Cherry Creek North Drive, 8th Floor &nbsp;·&nbsp; Denver, Colorado 80209
+    </div>
+  </footer>
+
+</div></div>
+</body>
+</html>

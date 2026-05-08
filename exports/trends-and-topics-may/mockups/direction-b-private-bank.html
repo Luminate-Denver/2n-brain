@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2^n Trends & Topics — Direction B: Private Bank Dispatch</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #0A1A3A; font-family: 'Inter', -apple-system, 'Helvetica Neue', Arial, sans-serif; color: #E8E4DC; -webkit-font-smoothing: antialiased; padding: 32px 0; }
+  .wrap { max-width: 640px; margin: 0 auto; background: #FFFFFF; color: #0A1A3A; border: 8px solid #0A1A3A; }
+  .inner { border: 1px solid #B8870A; margin: 12px; }
+
+  /* Masthead */
+  .mast { padding: 32px 32px 24px; border-bottom: 2px solid #0A1A3A; text-align: center; position: relative; }
+  .mast::before, .mast::after { content: ''; position: absolute; top: 50%; width: 32px; height: 1px; background: #B8870A; }
+  .mast::before { left: 32px; }
+  .mast::after { right: 32px; }
+  .mast .crest { font-family: 'Instrument Serif', Georgia, serif; font-size: 13px; letter-spacing: 0.32em; text-transform: uppercase; color: #B8870A; margin-bottom: 12px; }
+  .mast h1 { font-family: 'Instrument Serif', Georgia, serif; font-size: 38px; font-weight: 400; margin: 0 0 6px; letter-spacing: -0.01em; line-height: 1; }
+  .mast .vol { font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: #6B6657; margin-top: 12px; }
+  .mast .vol .sep { color: #B8870A; padding: 0 8px; }
+
+  /* Letter */
+  .letter { padding: 36px 40px 28px; border-bottom: 1px solid #E0D8C5; }
+  .letter .from { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #B8870A; margin: 0 0 16px; font-weight: 600; }
+  .letter p { font-size: 15px; line-height: 1.7; color: #2B3550; margin: 0 0 14px; }
+  .letter strong { color: #0A1A3A; font-weight: 600; }
+  .drop { float: left; font-family: 'Instrument Serif', Georgia, serif; font-size: 64px; line-height: 0.85; padding: 6px 12px 0 0; color: #B8870A; }
+
+  /* Section block */
+  .block { padding: 28px 40px 28px; border-bottom: 1px solid #E0D8C5; }
+  .block:last-child { border-bottom: 0; }
+  .block .label { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .block .label .num { font-family: 'Instrument Serif', Georgia, serif; font-size: 22px; color: #B8870A; min-width: 36px; }
+  .block .label .name { font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase; color: #0A1A3A; font-weight: 600; flex: 1; }
+  .block .label .rule { height: 1px; background: #B8870A; flex: 1; max-width: 80px; }
+  .block h2 { font-family: 'Instrument Serif', Georgia, serif; font-size: 26px; font-weight: 400; margin: 0 0 12px; line-height: 1.15; letter-spacing: -0.01em; }
+  .block p { font-size: 14.5px; line-height: 1.65; color: #3A4360; margin: 0 0 12px; }
+
+  /* New members table */
+  .roster { width: 100%; border-collapse: collapse; margin: 4px 0 18px; font-size: 13px; }
+  .roster tr { border-bottom: 1px dotted #D0C7B0; }
+  .roster tr:last-child { border-bottom: 0; }
+  .roster td { padding: 10px 0; vertical-align: baseline; }
+  .roster .nm { font-family: 'Instrument Serif', Georgia, serif; font-size: 16px; color: #0A1A3A; }
+  .roster .ct { text-align: right; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #B8870A; }
+
+  /* Deals list */
+  .ledger { margin: 0 0 18px; padding: 0; list-style: none; border-top: 1px solid #B8870A; border-bottom: 1px solid #B8870A; }
+  .ledger li { padding: 12px 0; border-bottom: 1px dotted #D0C7B0; display: flex; align-items: baseline; gap: 12px; }
+  .ledger li:last-child { border-bottom: 0; }
+  .ledger .idx { font-family: 'Instrument Serif', Georgia, serif; font-size: 14px; color: #B8870A; min-width: 32px; }
+  .ledger .nm { font-family: 'Instrument Serif', Georgia, serif; font-size: 17px; color: #0A1A3A; flex: 1; }
+  .ledger .sec { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #6B6657; }
+
+  /* Pod card */
+  .pod { background: #F7F1E2; border: 1px solid #B8870A; padding: 28px; margin: 6px 0 18px; }
+  .pod .ep { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8870A; font-weight: 600; margin: 0 0 10px; }
+  .pod .ep-title { font-family: 'Instrument Serif', Georgia, serif; font-size: 24px; line-height: 1.15; margin: 0 0 6px; }
+  .pod .guests { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #6B6657; margin-bottom: 14px; }
+  .pod p { font-size: 13.5px; line-height: 1.6; margin: 0 0 12px; }
+
+  /* Events */
+  .events { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 4px 0 18px; }
+  .events .ev { border: 1px solid #E0D8C5; padding: 14px 16px; }
+  .events .ev .city { font-family: 'Instrument Serif', Georgia, serif; font-size: 18px; line-height: 1.1; }
+  .events .ev .date { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #B8870A; margin-top: 6px; }
+  .events .ev.featured { background: #0A1A3A; color: #FFFFFF; border-color: #0A1A3A; }
+  .events .ev.featured .city { color: #FFFFFF; }
+  .events .ev.featured .date { color: #D9B863; }
+
+  /* Pull */
+  .pull { padding: 32px 40px; border-top: 1px solid #B8870A; border-bottom: 1px solid #B8870A; background: #FAF7EE; text-align: center; }
+  .pull .q { font-family: 'Instrument Serif', Georgia, serif; font-size: 26px; line-height: 1.3; margin: 0 0 12px; font-style: italic; }
+  .pull .who { font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8870A; }
+
+  /* Actions */
+  .actions { padding: 32px 40px; }
+  .actions .label { font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase; color: #B8870A; font-weight: 600; margin-bottom: 18px; }
+  .actions h2 { font-family: 'Instrument Serif', Georgia, serif; font-size: 24px; margin: 0 0 18px; }
+  .actions table { width: 100%; border-collapse: collapse; }
+  .actions tr { border-top: 1px solid #E0D8C5; }
+  .actions tr:last-child { border-bottom: 1px solid #E0D8C5; }
+  .actions td { padding: 16px 0; vertical-align: baseline; }
+  .actions td.n { font-family: 'Instrument Serif', Georgia, serif; font-size: 22px; color: #B8870A; width: 48px; }
+  .actions td.t { font-size: 14px; line-height: 1.55; }
+  .actions strong { font-weight: 600; }
+
+  /* CTA pill */
+  .cta { display: inline-block; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #0A1A3A; text-decoration: none; border: 1px solid #0A1A3A; padding: 10px 18px; font-weight: 600; transition: all 0.15s; }
+  .cta::after { content: ' →'; }
+
+  /* Footer */
+  footer { background: #0A1A3A; color: #C9CDD9; padding: 32px 40px; }
+  footer .sigs { display: flex; gap: 36px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #1F2D52; }
+  footer .sig .who { font-family: 'Instrument Serif', Georgia, serif; font-size: 18px; color: #FFFFFF; }
+  footer .sig a { color: #D9B863; text-decoration: none; font-size: 12px; }
+  footer .smol { font-size: 11px; line-height: 1.7; opacity: 0.75; }
+  footer a.lnk { color: #D9B863; text-decoration: none; }
+
+  @media (max-width: 600px) {
+    body { padding: 0; }
+    .wrap { border-width: 4px; }
+    .inner { margin: 6px; }
+    .mast, .letter, .block, .pull, .actions, footer { padding-left: 22px; padding-right: 22px; }
+    .events { grid-template-columns: 1fr; }
+    .mast h1 { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap"><div class="inner">
+
+  <header class="mast">
+    <div class="crest">2 ⋅ Power ⋅ N</div>
+    <h1>Trends &amp; Topics</h1>
+    <div class="vol">Family Office Brief <span class="sep">◆</span> Volume IV <span class="sep">◆</span> April 2026</div>
+  </header>
+
+  <section class="letter">
+    <div class="from">From the Founders</div>
+    <p><span class="drop">M</span>arch was a milestone month. We welcomed a record <strong>14 new Family Offices</strong> — the 2^n community has now reached the Eastern hemisphere — celebrated the first <strong>Gold</strong> status in the Amplifier Program, and locked in the date for our inaugural <strong>Family Office Summit in Denver, June 10–11</strong>.</p>
+    <p>None of this happens without you. Every introduction, every deal shared, every conversation at a dinner — that's what makes this community compound. This month's brief focuses on two things: recognizing the people driving that growth, and making it easy for you to keep it going.</p>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">I.</span><span class="name">Member Spotlight</span><span class="rule"></span></div>
+    <h2>Fourteen new family offices joined in March.</h2>
+    <p>Our biggest month yet. We're especially proud to welcome our first member from the Eastern hemisphere.</p>
+    <table class="roster">
+      <tr><td class="nm">Muir Station Capital</td><td class="ct">Lexington, KY</td></tr>
+      <tr><td class="nm">Viscogliosi Brothers Family Office</td><td class="ct">New York, NY</td></tr>
+      <tr><td class="nm">Navigant Oak</td><td class="ct">Northville, MI</td></tr>
+      <tr><td class="nm">Raleigh Enterprises</td><td class="ct">Los Angeles, CA</td></tr>
+      <tr><td class="nm">Mt. Vernon Investments</td><td class="ct">Dallas, TX</td></tr>
+      <tr><td class="nm">Walsh</td><td class="ct">Chicago, IL</td></tr>
+      <tr><td class="nm">Sterry Capital</td><td class="ct">Denver, CO</td></tr>
+      <tr><td class="nm">Dom Capital Group</td><td class="ct">Chicago, IL</td></tr>
+      <tr><td class="nm">Buster Ward Capital</td><td class="ct">Castle Pines, CO</td></tr>
+      <tr><td class="nm">ArgoFO</td><td class="ct">Baltimore, MD</td></tr>
+      <tr><td class="nm">Geffen Ventures</td><td class="ct">Chicago, IL</td></tr>
+      <tr><td class="nm">Koalescent Capital, Inc.</td><td class="ct">Prosper, TX</td></tr>
+      <tr><td class="nm">Neotis</td><td class="ct">Seoul, South Korea</td></tr>
+      <tr><td class="nm">BOS Capital</td><td class="ct">Southfield, MI</td></tr>
+    </table>
+    <a href="#" class="cta">View Member Profiles</a>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">II.</span><span class="name">Sponsor Member Program</span><span class="rule"></span></div>
+    <h2>Driven by your referrals.</h2>
+    <p>No new sponsors were admitted in March — and that's by design. The 2^n Sponsor/GP Program is referral-driven and merit-based. We maintain a strict <strong>5:1 family-office to sponsor ratio</strong>, so spots are limited and every admission has to be earned.</p>
+    <p>The strongest sponsor additions come from members who've worked with them directly. If there's a fund manager, GP, investment bank, or independent sponsor you'd personally vouch for — someone best-in-class — we want to hear about it.</p>
+    <p style="margin-top:16px;"><a href="#" class="cta">Sponsor Member Program</a></p>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">III.</span><span class="name">Deal Spotlight</span><span class="rule"></span></div>
+    <h2>Recent on the Marketplace.</h2>
+    <ol class="ledger">
+      <li><span class="idx">01</span><span class="nm">Windswept Royalties</span><span class="sec">Energy</span></li>
+      <li><span class="idx">02</span><span class="nm">Residential Propane Distribution — SE US</span><span class="sec">Industrials</span></li>
+      <li><span class="idx">03</span><span class="nm">BGA Real Estate Fund — 2026 Series</span><span class="sec">Real Estate</span></li>
+      <li><span class="idx">04</span><span class="nm">Centerline Biomedical</span><span class="sec">Healthcare</span></li>
+    </ol>
+    <p>Co-investing is one of the fastest ways to build real relationships within 2n. Use the + button in the Marketplace to submit. Every deal is reviewed before going live.</p>
+    <p style="margin-top:16px;"><a href="#" class="cta">View Deal Marketplace</a></p>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">IV.</span><span class="name">2<sup>n</sup> Intelligence</span><span class="rule"></span></div>
+    <div class="pod">
+      <div class="ep">New Exponential Episode</div>
+      <div class="ep-title">Fireside Chat — W5 Group</div>
+      <div class="guests">Celine Winter · Ryan Munoz</div>
+      <p>Kyle Shoemaker (Fifth Avenue Family Office) and Matt Burskey sit down with the leadership team at Miami-based W5 Group, a transatlantic platform built around niche residential real estate across Europe and the U.S. Celine shares the firm's 2009 origin story in Zug, Switzerland; Ryan outlines his path to CEO/CIO and the firm's early integration of AI.</p>
+      <a href="#" class="cta">Watch Episode</a>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">V.</span><span class="name">Inside 2<sup>n</sup></span><span class="rule"></span></div>
+    <h2>Where we'll be.</h2>
+    <div class="events">
+      <div class="ev"><div class="city">Washington D.C. Lunch</div><div class="date">April 15</div></div>
+      <div class="ev"><div class="city">Chicago Dinner</div><div class="date">April 29</div></div>
+      <div class="ev"><div class="city">NYC Dinner</div><div class="date">May 21</div></div>
+      <div class="ev featured"><div class="city">Denver Summit</div><div class="date">June 10–11</div></div>
+    </div>
+    <p style="margin-top:8px; font-size:13px; color:#6B6657;"><strong style="color:#0A1A3A;">New Platform:</strong> Event management system for easier RSVP, plus a beta recommendation engine matching family offices by investment segment.</p>
+    <p style="margin-top:16px;"><a href="#" class="cta">RSVP for Events</a></p>
+  </section>
+
+  <section class="pull">
+    <div class="q">"Benny Kay is the first member to reach Gold in the Amplifier Program."</div>
+    <div class="who">Amplifier Program Update</div>
+  </section>
+
+  <section class="block" style="padding-top:28px;">
+    <p style="font-size:14.5px; line-height:1.65; color:#3A4360; margin:0 0 16px;">The Amplifier Program recognizes members who actively strengthen the platform — through introductions, shared opportunities, and meaningful engagement. Reaching Gold reflects a sustained commitment. Thank you, Benny, for leading the charge.</p>
+    <a href="#" class="cta">See Amplifier Status</a>
+  </section>
+
+  <section class="actions">
+    <div class="label">Three Things This Month</div>
+    <table>
+      <tr><td class="n">01.</td><td class="t"><strong>Refer a family office.</strong> Know someone who belongs in this room? Send an intro to Matt or Sydney.</td></tr>
+      <tr><td class="n">02.</td><td class="t"><strong>Refer a sponsor member.</strong> If you work with a best-in-class GP, manager, or investment bank, make the introduction.</td></tr>
+      <tr><td class="n">03.</td><td class="t"><strong>Post a deal or RSVP for an event.</strong> The more you put into the platform, the more you get out of it.</td></tr>
+    </table>
+  </section>
+
+  <footer>
+    <div class="sigs">
+      <div class="sig"><div class="who">Matt Burskey</div><a href="mailto:mb@2pwrn.com">mb@2pwrn.com</a></div>
+      <div class="sig"><div class="who">Sydney Burskey</div><a href="mailto:sydneyb@2pwrn.com">sydneyb@2pwrn.com</a></div>
+    </div>
+    <div class="smol">
+      <a class="lnk" href="https://2pwrn.com">2pwrn.com</a> &nbsp;·&nbsp; <a class="lnk" href="https://linkedin.com/company/2-power-n">LinkedIn</a><br>
+      2 Power N, LLC &nbsp;·&nbsp; 3773 Cherry Creek North Drive, 8th Floor &nbsp;·&nbsp; Denver, Colorado 80209
+    </div>
+  </footer>
+
+</div></div>
+</body>
+</html>

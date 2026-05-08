@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trends & Topics — 3 Design Directions</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; background: #1A1A1A; color: #E8E8E8; }
+  header { padding: 32px 40px; border-bottom: 1px solid #333; }
+  header h1 { margin: 0 0 6px; font-size: 22px; font-weight: 500; }
+  header p { margin: 0; color: #999; font-size: 14px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; height: calc(100vh - 95px); }
+  .pane { display: flex; flex-direction: column; border-right: 1px solid #333; min-height: 0; }
+  .pane:last-child { border-right: 0; }
+  .head { padding: 16px 24px; border-bottom: 1px solid #333; }
+  .head .label { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #B8870A; margin-bottom: 4px; }
+  .head .name { font-size: 16px; font-weight: 500; color: #FFF; }
+  .head .desc { font-size: 12px; color: #999; margin-top: 4px; line-height: 1.5; }
+  .frame { flex: 1; border: 0; background: #FFF; }
+  @media (max-width: 1100px) {
+    .grid { grid-template-columns: 1fr; height: auto; }
+    .pane { border-right: 0; border-bottom: 1px solid #333; height: 800px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Trends &amp; Topics — May 2026: 3 design directions</h1>
+  <p>Same April content rendered three ways for comparison. Pick one (or mix) to proceed with composition.</p>
+</header>
+<div class="grid">
+  <div class="pane">
+    <div class="head">
+      <div class="label">Direction A</div>
+      <div class="name">Editorial</div>
+      <div class="desc">Magazine-style. Cream + navy. Big serif headlines (Instrument Serif). Pull-quote stats. Generous whitespace. Reads like a Bloomberg Wealth quarterly.</div>
+    </div>
+    <iframe class="frame" src="direction-a-editorial.html"></iframe>
+  </div>
+  <div class="pane">
+    <div class="head">
+      <div class="label">Direction B</div>
+      <div class="name">Private-Bank Dispatch</div>
+      <div class="desc">Bordered. Compressed. Roman numeral sections, dotted ledger rules. Closer to a boutique private-bank monthly. More structured + scannable.</div>
+    </div>
+    <iframe class="frame" src="direction-b-private-bank.html"></iframe>
+  </div>
+  <div class="pane">
+    <div class="head">
+      <div class="label">Direction C</div>
+      <div class="name">Modern Minimal</div>
+      <div class="desc">Contemporary fintech. Inter sans + Instrument Serif accents + JetBrains Mono labels. Hairlines, big numbers, mono section codes. Almost editorial-tech.</div>
+    </div>
+    <iframe class="frame" src="direction-c-modern-minimal.html"></iframe>
+  </div>
+</div>
+</body>
+</html>

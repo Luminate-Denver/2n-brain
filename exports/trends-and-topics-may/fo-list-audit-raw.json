@@ -1,0 +1,279 @@
+{
+  "ac_contacts_count": 195,
+  "fo_users_count": 194,
+  "missing_in_ac": [
+    {
+      "email": "jbw@wautier.co.uk",
+      "firstName": "Jean-Baptiste",
+      "lastName": "Wautier",
+      "createdAt": "2026-04-22T15:33:58.887Z",
+      "id": 293
+    },
+    {
+      "email": "jamie@53stations.com",
+      "firstName": "Jamie",
+      "lastName": "Fisher",
+      "createdAt": "2026-04-21T22:20:06.011Z",
+      "id": 292
+    },
+    {
+      "email": "chinedu@53stations.com",
+      "firstName": "Chinedu",
+      "lastName": "Udeogu",
+      "createdAt": "2026-04-21T22:19:42.069Z",
+      "id": 291
+    },
+    {
+      "email": "benjamin@53stations.com",
+      "firstName": "Ben",
+      "lastName": "Sack",
+      "createdAt": "2026-04-21T21:57:17.563Z",
+      "id": 290
+    },
+    {
+      "email": "gbailey@legacyknight.com",
+      "firstName": "Garrett",
+      "lastName": "Bailey",
+      "createdAt": "2026-04-13T20:02:06.203Z",
+      "id": 286
+    },
+    {
+      "email": "hthompson@jbpco.com",
+      "firstName": "Hank",
+      "lastName": "Thompson",
+      "createdAt": "2026-04-10T21:34:34.498Z",
+      "id": 285
+    },
+    {
+      "email": "tmw7991@gmail.com",
+      "firstName": "Trevor",
+      "lastName": "Williams (Test)",
+      "createdAt": "2025-07-21T19:25:30.691Z",
+      "id": 133
+    },
+    {
+      "email": "test@test123.com",
+      "firstName": "Test",
+      "lastName": "User",
+      "createdAt": "2025-04-16T13:43:00.626Z",
+      "id": 22
+    }
+  ],
+  "name_diffs": [
+    {
+      "email": "tom@thorntoncapital.com",
+      "ac": "Thomas Jones",
+      "fo": "Tom Jones"
+    },
+    {
+      "email": "codwyer@bga.com",
+      "ac": "Conor O'Dwyer",
+      "fo": "Conor O\u2019Dwyer"
+    },
+    {
+      "email": "lonny@monfortcompanies.com",
+      "ac": "Lonny Kandel",
+      "fo": "Laurence \"Lonny\" Kandel"
+    },
+    {
+      "email": "ben@newvintagepartners.com",
+      "ac": "Ben Slome",
+      "fo": "Benjamin Slome"
+    },
+    {
+      "email": "omair@schwartzcap.com",
+      "ac": "Omar Chaudhry",
+      "fo": "Omair Chaudhry"
+    },
+    {
+      "email": "nick.lazzaro@kloofcapital.com",
+      "ac": "Nick Lazarro",
+      "fo": "Nick Lazzaro"
+    },
+    {
+      "email": "whaddad@partnerspath.com",
+      "ac": "William Hadad",
+      "fo": "William Haddad"
+    },
+    {
+      "email": "marco@brenergroup.com",
+      "ac": "Marco Quevado",
+      "fo": "Marco Quevedo"
+    },
+    {
+      "email": "rshelef@celinacapital.com",
+      "ac": "Roy Schelef",
+      "fo": "Roy Shelef"
+    },
+    {
+      "email": "joconnor@bga.com",
+      "ac": "John O'Connor",
+      "fo": "John O\u2019Connor"
+    }
+  ],
+  "orphans_in_ac": [
+    {
+      "email": "aking@ffccapital.net",
+      "firstName": "Alice",
+      "lastName": "King",
+      "id": "12",
+      "cdate": "2025-05-15T10:18:26-05:00"
+    },
+    {
+      "email": "brian@ruralroute3holdings.com",
+      "firstName": "Brian",
+      "lastName": "Horner",
+      "id": "85",
+      "cdate": "2025-07-03T05:13:31-05:00"
+    },
+    {
+      "email": "brianm@mantucket.com",
+      "firstName": "Brian",
+      "lastName": "Mankwitz",
+      "id": "403",
+      "cdate": "2025-08-21T13:22:31-05:00"
+    },
+    {
+      "email": "chris.barrile@gmail.com",
+      "firstName": "Chris",
+      "lastName": "Barrile",
+      "id": "8",
+      "cdate": "2025-04-01T17:02:21-05:00"
+    },
+    {
+      "email": "christian.coquoz@inlightcapital.com",
+      "firstName": "Christian",
+      "lastName": "Coquoz",
+      "id": "598",
+      "cdate": "2026-01-20T16:07:05-06:00"
+    },
+    {
+      "email": "kjiang@excellent-capital.com",
+      "firstName": "Kenan",
+      "lastName": "Jiang",
+      "id": "71",
+      "cdate": "2025-07-03T05:06:46-05:00"
+    },
+    {
+      "email": "max@inlightcapital.com",
+      "firstName": "Max",
+      "lastName": "Machiorlette",
+      "id": "68",
+      "cdate": "2025-07-03T05:05:22-05:00"
+    },
+    {
+      "email": "mburskey@linkstreetcapital.com",
+      "firstName": "Matt",
+      "lastName": "Burskey",
+      "id": "50",
+      "cdate": "2025-05-15T10:18:31-05:00"
+    },
+    {
+      "email": "tnottingham@bga.com",
+      "firstName": "Trident",
+      "lastName": "Nottingham",
+      "id": "24",
+      "cdate": "2025-05-15T10:18:28-05:00"
+    }
+  ],
+  "new_fo_since_april_2": [
+    {
+      "email": "jbw@wautier.co.uk",
+      "firstName": "Jean-Baptiste",
+      "lastName": "Wautier",
+      "createdAt": "2026-04-22T15:33:58.887Z",
+      "id": 293
+    },
+    {
+      "email": "jamie@53stations.com",
+      "firstName": "Jamie",
+      "lastName": "Fisher",
+      "createdAt": "2026-04-21T22:20:06.011Z",
+      "id": 292
+    },
+    {
+      "email": "chinedu@53stations.com",
+      "firstName": "Chinedu",
+      "lastName": "Udeogu",
+      "createdAt": "2026-04-21T22:19:42.069Z",
+      "id": 291
+    },
+    {
+      "email": "benjamin@53stations.com",
+      "firstName": "Ben",
+      "lastName": "Sack",
+      "createdAt": "2026-04-21T21:57:17.563Z",
+      "id": 290
+    },
+    {
+      "email": "gbailey@legacyknight.com",
+      "firstName": "Garrett",
+      "lastName": "Bailey",
+      "createdAt": "2026-04-13T20:02:06.203Z",
+      "id": 286
+    },
+    {
+      "email": "hthompson@jbpco.com",
+      "firstName": "Hank",
+      "lastName": "Thompson",
+      "createdAt": "2026-04-10T21:34:34.498Z",
+      "id": 285
+    },
+    {
+      "email": "tkasierski@jbpco.com",
+      "firstName": "Thomas",
+      "lastName": "Kasierski",
+      "createdAt": "2026-04-10T16:45:15.675Z",
+      "id": 284
+    },
+    {
+      "email": "yfahey21@gmail.com",
+      "firstName": "Yuliya",
+      "lastName": "Fahey",
+      "createdAt": "2026-04-10T14:43:53.361Z",
+      "id": 283
+    },
+    {
+      "email": "kenny@monfortcompanies.com",
+      "firstName": "Kenneth",
+      "lastName": "Monfort",
+      "createdAt": "2026-04-10T14:38:25.235Z",
+      "id": 282
+    },
+    {
+      "email": "justinweber@cre.investments",
+      "firstName": "Justin M",
+      "lastName": "Weber",
+      "createdAt": "2026-04-08T22:47:56.158Z",
+      "id": 281
+    },
+    {
+      "email": "james@hadleyfamilyoffice.com",
+      "firstName": "James",
+      "lastName": "Scott",
+      "createdAt": "2026-04-07T20:30:32.862Z",
+      "id": 280
+    },
+    {
+      "email": "alican@tappanwoodfinancelabs.com",
+      "firstName": "Alican",
+      "lastName": "Arcasoy",
+      "createdAt": "2026-04-07T18:45:08.484Z",
+      "id": 279
+    },
+    {
+      "email": "sgoodman@fivepointsfv.com",
+      "firstName": "Sam",
+      "lastName": "Goodman",
+      "createdAt": "2026-04-03T20:52:28.312Z",
+      "id": 278
+    },
+    {
+      "email": "patrick@jdainvestments.com",
+      "firstName": "Patrick",
+      "lastName": "Armstrong",
+      "createdAt": "2026-04-02T20:22:48.864Z",
+      "id": 277
+    }
+  ]
+}

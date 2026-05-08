@@ -182,7 +182,9 @@ If they confirm, delete both the rendered PDF files and their matching `.html` i
 - **Pre-name icon**: only the silver/gold amplifier check is rendered as a pre-name icon. **Founding members no longer carry a caret pre-icon** (removed 2026-04-27) — their tier shows up only in the status line below the name. So a guest who is both Founding Member *and* gold amplifier renders with one pre-icon (the gold check) and "Founding Member" in the status line.
 - **Pre-icon rendering**: the icon is a `<span class="pre-icon">` with the asset set as `background-image`, locked square via min/max width+height, `flex-shrink: 0`. Table cards use `background-size: contain` (assets are 2818×2816, near-square). Name badges use `background-size: 100% 100%` because at the 0.11" badge size, Chromium's sub-pixel rounding under `contain` clips the right edge of the icon — `100% 100%` forces full fill (the assets are square enough that this introduces no visible distortion).
 
-### Table card — front (6in × 4in, landscape)
+### Table card — single design, printed double-sided (6in × 4in, landscape)
+There is **only one design** for the table card. The printer prints it on both sides, so the back is identical to the front — the renderer emits one page per guest, no separate back PDF or back layout.
+
 All blocks are horizontally centered. The silver/gold check (when present) sits absolutely positioned to the left of the centered name, so the name itself stays optically centered on the card.
 ```
           [2^n brand mark, centered, 0.55" tall]
@@ -194,17 +196,13 @@ All blocks are horizontally centered. The silver/gold check (when present) sits 
 
                   Company Name (22pt, gold, Instrument Serif)
 
-         [sponsor logos row, centered, slot 1.4in × 0.55in per sponsor]
+         [sponsor row, centered, gap 0.4in between cells]
+         [each cell: logo 0.95in × 0.32in slot   →   QR 0.4in × 0.4in directly below]
 ```
+
+Each sponsor cell is a vertical stack: logo on top (smaller than the prior 1.4in × 0.55in slot), then the sponsor's QR code (encoding `sponsor.website`) directly below. The QR replaces the old back-side QR row.
 
 Guests with no `memberStatus` and no `titleOverride`: skip the status line entirely.
-
-### Table card — back (6in × 4in, landscape)
-Row of QR codes, one per sponsor, vertically centered on the page. Each cell:
-```
-[QR code, 1.3" square]
-[sponsor logo, 1.2in × 0.45in slot, centered beneath]
-```
 
 ### Name badge (3.5in × 2in, landscape)
 Same content as the front of the table card, scaled down. All blocks horizontally centered; pre-icons absolute-positioned to the left of the centered name.
@@ -235,9 +233,9 @@ Drive: one folder per event named `<City> <EventType> - MM/YYYY` (e.g. `Chicago 
 
 - **Long names**: if name > 24 chars, drop font size to ~30pt on table cards / 14pt on badges.
 - **Long company names**: wrap up to 2 lines, same rule.
-- **Single sponsor**: center the one logo / QR.
+- **Single sponsor**: center the one logo / QR cell.
 - **Three+ sponsors**: scale logo height down so they fit side-by-side.
-- **Visual balance across logos with different aspect ratios**: every sponsor logo renders inside a fixed-size `.sponsor-slot` (1.4in × 0.55in for table cards, 0.65in × 0.26in for badges). The `<img>` uses `object-fit: contain` with `max-width/max-height: 100%`, so each logo scales to fit the slot regardless of its native aspect ratio. This prevents wide wordmarks (e.g. ARCH at ~5:1) from dominating taller logos (e.g. BGA at ~2.6:1) when they sit at the same height.
+- **Visual balance across logos with different aspect ratios**: every sponsor logo renders inside a fixed-size `.sponsor-slot` (0.95in × 0.32in for table cards, 0.65in × 0.26in for badges). The `<img>` uses `object-fit: contain` with `max-width/max-height: 100%`, so each logo scales to fit the slot regardless of its native aspect ratio. This prevents wide wordmarks (e.g. ARCH at ~5:1) from dominating taller logos (e.g. BGA at ~2.6:1) when they sit at the same height.
 - **White-on-transparent sponsor logos**: many sponsor logos are designed for dark backgrounds and are invisible on the white card. The renderer applies `filter: brightness(0)` to every `.sponsor-logo` so these logos render as solid black silhouettes. If a sponsor supplies a dark or full-color logo that should keep its native colors, override the filter for that sponsor (e.g. add a `--colored` modifier class).
 - **Flag surprises**: if a user record is missing `company` or has an unexpected `memberStatus` value, list them back to the user for confirmation before rendering — don't silently render blank.
 - **Version bump**: versioning lives on the PDF filename (`-V1.pdf`, `-V2.pdf`, ...), not on the Drive folder. The event folder (`<City> <EventType> - MM/YYYY`) is reused across revisions — new versions sit alongside older ones in the same folder.
