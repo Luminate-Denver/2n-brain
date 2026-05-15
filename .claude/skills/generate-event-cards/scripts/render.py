@@ -24,11 +24,16 @@ from playwright.sync_api import sync_playwright
 REPO_ROOT = Path(__file__).resolve().parents[4]
 ASSETS = REPO_ROOT / "assets"
 
-BRAND_GOLD = "#B8870A"
+BRAND_GOLD = "#a77a33"
 NAME_NAVY = "#0A1A3A"
 
 ASSET_FILES = {
-    "two_n_brand":      ASSETS / "2^n_Logo_withCircle_transparent-V2.png",
+    # Use the same SVG for both the big brand mark and the mini status-line logo.
+    # The legacy PNG (`2^n_Logo_withCircle_transparent-V2.png`) was retired 2026-05-15
+    # because Chromium rasterized it slightly squashed at the 0.28in brand size, while
+    # the SVG renders crisp at any size — and matching sources guarantees both 2N marks
+    # share identical proportions / stroke weights.
+    "two_n_brand":      ASSETS / "2^n_Logo_v2.svg",
     "two_n_mini":       ASSETS / "2^n_Logo_v2.svg",
     "silver_check":     ASSETS / "Silver-Check-1.png",
     "gold_check":       ASSETS / "Gold-Check-1.png",
@@ -87,12 +92,22 @@ def title_text(guest: dict) -> str | None:
     return None
 
 
+def _logo_style(sponsor: dict) -> str:
+    """Optional per-sponsor visual size tweak via manifest field `sizeScale` (float, default 1.0).
+    Applied as CSS transform: scale() so the slot's layout box stays unchanged and neighboring
+    logos / QR codes stay aligned."""
+    scale = sponsor.get("sizeScale")
+    if scale is None or float(scale) == 1.0:
+        return ""
+    return f' style="transform: scale({float(scale)}); transform-origin: center center;"'
+
+
 def sponsor_logos_html(sponsors: list[dict], manifest_dir: Path, *, badge: bool = False) -> str:
     slot_cls = "sponsor-slot sponsor-slot--badge" if badge else "sponsor-slot"
     tags = []
     for s in sponsors:
         uri = data_uri(manifest_dir / s["logoPath"])
-        tags.append(f'<div class="{slot_cls}"><img class="sponsor-logo" src="{uri}" alt=""/></div>')
+        tags.append(f'<div class="{slot_cls}"><img class="sponsor-logo" src="{uri}" alt=""{_logo_style(s)}/></div>')
     return "".join(tags)
 
 
@@ -104,7 +119,7 @@ def sponsor_cells_html(sponsors: list[dict], manifest_dir: Path) -> str:
         qr = qr_data_uri(s["website"])
         cells.append(
             f'<div class="sponsor-cell">'
-            f'  <div class="sponsor-slot"><img class="sponsor-logo" src="{logo}" alt=""/></div>'
+            f'  <div class="sponsor-slot"><img class="sponsor-logo" src="{logo}" alt=""{_logo_style(s)}/></div>'
             f'  <img class="sponsor-qr" src="{qr}" alt=""/>'
             f'</div>'
         )
@@ -119,7 +134,7 @@ def table_card_page(guest: dict, sponsors_html: str, assets: dict[str, str]) -> 
     if t:
         status = (
             f'<div class="status">'
-            f'  <img class="mini-2n" src="{assets["two_n_mini"]}" alt=""/>'
+            f'  <span class="mini-2n" style="background-image:url({assets["two_n_mini"]})"></span>'
             f'  <span>{t}</span>'
             f'</div>'
         )
@@ -136,7 +151,7 @@ def table_card_page(guest: dict, sponsors_html: str, assets: dict[str, str]) -> 
     return f'''
       <section class="page card-front">
         <div class="stack">
-          <img class="brand" src="{assets["two_n_brand"]}" alt=""/>
+          <div class="brand" style="background-image:url({assets["two_n_brand"]})"></div>
           <div class="name-row">
             <h1 class="{name_class}">{icons_block}{guest["name"]}</h1>
           </div>
@@ -155,7 +170,7 @@ def name_badge_page(guest: dict, sponsors_html: str, assets: dict[str, str]) -> 
     if t:
         status = (
             f'<div class="status">'
-            f'  <img class="mini-2n" src="{assets["two_n_mini"]}" alt=""/>'
+            f'  <span class="mini-2n" style="background-image:url({assets["two_n_mini"]})"></span>'
             f'  <span>{t}</span>'
             f'</div>'
         )
@@ -167,7 +182,7 @@ def name_badge_page(guest: dict, sponsors_html: str, assets: dict[str, str]) -> 
     return f'''
       <section class="page badge">
         <div class="stack">
-          <img class="brand" src="{assets["two_n_brand"]}" alt=""/>
+          <div class="brand" style="background-image:url({assets["two_n_brand"]})"></div>
           <div class="name-row">
             <h1 class="{name_class}">{icons_block}{guest["name"]}</h1>
           </div>
@@ -197,7 +212,13 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
   display: flex; flex-direction: column; align-items: center;
   width: 100%;
 }}
-.card-front .brand {{ height: 0.55in; }}
+.card-front .brand {{
+  width: 0.55in; height: 0.55in;
+  min-width: 0.55in; max-width: 0.55in;
+  min-height: 0.55in; max-height: 0.55in;
+  flex-shrink: 0; flex-grow: 0;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}}
 .name-row {{
   width: 100%;
   text-align: center;
@@ -237,10 +258,17 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
   color: {BRAND_GOLD}; font-size: 14pt; font-weight: 400;
   margin-top: 0.03in;
 }}
-.status .mini-2n {{ height: 0.22in; }}
+.status .mini-2n {{
+  display: inline-block;
+  width: 0.22in; height: 0.22in;
+  min-width: 0.22in; max-width: 0.22in;
+  min-height: 0.22in; max-height: 0.22in;
+  flex-shrink: 0; flex-grow: 0;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}}
 .company {{
   font-family: 'Instrument Serif', 'Times New Roman', Georgia, serif;
-  color: {BRAND_GOLD}; font-size: 22pt; font-weight: 400;
+  color: {NAME_NAVY}; font-size: 22pt; font-weight: 400;
   margin-top: 0.25in; text-align: center;
 }}
 .sponsors {{
@@ -248,10 +276,10 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
   display: flex; align-items: flex-start; justify-content: center; gap: 0.4in;
 }}
 .sponsor-cell {{
-  display: flex; flex-direction: column; align-items: center; gap: 0.06in;
+  display: flex; flex-direction: column; align-items: center; gap: 0.18in;
 }}
 .sponsor-slot {{
-  width: 0.95in; height: 0.32in;
+  width: 0.82in; height: 0.27in;
   display: flex; align-items: center; justify-content: center;
 }}
 .sponsor-logo {{
@@ -259,7 +287,7 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
   object-fit: contain; filter: brightness(0) invert(20%);
 }}
 .sponsor-qr {{
-  width: 0.4in; height: 0.4in;
+  width: 0.34in; height: 0.34in;
   display: block;
 }}
 """
@@ -282,7 +310,13 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
   display: flex; flex-direction: column; align-items: center;
   width: 100%;
 }}
-.badge .brand {{ height: 0.28in; }}
+.badge .brand {{
+  width: 0.28in; height: 0.28in;
+  min-width: 0.28in; max-width: 0.28in;
+  min-height: 0.28in; max-height: 0.28in;
+  flex-shrink: 0; flex-grow: 0;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}}
 .badge .name-row {{ width: 100%; text-align: center; margin-top: 0.06in; }}
 .badge .name {{
   display: inline-block;
@@ -316,17 +350,24 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
   display: inline-flex; align-items: center; gap: 0.04in;
   color: {BRAND_GOLD}; font-size: 8pt; margin-top: 0.015in;
 }}
-.badge .status .mini-2n {{ height: 0.12in; }}
+.badge .status .mini-2n {{
+  display: inline-block;
+  width: 0.12in; height: 0.12in;
+  min-width: 0.12in; max-width: 0.12in;
+  min-height: 0.12in; max-height: 0.12in;
+  flex-shrink: 0; flex-grow: 0;
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+}}
 .badge .company {{
   font-family: 'Instrument Serif', 'Times New Roman', Georgia, serif;
-  color: {BRAND_GOLD}; font-size: 12pt; margin-top: 0.10in; text-align: center;
+  color: {NAME_NAVY}; font-size: 12pt; margin-top: 0.10in; text-align: center;
 }}
 .badge .sponsors {{
   margin-top: 0.14in;
-  display: flex; align-items: center; justify-content: center; gap: 0.2in;
+  display: flex; align-items: center; justify-content: center; gap: 0.32in;
 }}
 .badge .sponsor-slot {{
-  width: 0.65in; height: 0.26in;
+  width: 0.52in; height: 0.21in;
   display: flex; align-items: center; justify-content: center;
 }}
 .badge .sponsor-logo {{

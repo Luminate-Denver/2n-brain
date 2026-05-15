@@ -1,0 +1,242 @@
+{
+  "event": {
+    "title": "2^n Family Office Dinner - New York 2026",
+    "city": "New York",
+    "date": "2026_05_21",
+    "eventType": "Dinner"
+  },
+  "sponsors": [
+    {
+      "name": "BGA",
+      "logoPath": "tmp/bga.svg",
+      "website": "https://bga.com"
+    },
+    {
+      "name": "Morrison Cohen LLP",
+      "logoPath": "tmp/morrisoncohen.svg",
+      "website": "https://www.morrisoncohen.com/",
+      "sizeScale": 1.18
+    },
+    {
+      "name": "ARCH",
+      "logoPath": "tmp/arch.svg",
+      "website": "https://arch.co"
+    }
+  ],
+  "guests": [
+    {
+      "name": "Claire Bannon",
+      "company": "Confluence Capital & Investments",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Ross Barlow",
+      "company": "Wildcat Capital Management",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Sergei Bourlatskii",
+      "company": "Malkin Holdings",
+      "memberStatus": null,
+      "amplifierStatus": null
+    },
+    {
+      "name": "Matt Burskey",
+      "company": "",
+      "titleOverride": "Founder"
+    },
+    {
+      "name": "Sydney Burskey",
+      "company": "",
+      "titleOverride": "Associate"
+    },
+    {
+      "name": "Brandon Colón",
+      "company": "Battery Global Advisors (BGA)",
+      "memberStatus": "Founding Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "William Conway",
+      "company": "Elysium Management",
+      "memberStatus": "Founding Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Leeor Farhadian",
+      "company": "The Straus Group",
+      "memberStatus": null,
+      "amplifierStatus": null
+    },
+    {
+      "name": "Leeor Farhadian",
+      "company": "The Straus Group",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Kevin Finan",
+      "company": "PCW Management",
+      "memberStatus": null,
+      "amplifierStatus": null
+    },
+    {
+      "name": "Kenny Fitzpatrick",
+      "company": "Colt Road Capital",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Ryan Fix",
+      "company": "Abod Capital Solutions",
+      "memberStatus": null,
+      "amplifierStatus": null
+    },
+    {
+      "name": "Matthew Griffin",
+      "company": "PCW Management",
+      "memberStatus": null,
+      "amplifierStatus": null
+    },
+    {
+      "name": "Rob Grimaldi",
+      "company": "Viscogliosi Brothers LLC",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "William Haddad",
+      "company": "Partners Path",
+      "memberStatus": "Member",
+      "amplifierStatus": "silver"
+    },
+    {
+      "name": "Jared Halperin",
+      "company": "Meritage Group",
+      "memberStatus": "Founding Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Matt Hershey",
+      "company": "Marron Capital",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Stephen Hoefer",
+      "company": "Mt. Vernon Investments",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Brett Kaplan",
+      "company": "Kloof Capital",
+      "memberStatus": "Founding Member",
+      "amplifierStatus": "silver"
+    },
+    {
+      "name": "Jesse Kimball",
+      "company": "Windswept Energy, LLC",
+      "memberStatus": "Sponsor Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "David LaGalia",
+      "company": "Morrison Cohen LLP",
+      "memberStatus": null,
+      "amplifierStatus": null
+    },
+    {
+      "name": "David Law",
+      "company": "Lion Rock Management",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Jack Litowitz",
+      "company": "Qstar Capital",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Christian MacCarron",
+      "company": "Taubman Capital Management LLC",
+      "memberStatus": null,
+      "amplifierStatus": null
+    },
+    {
+      "name": "Will Marron",
+      "company": "Marron Capital",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Daniel Miller",
+      "company": "ARCH",
+      "memberStatus": null,
+      "amplifierStatus": null
+    },
+    {
+      "name": "Jennifer Morrissey",
+      "company": "MBX Group",
+      "memberStatus": null,
+      "amplifierStatus": null
+    },
+    {
+      "name": "Benjamin Payner",
+      "company": "Pinehouse Capital LLC",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Nick Riloff",
+      "company": "PCW Management",
+      "memberStatus": null,
+      "amplifierStatus": null
+    },
+    {
+      "name": "David Rothenhaus",
+      "company": "Battery Global Advisors (BGA)",
+      "memberStatus": "Founding Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Zach Sheinberg",
+      "company": "Anaquit",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Benjamin Slome",
+      "company": "New Vintage Partners",
+      "memberStatus": "Member",
+      "amplifierStatus": "gold"
+    },
+    {
+      "name": "Stephen Soleymani",
+      "company": "Morrison Cohen LLP",
+      "memberStatus": null,
+      "amplifierStatus": null
+    },
+    {
+      "name": "Steven Tenzer",
+      "company": "Hunter Creek",
+      "memberStatus": "Founding Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Kristina Walsh",
+      "company": "Sandalwood Securities",
+      "memberStatus": "Member",
+      "amplifierStatus": "silver"
+    },
+    {
+      "name": "Robby Wechsler",
+      "company": "Anzan Investments",
+      "memberStatus": null,
+      "amplifierStatus": null
+    }
+  ]
+}

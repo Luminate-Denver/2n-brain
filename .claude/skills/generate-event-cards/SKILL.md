@@ -38,8 +38,17 @@ Read sponsors off the event record (field is typically `sponsors[]` — each has
 - **Options:** one option per sponsor, all preselected by default in the message ("all checked"). Pre-tick by listing every sponsor.
 
 For each confirmed sponsor:
-- Download the logo PNG from the MCP's `/api/media/file/...` URL to `exports/events/<slug>/tmp/<sponsor>.png`
+- Download the logo from the MCP's `/api/media/file/...` URL to `exports/events/<slug>/tmp/<sponsor>.<ext>`, preserving whatever extension the source file uses (`.svg`, `.png`, `.jpg`).
 - Record the `website` URL (this is what the QR code encodes)
+
+**Logo format gate — non-SVG sponsors must be flagged.** After downloading, check each sponsor's file extension / Payload `mimeType`. For any sponsor whose logo is **not** an SVG (i.e. PNG / JPG / anything raster), call `AskUserQuestion` once before continuing:
+- **Question:** "Sponsor logo(s) are raster (PNG/JPG): <comma-separated sponsor names>. SVG renders crisper at small print sizes and avoids the rasterization-aspect quirks we hit on NY 2026. How do you want to proceed?"
+- **Options:**
+  - `Pause — I'll upload SVG(s) to Payload (Recommended)` — wait for CJ to confirm the new files are in Payload, then re-fetch the sponsor record and re-download.
+  - `Use the raster file(s) as-is` — proceed with the current downloads (acceptable but flagged for the record).
+  - `Use a local SVG file instead` — ask CJ for the absolute path to a local `.svg` and copy it into `tmp/<sponsor>.svg`, overwriting the raster download.
+
+Only proceed past this gate once every sponsor logo is either SVG or explicitly approved by CJ as raster.
 
 ### 4. Burskey check
 
@@ -102,6 +111,8 @@ Schema:
 ```
 
 `logoPath` is relative to the manifest file.
+
+**Optional per-sponsor `sizeScale`** (float, default `1.0`): multiplies the rendered logo via CSS `transform: scale()` without changing slot layout. Use when one sponsor's mark reads visually small against the others because of internal padding / mark-vs-bounding-box ratio differences (e.g. Morrison Cohen at ~1.18 alongside BGA + ARCH on NY 2026). Don't reach for this just because aspect ratios differ — only when the rendered result looks unbalanced.
 
 ### 7. Render PDFs locally
 
@@ -172,11 +183,12 @@ If they confirm, delete both the rendered PDF files and their matching `.html` i
 ### Shared tokens
 - Brand font: **Overused Grotesk** (installed in `~/Library/Fonts/` on macOS; Chromium picks it up automatically). Fallback stack: `'Overused Grotesk', 'Inter', -apple-system, 'Helvetica Neue', Arial, sans-serif`.
 - Company / family-office font: **Instrument Serif** (loaded via Google Fonts `@import` in the rendered HTML). Fallback: `'Times New Roman', Georgia, serif`.
-- Brand gold: `#B8870A`
+- Brand gold: `#a77a33` (matches the fill baked into `assets/2^n_Logo_v2.svg`; switched from the lighter `#B8870A` on 2026-05-14 after legibility issues at distance on the prior printed run — keep using the darker hex on every future render).
 - Name navy: `#0A1A3A` (very dark navy)
 - Name: navy, **weight 400 (regular)**, negative letter-spacing (`-0.07rem` table cards, `-0.038rem` name badges)
 - Status: brand gold, sans (Overused Grotesk), weight 400
-- Company: brand gold, **Instrument Serif**, weight 400
+- Company / family-office name: **name navy** (`#0A1A3A`), **Instrument Serif**, weight 400 — matches the guest name color (switched from brand gold on 2026-05-15 per Matt's NY 2026 review).
+- **2N logo aspect ratio is locked everywhere.** Every `<img>` rendering the 2N mark (`.brand` on the card/badge, `.mini-2n` inside the status line) must set explicit `width` and `height` to the same value plus `flex-shrink: 0` + `object-fit: contain`. Setting only `height` lets a flex container squash the width without losing height, which distorts the circle. If you add a new place that renders the 2N mark, apply the same pattern.
 - **Horizontal centering**: every block on the front of the card and on the badge (brand mark, name, status line, company, sponsor row) is horizontally centered. The silver/gold amplifier check (when present) hangs left of the name via absolute positioning (`right: 100%` relative to the inline-block `.name`) so the name itself stays optically centered on the card.
 - **Vertical centering**: the entire content group (`.stack` = brand mark + name-row + status + company + sponsors) is vertically centered on the page via page-level flex (`.page { display: flex; flex-direction: column; justify-content: center; align-items: center; }`). No absolute positioning of the brand mark or sponsor row — everything flows in the stack.
 - **Pre-name icon**: only the silver/gold amplifier check is rendered as a pre-name icon. **Founding members no longer carry a caret pre-icon** (removed 2026-04-27) — their tier shows up only in the status line below the name. So a guest who is both Founding Member *and* gold amplifier renders with one pre-icon (the gold check) and "Founding Member" in the status line.
@@ -197,10 +209,10 @@ All blocks are horizontally centered. The silver/gold check (when present) sits 
                   Company Name (22pt, gold, Instrument Serif)
 
          [sponsor row, centered, gap 0.4in between cells]
-         [each cell: logo 0.95in × 0.32in slot   →   QR 0.4in × 0.4in directly below]
+         [each cell: logo 0.82in × 0.27in slot   →   0.18in gap   →   QR 0.34in × 0.34in directly below]
 ```
 
-Each sponsor cell is a vertical stack: logo on top (smaller than the prior 1.4in × 0.55in slot), then the sponsor's QR code (encoding `sponsor.website`) directly below. The QR replaces the old back-side QR row.
+Each sponsor cell is a vertical stack: logo on top, then the sponsor's QR code (encoding `sponsor.website`) directly below with `0.18in` of vertical breathing room between them. The QR replaces the old back-side QR row.
 
 Guests with no `memberStatus` and no `titleOverride`: skip the status line entirely.
 
@@ -211,7 +223,7 @@ Same content as the front of the table card, scaled down. All blocks horizontall
 - Name 18pt, weight 400, navy #0A1A3A, letter-spacing -0.038rem
 - Status line 8pt, gold sans (mini-2n 0.12" tall)
 - Company 12pt, gold Instrument Serif
-- Sponsors row: slot 0.65in × 0.26in per sponsor
+- Sponsors row: slot 0.52in × 0.21in per sponsor, `0.32in` horizontal gap between cells
 
 ## Assets
 
@@ -234,8 +246,13 @@ Drive: one folder per event named `<City> <EventType> - MM/YYYY` (e.g. `Chicago 
 - **Long names**: if name > 24 chars, drop font size to ~30pt on table cards / 14pt on badges.
 - **Long company names**: wrap up to 2 lines, same rule.
 - **Single sponsor**: center the one logo / QR cell.
-- **Three+ sponsors**: scale logo height down so they fit side-by-side.
-- **Visual balance across logos with different aspect ratios**: every sponsor logo renders inside a fixed-size `.sponsor-slot` (0.95in × 0.32in for table cards, 0.65in × 0.26in for badges). The `<img>` uses `object-fit: contain` with `max-width/max-height: 100%`, so each logo scales to fit the slot regardless of its native aspect ratio. This prevents wide wordmarks (e.g. ARCH at ~5:1) from dominating taller logos (e.g. BGA at ~2.6:1) when they sit at the same height.
+- **Two sponsors**: the 3-sponsor sizing below leaves the row looking sparse — bump the slot up (~1.2× linear) and reduce the inter-cell gap so the row reads as intentional rather than empty. Confirm with CJ before locking new dimensions.
+- **Three sponsors (canonical layout — locked 2026-05-15 after the NY 2026 V4 print review)**: this is the most common case (BGA / ARCH / sponsor #3). The values below are baked into `render.py` CSS and have been signed off by CJ. **Do not change them when you have 3 sponsors — only adjust if the event has a different count.**
+  - **Table cards**: slot `0.82in × 0.27in`, QR `0.34in × 0.34in`, vertical gap `0.18in` between logo and QR, horizontal gap `0.4in` between cells.
+  - **Name badges**: slot `0.52in × 0.21in`, horizontal gap `0.32in` between cells.
+  - **Per-sponsor balance**: when one sponsor's mark reads visually smaller than the others (because of internal padding in its source file — e.g. Morrison Cohen vs BGA / ARCH on NY 2026), tune via the `sizeScale` manifest field. **NY 2026 baseline: Morrison Cohen at `1.18`**, BGA + ARCH at default `1.0`. Reuse those exact values when the same three sponsors appear together. For a new sponsor trio, start with 1.0 across the board and only nudge a single sponsor if the print preview looks unbalanced.
+- **Four+ sponsors**: hasn't shipped yet — start by shrinking the slot proportionally and reducing inter-cell gap; verify in print preview before sign-off.
+- **Visual balance across logos with different aspect ratios**: every sponsor logo renders inside a fixed-size `.sponsor-slot`. The `<img>` uses `object-fit: contain` with `max-width/max-height: 100%`, so each logo scales to fit the slot regardless of its native aspect ratio. This prevents wide wordmarks (e.g. ARCH at ~5:1) from dominating taller logos (e.g. BGA at ~2.6:1) when they sit at the same height.
 - **White-on-transparent sponsor logos**: many sponsor logos are designed for dark backgrounds and are invisible on the white card. The renderer applies `filter: brightness(0)` to every `.sponsor-logo` so these logos render as solid black silhouettes. If a sponsor supplies a dark or full-color logo that should keep its native colors, override the filter for that sponsor (e.g. add a `--colored` modifier class).
 - **Flag surprises**: if a user record is missing `company` or has an unexpected `memberStatus` value, list them back to the user for confirmation before rendering — don't silently render blank.
 - **Version bump**: versioning lives on the PDF filename (`-V1.pdf`, `-V2.pdf`, ...), not on the Drive folder. The event folder (`<City> <EventType> - MM/YYYY`) is reused across revisions — new versions sit alongside older ones in the same folder.
