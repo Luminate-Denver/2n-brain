@@ -1,0 +1,678 @@
+{
+  "ac_contacts_count": 201,
+  "fo_users_count": 235,
+  "missing_in_ac": [
+    {
+      "email": "andrew.youngling@kinshipcapital.com",
+      "firstName": "Andrew",
+      "lastName": "Youngling",
+      "createdAt": "2026-06-03T15:46:44.095Z",
+      "id": 341
+    },
+    {
+      "email": "albert.luk@bgencap.com",
+      "firstName": "Albert",
+      "lastName": "Luk",
+      "createdAt": "2026-06-01T20:44:18.910Z",
+      "id": 339
+    },
+    {
+      "email": "joe.grozier@centaurcp.com",
+      "firstName": "Joe",
+      "lastName": "Grozier",
+      "createdAt": "2026-06-01T20:41:19.977Z",
+      "id": 338
+    },
+    {
+      "email": "shivan@bondycapital.com",
+      "firstName": "Shivan",
+      "lastName": "Patel",
+      "createdAt": "2026-06-01T20:39:35.772Z",
+      "id": 337
+    },
+    {
+      "email": "zac@rizecapitalpartners.com",
+      "firstName": "Zac",
+      "lastName": "Mattey",
+      "createdAt": "2026-06-01T20:37:32.621Z",
+      "id": 336
+    },
+    {
+      "email": "jmhunegs@hwkaufman.com",
+      "firstName": "Joshua",
+      "lastName": "Hunegs",
+      "createdAt": "2026-06-01T20:33:03.073Z",
+      "id": 335
+    },
+    {
+      "email": "gabe@applebaumventures.com",
+      "firstName": "Gabe",
+      "lastName": "Scharg",
+      "createdAt": "2026-06-01T20:30:45.249Z",
+      "id": 334
+    },
+    {
+      "email": "ryan@jonacapital.ca",
+      "firstName": "Ryan",
+      "lastName": "French",
+      "createdAt": "2026-06-01T20:28:08.582Z",
+      "id": 333
+    },
+    {
+      "email": "aazam@verdisinvestment.com",
+      "firstName": "Amelia",
+      "lastName": "Azam",
+      "createdAt": "2026-06-01T19:46:58.236Z",
+      "id": 332
+    },
+    {
+      "email": "mattg@pcwmanagement.com",
+      "firstName": "Matt",
+      "lastName": "Griffin",
+      "createdAt": "2026-06-01T17:33:44.795Z",
+      "id": 331
+    },
+    {
+      "email": "kevinf@pcwmanagement.com",
+      "firstName": "Kevin",
+      "lastName": "Finan",
+      "createdAt": "2026-06-01T17:33:43.277Z",
+      "id": 330
+    },
+    {
+      "email": "rob@neptunecp.com",
+      "firstName": "Rob",
+      "lastName": "Zizza",
+      "createdAt": "2026-05-30T20:24:02.006Z",
+      "id": 329
+    },
+    {
+      "email": "tim.sheehy@kkcg.com",
+      "firstName": "Tim",
+      "lastName": "Sheehy",
+      "createdAt": "2026-05-30T20:22:22.049Z",
+      "id": 328
+    },
+    {
+      "email": "kwhitney@duch.com",
+      "firstName": "Kelly",
+      "lastName": "Whitney",
+      "createdAt": "2026-05-30T20:19:31.984Z",
+      "id": 327
+    },
+    {
+      "email": "agrossbart@locusfinancial.com",
+      "firstName": "Andrew",
+      "lastName": "Grossbart",
+      "createdAt": "2026-05-30T17:28:04.704Z",
+      "id": 326
+    },
+    {
+      "email": "djisa@mbxgroup.com",
+      "firstName": "Daniel",
+      "lastName": "Jisa",
+      "createdAt": "2026-05-30T17:20:36.570Z",
+      "id": 325
+    },
+    {
+      "email": "dwarrington@thefishergrp.com",
+      "firstName": "Dave",
+      "lastName": "Warrington",
+      "createdAt": "2026-05-30T17:18:48.090Z",
+      "id": 324
+    },
+    {
+      "email": "drifkin@jrivercapital.com",
+      "firstName": "Drew",
+      "lastName": "Rifkin",
+      "createdAt": "2026-05-30T17:09:57.984Z",
+      "id": 322
+    },
+    {
+      "email": "nickr@pcwmanagement.com",
+      "firstName": "Nick",
+      "lastName": "Riloff",
+      "createdAt": "2026-05-30T16:52:23.253Z",
+      "id": 321
+    },
+    {
+      "email": "rfix@abodcapital.com",
+      "firstName": "Ryan",
+      "lastName": "Fix",
+      "createdAt": "2026-05-29T19:34:55.815Z",
+      "id": 318
+    },
+    {
+      "email": "todd@beemok.com",
+      "firstName": "Todd",
+      "lastName": "Kuhl",
+      "createdAt": "2026-05-29T15:40:18.310Z",
+      "id": 317
+    },
+    {
+      "email": "noahu@cercanolp.com",
+      "firstName": "Noah",
+      "lastName": "Uzal",
+      "createdAt": "2026-05-28T19:56:22.022Z",
+      "id": 316
+    },
+    {
+      "email": "ben.stoddard.cfa@gmail.com",
+      "firstName": "Ben",
+      "lastName": "Stoddard",
+      "createdAt": "2026-05-26T15:53:32.100Z",
+      "id": 314
+    },
+    {
+      "email": "matt.miller@winter.com",
+      "firstName": "Matt ",
+      "lastName": "Miller",
+      "createdAt": "2026-05-24T15:51:03.891Z",
+      "id": 313
+    },
+    {
+      "email": "glwmalkin@malkinholdings.com",
+      "firstName": "George",
+      "lastName": "Malkin",
+      "createdAt": "2026-05-22T17:19:10.793Z",
+      "id": 312
+    },
+    {
+      "email": "sbourlatskii@malkinholdings.com",
+      "firstName": "Sergei",
+      "lastName": "Bourlatskii",
+      "createdAt": "2026-05-22T17:17:27.447Z",
+      "id": 311
+    },
+    {
+      "email": "lfarhadian@strausgroup.com",
+      "firstName": "Leeor",
+      "lastName": "Farhadian",
+      "createdAt": "2026-05-18T14:05:29.595Z",
+      "id": 310
+    },
+    {
+      "email": "alican@tappanwoodfinancelabs.com",
+      "firstName": "Alican",
+      "lastName": "Arcasoy",
+      "createdAt": "2026-04-07T18:45:08.484Z",
+      "id": 279
+    },
+    {
+      "email": "sgoodman@fivepointsfv.com",
+      "firstName": "Sam",
+      "lastName": "Goodman",
+      "createdAt": "2026-04-03T20:52:28.312Z",
+      "id": 278
+    },
+    {
+      "email": "ryan.langston@n5b.com",
+      "firstName": "Ryan",
+      "lastName": "Langston",
+      "createdAt": "2026-02-04T15:57:03.464Z",
+      "id": 235
+    },
+    {
+      "email": "sutton.fannon@inlightcapital.com",
+      "firstName": "Sutton",
+      "lastName": "Fannon",
+      "createdAt": "2026-01-08T23:32:07.177Z",
+      "id": 209
+    },
+    {
+      "email": "james.brolan@inlightcapital.com",
+      "firstName": "James",
+      "lastName": "Brolan",
+      "createdAt": "2026-01-08T23:29:48.810Z",
+      "id": 207
+    },
+    {
+      "email": "zlane@interportcapital.com",
+      "firstName": "Zach",
+      "lastName": "Lane",
+      "createdAt": "2025-12-22T21:44:48.695Z",
+      "id": 202
+    },
+    {
+      "email": "kyle@oawmgmt.com",
+      "firstName": "Kyle",
+      "lastName": "Offermann",
+      "createdAt": "2025-11-12T22:37:16.136Z",
+      "id": 182
+    },
+    {
+      "email": "brian@willcapllc.com",
+      "firstName": "Brian",
+      "lastName": "Murphy",
+      "createdAt": "2025-10-31T13:31:29.651Z",
+      "id": 167
+    },
+    {
+      "email": "test@user.com",
+      "firstName": "Test",
+      "lastName": "User",
+      "createdAt": "2025-07-21T19:25:30.691Z",
+      "id": 133
+    },
+    {
+      "email": "rkilby@rlacy.com",
+      "firstName": "Richard",
+      "lastName": "Kilby",
+      "createdAt": "2025-07-08T21:36:37.978Z",
+      "id": 122
+    },
+    {
+      "email": "michael.walden@jedunn.com",
+      "firstName": "Michael",
+      "lastName": "Walden",
+      "createdAt": "2025-05-13T12:26:38.322Z",
+      "id": 47
+    },
+    {
+      "email": "adonnelly@contistreetpartners.com",
+      "firstName": "Arthur",
+      "lastName": "Donnelly ",
+      "createdAt": "2025-04-23T13:39:37.489Z",
+      "id": 25
+    },
+    {
+      "email": "test@admin.com",
+      "firstName": "Test",
+      "lastName": "Admin",
+      "createdAt": "2025-04-16T13:43:00.626Z",
+      "id": 22
+    }
+  ],
+  "name_diffs": [
+    {
+      "email": "tom@thorntoncapital.com",
+      "ac": "Thomas Jones",
+      "fo": "Tom Jones"
+    },
+    {
+      "email": "codwyer@bga.com",
+      "ac": "Conor O'Dwyer",
+      "fo": "Conor O\u2019Dwyer"
+    },
+    {
+      "email": "lonny@monfortcompanies.com",
+      "ac": "Lonny Kandel",
+      "fo": "Laurence \"Lonny\" Kandel"
+    },
+    {
+      "email": "ben@newvintagepartners.com",
+      "ac": "Ben Slome",
+      "fo": "Benjamin Slome"
+    },
+    {
+      "email": "omair@schwartzcap.com",
+      "ac": "Omar Chaudhry",
+      "fo": "Omair Chaudhry"
+    },
+    {
+      "email": "nick.lazzaro@kloofcapital.com",
+      "ac": "Nick Lazarro",
+      "fo": "Nick Lazzaro"
+    },
+    {
+      "email": "whaddad@partnerspath.com",
+      "ac": "William Hadad",
+      "fo": "William Haddad"
+    },
+    {
+      "email": "marco@brenergroup.com",
+      "ac": "Marco Quevado",
+      "fo": "Marco Quevedo"
+    },
+    {
+      "email": "rshelef@celinacapital.com",
+      "ac": "Roy Schelef",
+      "fo": "Roy Shelef"
+    },
+    {
+      "email": "joconnor@bga.com",
+      "ac": "John O'Connor",
+      "fo": "John O\u2019Connor"
+    }
+  ],
+  "orphans_in_ac": [
+    {
+      "email": "brian@ruralroute3holdings.com",
+      "firstName": "Brian",
+      "lastName": "Horner",
+      "id": "85",
+      "cdate": "2025-07-03T05:13:31-05:00"
+    },
+    {
+      "email": "brianm@mantucket.com",
+      "firstName": "Brian",
+      "lastName": "Mankwitz",
+      "id": "403",
+      "cdate": "2025-08-21T13:22:31-05:00"
+    },
+    {
+      "email": "chris.barrile@gmail.com",
+      "firstName": "Chris",
+      "lastName": "Barrile",
+      "id": "8",
+      "cdate": "2025-04-01T17:02:21-05:00"
+    },
+    {
+      "email": "kjiang@excellent-capital.com",
+      "firstName": "Kenan",
+      "lastName": "Jiang",
+      "id": "71",
+      "cdate": "2025-07-03T05:06:46-05:00"
+    },
+    {
+      "email": "max@inlightcapital.com",
+      "firstName": "Max",
+      "lastName": "Machiorlette",
+      "id": "68",
+      "cdate": "2025-07-03T05:05:22-05:00"
+    },
+    {
+      "email": "mburskey@linkstreetcapital.com",
+      "firstName": "Matt",
+      "lastName": "Burskey",
+      "id": "50",
+      "cdate": "2025-05-15T10:18:31-05:00"
+    }
+  ],
+  "new_fo_since_april_2": [
+    {
+      "email": "andrew.youngling@kinshipcapital.com",
+      "firstName": "Andrew",
+      "lastName": "Youngling",
+      "createdAt": "2026-06-03T15:46:44.095Z",
+      "id": 341
+    },
+    {
+      "email": "albert.luk@bgencap.com",
+      "firstName": "Albert",
+      "lastName": "Luk",
+      "createdAt": "2026-06-01T20:44:18.910Z",
+      "id": 339
+    },
+    {
+      "email": "joe.grozier@centaurcp.com",
+      "firstName": "Joe",
+      "lastName": "Grozier",
+      "createdAt": "2026-06-01T20:41:19.977Z",
+      "id": 338
+    },
+    {
+      "email": "shivan@bondycapital.com",
+      "firstName": "Shivan",
+      "lastName": "Patel",
+      "createdAt": "2026-06-01T20:39:35.772Z",
+      "id": 337
+    },
+    {
+      "email": "zac@rizecapitalpartners.com",
+      "firstName": "Zac",
+      "lastName": "Mattey",
+      "createdAt": "2026-06-01T20:37:32.621Z",
+      "id": 336
+    },
+    {
+      "email": "jmhunegs@hwkaufman.com",
+      "firstName": "Joshua",
+      "lastName": "Hunegs",
+      "createdAt": "2026-06-01T20:33:03.073Z",
+      "id": 335
+    },
+    {
+      "email": "gabe@applebaumventures.com",
+      "firstName": "Gabe",
+      "lastName": "Scharg",
+      "createdAt": "2026-06-01T20:30:45.249Z",
+      "id": 334
+    },
+    {
+      "email": "ryan@jonacapital.ca",
+      "firstName": "Ryan",
+      "lastName": "French",
+      "createdAt": "2026-06-01T20:28:08.582Z",
+      "id": 333
+    },
+    {
+      "email": "aazam@verdisinvestment.com",
+      "firstName": "Amelia",
+      "lastName": "Azam",
+      "createdAt": "2026-06-01T19:46:58.236Z",
+      "id": 332
+    },
+    {
+      "email": "mattg@pcwmanagement.com",
+      "firstName": "Matt",
+      "lastName": "Griffin",
+      "createdAt": "2026-06-01T17:33:44.795Z",
+      "id": 331
+    },
+    {
+      "email": "kevinf@pcwmanagement.com",
+      "firstName": "Kevin",
+      "lastName": "Finan",
+      "createdAt": "2026-06-01T17:33:43.277Z",
+      "id": 330
+    },
+    {
+      "email": "rob@neptunecp.com",
+      "firstName": "Rob",
+      "lastName": "Zizza",
+      "createdAt": "2026-05-30T20:24:02.006Z",
+      "id": 329
+    },
+    {
+      "email": "tim.sheehy@kkcg.com",
+      "firstName": "Tim",
+      "lastName": "Sheehy",
+      "createdAt": "2026-05-30T20:22:22.049Z",
+      "id": 328
+    },
+    {
+      "email": "kwhitney@duch.com",
+      "firstName": "Kelly",
+      "lastName": "Whitney",
+      "createdAt": "2026-05-30T20:19:31.984Z",
+      "id": 327
+    },
+    {
+      "email": "agrossbart@locusfinancial.com",
+      "firstName": "Andrew",
+      "lastName": "Grossbart",
+      "createdAt": "2026-05-30T17:28:04.704Z",
+      "id": 326
+    },
+    {
+      "email": "djisa@mbxgroup.com",
+      "firstName": "Daniel",
+      "lastName": "Jisa",
+      "createdAt": "2026-05-30T17:20:36.570Z",
+      "id": 325
+    },
+    {
+      "email": "dwarrington@thefishergrp.com",
+      "firstName": "Dave",
+      "lastName": "Warrington",
+      "createdAt": "2026-05-30T17:18:48.090Z",
+      "id": 324
+    },
+    {
+      "email": "dixonhayes@gmail.com",
+      "firstName": "Dixon",
+      "lastName": "Hayes",
+      "createdAt": "2026-05-30T17:15:58.980Z",
+      "id": 323
+    },
+    {
+      "email": "drifkin@jrivercapital.com",
+      "firstName": "Drew",
+      "lastName": "Rifkin",
+      "createdAt": "2026-05-30T17:09:57.984Z",
+      "id": 322
+    },
+    {
+      "email": "nickr@pcwmanagement.com",
+      "firstName": "Nick",
+      "lastName": "Riloff",
+      "createdAt": "2026-05-30T16:52:23.253Z",
+      "id": 321
+    },
+    {
+      "email": "rfix@abodcapital.com",
+      "firstName": "Ryan",
+      "lastName": "Fix",
+      "createdAt": "2026-05-29T19:34:55.815Z",
+      "id": 318
+    },
+    {
+      "email": "todd@beemok.com",
+      "firstName": "Todd",
+      "lastName": "Kuhl",
+      "createdAt": "2026-05-29T15:40:18.310Z",
+      "id": 317
+    },
+    {
+      "email": "noahu@cercanolp.com",
+      "firstName": "Noah",
+      "lastName": "Uzal",
+      "createdAt": "2026-05-28T19:56:22.022Z",
+      "id": 316
+    },
+    {
+      "email": "ben.stoddard.cfa@gmail.com",
+      "firstName": "Ben",
+      "lastName": "Stoddard",
+      "createdAt": "2026-05-26T15:53:32.100Z",
+      "id": 314
+    },
+    {
+      "email": "matt.miller@winter.com",
+      "firstName": "Matt ",
+      "lastName": "Miller",
+      "createdAt": "2026-05-24T15:51:03.891Z",
+      "id": 313
+    },
+    {
+      "email": "glwmalkin@malkinholdings.com",
+      "firstName": "George",
+      "lastName": "Malkin",
+      "createdAt": "2026-05-22T17:19:10.793Z",
+      "id": 312
+    },
+    {
+      "email": "sbourlatskii@malkinholdings.com",
+      "firstName": "Sergei",
+      "lastName": "Bourlatskii",
+      "createdAt": "2026-05-22T17:17:27.447Z",
+      "id": 311
+    },
+    {
+      "email": "lfarhadian@strausgroup.com",
+      "firstName": "Leeor",
+      "lastName": "Farhadian",
+      "createdAt": "2026-05-18T14:05:29.595Z",
+      "id": 310
+    },
+    {
+      "email": "stefan@evergreeninvestco.com",
+      "firstName": "Stefan",
+      "lastName": "Skalbania",
+      "createdAt": "2026-05-14T16:33:37.466Z",
+      "id": 309
+    },
+    {
+      "email": "thomas@evergreeninvestco.com",
+      "firstName": "Tommy",
+      "lastName": "Galloway",
+      "createdAt": "2026-05-14T16:23:49.049Z",
+      "id": 308
+    },
+    {
+      "email": "john@tappanwoodfinancelabs.com",
+      "firstName": "John",
+      "lastName": "Forlines",
+      "createdAt": "2026-05-13T20:33:39.870Z",
+      "id": 307
+    },
+    {
+      "email": "bruce@evergreeninvestco.com",
+      "firstName": "Bruce",
+      "lastName": "Galloway",
+      "createdAt": "2026-05-12T19:57:02.261Z",
+      "id": 306
+    },
+    {
+      "email": "luke@ridgelinevc.com",
+      "firstName": "Luke",
+      "lastName": "Vernon",
+      "createdAt": "2026-05-12T19:17:11.087Z",
+      "id": 305
+    },
+    {
+      "email": "kk@gacapital.com",
+      "firstName": "Krishna",
+      "lastName": "Kantheti",
+      "createdAt": "2026-05-11T19:34:59.244Z",
+      "id": 304
+    },
+    {
+      "email": "llunt@pritzkerrealty.com",
+      "firstName": "Lissa",
+      "lastName": "Lunt",
+      "createdAt": "2026-05-07T14:16:17.382Z",
+      "id": 301
+    },
+    {
+      "email": "tnottingham@bga.com",
+      "firstName": "Trident",
+      "lastName": "Nottingham",
+      "createdAt": "2026-05-07T13:10:12.762Z",
+      "id": 300
+    },
+    {
+      "email": "ejacobson@pritzkerrealty.com",
+      "firstName": "Eric",
+      "lastName": "Jacobson",
+      "createdAt": "2026-05-06T21:14:00.962Z",
+      "id": 299
+    },
+    {
+      "email": "jbodner@pritzkerff.com",
+      "firstName": "Jacob",
+      "lastName": "Bodner",
+      "createdAt": "2026-05-06T21:12:58.721Z",
+      "id": 298
+    },
+    {
+      "email": "gsmith@pritzkerff.com",
+      "firstName": "Garrett",
+      "lastName": "Smith",
+      "createdAt": "2026-05-06T21:11:55.319Z",
+      "id": 297
+    },
+    {
+      "email": "nsteingreaber@pspcapital.com",
+      "firstName": "Nick",
+      "lastName": "Steingreaber",
+      "createdAt": "2026-05-06T21:10:22.646Z",
+      "id": 296
+    },
+    {
+      "email": "cgreenberg@pspgrowth.com",
+      "firstName": "Caroline ",
+      "lastName": "Greenberg",
+      "createdAt": "2026-05-06T21:09:09.026Z",
+      "id": 295
+    },
+    {
+      "email": "hfunch@pritzkerrealty.com",
+      "firstName": "Hanna",
+      "lastName": "Funch",
+      "createdAt": "2026-05-06T14:53:33.669Z",
+      "id": 294
+    }
+  ]
+}

@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="only light">
+<meta name="supported-color-schemes" content="light">
+<title>2^n Trends & Topics — Family Office Brief, June 2026 (v1)</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Force light treatment — see <meta name="color-scheme" content="only light">.
+     We tried supporting Apple Mail dark mode with a #05121f body bg via prefers-color-scheme,
+     but Outlook (Mac + web) interpreted "light dark" as permission to auto-invert the entire
+     email content, rendering navy text on navy background. Falling back to strict light. */
+  :root { color-scheme: only light; supported-color-schemes: light; }
+  body { margin: 0; background: #0A1A3A; font-family: 'Inter', -apple-system, 'Helvetica Neue', Arial, sans-serif; color: #E8E4DC; -webkit-font-smoothing: antialiased; padding: 32px 0; color-scheme: only light; }
+  /* Browser-preview only: when viewed locally in a dark-mode browser, the outer body bg
+     swaps to a deeper shade. Email clients respect color-scheme:only light and ignore this. */
+  @media (prefers-color-scheme: dark) {
+    body { background: #05121f; }
+  }
+  /* Orphan / widow control — modern WebKit, Chromium, Firefox; ignored gracefully elsewhere. */
+  p, .ep-title, .pull .q { text-wrap: pretty; orphans: 3; widows: 2; }
+  h1, h2, h3, h4, h5 { text-wrap: balance; }
+  .nbsp { white-space: nowrap; }
+  .wrap { max-width: 640px; margin: 0 auto; background: #FFFFFF; color: #0A1A3A; border: 8px solid #0A1A3A; }
+  .inner { border: 1px solid #B8870A; margin: 12px; }
+
+  /* Inline 2^n logo */
+  .logo-inline { display: inline-block; vertical-align: -0.22em; height: 1.1em; width: 1.1em; }
+  .logo-inline path, .logo-inline polygon { fill: #a77a33; }
+  /* Heading variant — meaningfully larger than the cap height so the mark reads as a logo, not a tiny icon. */
+  .label-name .logo-inline { height: 1.9em; width: 1.9em; vertical-align: -0.55em; margin: 0 3px; }
+  .feat .f h4 .logo-inline { height: 1.0em; width: 1.0em; vertical-align: -0.16em; }
+
+  /* Masthead */
+  .mast { padding: 36px 32px 28px; border-bottom: 2px solid #0A1A3A; text-align: center; position: relative; }
+  .mast::before, .mast::after { content: ''; position: absolute; top: calc(36px + 28px); width: 32px; height: 1px; background: #B8870A; }
+  .mast::before { left: 32px; }
+  .mast::after { right: 32px; }
+  .mast .brand-mark { width: 56px; height: 56px; margin: 0 auto 16px; display: block; }
+  .mast .brand-mark path, .mast .brand-mark polygon { fill: #a77a33; }
+  .mast h1 { font-family: 'Instrument Serif', Georgia, serif; font-size: 38px; font-weight: 400; margin: 0 0 6px; letter-spacing: -0.01em; line-height: 1; }
+  .mast .vol { font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: #6B6657; margin-top: 14px; }
+  .mast .vol .sep { color: #B8870A; padding: 0 8px; }
+  .mast .vol .vol-seg { display: inline; }
+
+  /* Letter */
+  .letter { padding: 36px 40px 28px; border-bottom: 1px solid #E0D8C5; }
+  .letter .from { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #B8870A; margin: 0 0 16px; font-weight: 600; }
+  .letter p { font-size: 15px; line-height: 1.7; color: #2B3550; margin: 0 0 14px; }
+  .letter strong { color: #0A1A3A; font-weight: 600; }
+  .letter em { color: #0A1A3A; }
+  .drop { float: left; font-family: 'Instrument Serif', Georgia, serif; font-size: 92px; line-height: 0.82; padding: 0 6px 0 0; margin: 0; color: #B8870A; }
+
+  /* Stats strip in lede */
+  .stat-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 24px 0 4px; padding: 20px 0; border-top: 1px dotted #D0C7B0; border-bottom: 1px dotted #D0C7B0; }
+  .stat-strip .s { padding: 0 12px; border-right: 1px dotted #D0C7B0; text-align: center; }
+  .stat-strip .s:last-child { border-right: 0; }
+  .stat-strip .n { font-family: 'Instrument Serif', Georgia, serif; font-size: 32px; line-height: 1; color: #0A1A3A; }
+  .stat-strip .l { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #6B6657; margin-top: 6px; }
+
+  /* Section block */
+  .block { padding: 28px 40px 28px; border-bottom: 1px solid #E0D8C5; }
+  .block:last-child { border-bottom: 0; }
+  .block .label { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .block .label .num { font-family: 'Instrument Serif', Georgia, serif; font-size: 22px; color: #B8870A; min-width: 36px; }
+  .block .label .name { font-size: 13px; letter-spacing: 0.24em; text-transform: uppercase; color: #0A1A3A; font-weight: 600; flex: 1; display: flex; align-items: center; gap: 8px; }
+  .block .label .rule { height: 1px; background: #B8870A; flex: 1; max-width: 80px; }
+  .block h2 { font-family: 'Instrument Serif', Georgia, serif; font-size: 26px; font-weight: 400; margin: 0 0 12px; line-height: 1.15; letter-spacing: -0.01em; }
+  .block h3 { font-family: 'Instrument Serif', Georgia, serif; font-size: 19px; font-weight: 400; margin: 20px 0 10px; }
+  .block p { font-size: 14.5px; line-height: 1.65; color: #3A4360; margin: 0 0 12px; }
+  .block p strong { color: #0A1A3A; font-weight: 600; }
+  .block p em { color: #0A1A3A; font-style: italic; }
+
+  /* New members table */
+  .roster { width: 100%; border-collapse: collapse; margin: 4px 0 18px; font-size: 13px; }
+  .roster tr { border-bottom: 1px dotted #D0C7B0; }
+  .roster tr:last-child { border-bottom: 0; }
+  .roster td { padding: 10px 0; vertical-align: baseline; }
+  .roster .nm { font-family: 'Instrument Serif', Georgia, serif; font-size: 16px; color: #0A1A3A; }
+  .roster .ct { text-align: right; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #B8870A; }
+
+  /* Deals list */
+  .ledger { margin: 0 0 18px; padding: 0; list-style: none; border-top: 1px solid #B8870A; border-bottom: 1px solid #B8870A; }
+  .ledger li { padding: 12px 0; border-bottom: 1px dotted #D0C7B0; display: flex; align-items: baseline; gap: 12px; }
+  .ledger li:last-child { border-bottom: 0; }
+  .ledger .idx { font-family: 'Instrument Serif', Georgia, serif; font-size: 14px; color: #B8870A; min-width: 32px; }
+  .ledger .nm { font-family: 'Instrument Serif', Georgia, serif; font-size: 17px; color: #0A1A3A; flex: 1; }
+  .ledger .sec { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #6B6657; }
+
+  /* Pull-to-action box */
+  .callout { background: #F7F1E2; border: 1px solid #B8870A; padding: 22px 26px; margin: 16px 0; }
+  .callout p { margin: 0 0 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout em { font-style: italic; color: #0A1A3A; }
+  .callout strong { color: #0A1A3A; }
+
+  /* Pod card */
+  .pod { background: #F7F1E2; border: 1px solid #B8870A; padding: 28px; margin: 6px 0 18px; }
+  .pod .ep { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8870A; font-weight: 600; margin: 0 0 10px; }
+  .pod .ep-title { font-family: 'Instrument Serif', Georgia, serif; font-size: 22px; line-height: 1.15; margin: 0 0 14px; }
+  .pod p { font-size: 13.5px; line-height: 1.6; margin: 0 0 12px; }
+
+  /* Events */
+  .events { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 4px 0 18px; }
+  .events .ev { border: 1px solid #E0D8C5; padding: 16px 18px; }
+  .events .ev .city { font-family: 'Instrument Serif', Georgia, serif; font-size: 19px; line-height: 1.1; }
+  .events .ev .date { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #B8870A; margin-top: 6px; }
+  .events .ev .status { display: inline-block; margin-top: 10px; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; padding: 4px 8px; border: 1px solid #B8870A; color: #B8870A; font-weight: 600; }
+  .events .ev.featured { background: #0A1A3A; color: #FFFFFF; border-color: #0A1A3A; }
+  .events .ev.featured .city { color: #FFFFFF; }
+  .events .ev.featured .date { color: #D9B863; }
+  .events .ev.featured .status { color: #D9B863; border-color: #D9B863; }
+  .events .ev.soldout { background: #FAF7EE; }
+  .events .ev.soldout .status { background: #B8870A; color: #FFFFFF; }
+
+  /* Feature cards */
+  .feat { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0 0; }
+  .feat .f { border: 1px solid #E0D8C5; padding: 18px 20px; }
+  /* Gmail mobile partially ignores `display:flex` on small wrappers, which lets the
+     circle stretch to the available height. Use inline-block + line-height +
+     vertical-align for email-bulletproof centering. */
+  .feat .f .icon { width: 44px; height: 44px; line-height: 44px; border: 1px solid #B8870A; border-radius: 50%; text-align: center; box-sizing: border-box; font-family: 'Instrument Serif', Georgia, serif; font-size: 14px; color: #B8870A; margin-bottom: 12px; }
+  .feat .f .icon img { vertical-align: middle; display: inline-block; }
+  .feat .f h4 { font-family: 'Instrument Serif', Georgia, serif; font-size: 18px; font-weight: 400; margin: 0 0 8px; line-height: 1.15; display: flex; align-items: center; gap: 4px; }
+  .feat .f p { font-size: 13px; line-height: 1.55; color: #3A4360; margin: 0; }
+  /* 2nTV brand mark — replaces the play-button icon in the TV card. Near-square aspect (862:833). */
+  .feat .f .tv-mark { display: block; height: 44px; width: auto; margin: 0 0 12px; }
+
+  /* CTA pill */
+  .cta { display: inline-block; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #0A1A3A; text-decoration: none; border: 1px solid #0A1A3A; padding: 10px 18px; font-weight: 600; }
+  .cta::after { content: ' →'; }
+  /* Smaller CTA variant for the feature-card buttons. */
+  .cta.cta-sm { font-size: 10px; letter-spacing: 0.18em; padding: 7px 12px; }
+
+  /* Footer */
+  footer { background: #0A1A3A; color: #C9CDD9; padding: 36px 40px; text-align: center; }
+  footer .foot-mark { width: 44px; height: 44px; margin: 0 auto 18px; display: block; }
+  footer .foot-mark .ring-bg { fill: #FFFFFF; }
+  footer .foot-mark .ring { fill: #0A1A3A; }
+  footer .foot-mark .glyph { fill: #0A1A3A; }
+  footer .sigs { display: flex; justify-content: center; gap: 48px; margin: 0 0 24px; padding: 0 0 24px; border-bottom: 1px solid #1F2D52; flex-wrap: wrap; }
+  footer .sig { text-align: center; }
+  footer .sig .who { font-family: 'Instrument Serif', Georgia, serif; font-size: 18px; color: #FFFFFF; margin-bottom: 4px; }
+  footer .sig a { color: #D9B863; text-decoration: none; font-size: 12px; }
+  footer .smol { font-size: 11px; line-height: 1.7; opacity: 0.75; }
+  footer a.lnk { color: #D9B863; text-decoration: none; }
+
+  @media (max-width: 600px) {
+    body { padding: 0; }
+    .wrap { border-width: 4px; }
+    .inner { margin: 6px; }
+    .mast, .letter, .block, footer { padding-left: 22px; padding-right: 22px; }
+    .events, .feat { grid-template-columns: 1fr; }
+    .stat-strip { grid-template-columns: 1fr 1fr 1fr; }
+    .mast h1 { font-size: 30px; }
+    footer .sigs { gap: 24px; }
+    /* Volume line — too wide for narrow viewports with the gold diamonds. Stack the 3 segments
+       and drop the diamonds; tighten letter-spacing slightly so each segment sits comfortably. */
+    .mast .vol { letter-spacing: 0.22em; line-height: 1.7; }
+    .mast .vol .sep { display: none; }
+    .mast .vol .vol-seg { display: block; }
+    /* Section labels — shrink the title and tighten the gap on narrow viewports.
+       Numerals get bumped up slightly so they read as anchors, not afterthoughts. */
+    .block .label { gap: 10px; }
+    .block .label .num { min-width: 0; font-size: 26px; }
+    .block .label .name { font-size: 11px; letter-spacing: 0.22em; }
+  }
+</style>
+</head>
+<body>
+<!--
+  NOTE FOR AC PUSH: This preview uses inline SVG / hosted PNGs for the 2^n logo.
+  Outlook desktop (Win) will not render inline SVG. Before sending via AC,
+  confirm each logo mark resolves to a hosted PNG.
+  OPEN ITEM (V1): Section II "Watch the Spotlight" CTA href is a PLACEHOLDER —
+  swap REPLACE-WITH-FRUITION-VIDEO-LINK with the real Fruition Partners video URL.
+  Section V left feature-card icon uses a ⌂ glyph placeholder; swap for a hosted
+  Directory PNG icon before the production send if desired.
+-->
+<div class="wrap"><div class="inner">
+
+  <header class="mast">
+    <img class="brand-mark" src="https://content.app-us1.com/MZZPE9/2025/11/27/70fbf0f9-a1c1-4c5c-86a2-1a76e1732cf9.png" alt="2^n">
+    <h1>Trends &amp; Topics</h1>
+    <div class="vol"><span class="vol-seg">Family Office Brief</span> <span class="sep">◆</span> <span class="vol-seg">Volume VI</span> <span class="sep">◆</span> <span class="vol-seg">June 2026</span></div>
+  </header>
+
+  <section class="letter">
+    <div class="from">From the Founders</div>
+    <p><span class="drop">T</span>he month of May reminded me why we built 2^n. We welcomed <strong>nine new family offices</strong> this month, each one arriving through a member who thought of us — and to everyone who made an introduction, thank you. The members adding the most value here aren't always the loudest in the room; they're the ones quietly opening a door for a peer they respect, and we&nbsp;notice.</p>
+    <p>We also got out on the road, where we do our best listening. New York gave us a week of good conversations and a great <strong>2^n Dinner on the 21st</strong> — you could feel the camaraderie the second the room filled, and seeing those connections continue on the platform afterward is exactly what we <em>knew</em> this would&nbsp;become.</p>
+    <p>So keep introducing the family offices and deal partners who belong here; every right person you bring makes the whole community stronger. Speaking of which, the <strong>2^n Talent Network</strong> is up next — family offices will be able to post roles and lean on the network to refer people they trust. If you have a thought on how we can serve this community better, send it my&nbsp;way.</p>
+
+    <div class="stat-strip">
+      <div class="s"><div class="n">136</div><div class="l">Family Offices</div></div>
+      <div class="s"><div class="n">9</div><div class="l">New in May</div></div>
+      <div class="s"><div class="n">1</div><div class="l">Wk to Summit</div></div>
+    </div>
+
+    <p style="margin-top:20px;">Here's what moved in May and what to have on your radar heading into&nbsp;June.</p>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">I.</span><span class="name label-name">Member Spotlight</span><span class="rule"></span></div>
+    <h2>Nine new family offices joined in&nbsp;May.</h2>
+    <p>Welcome to the community. This month's class runs coast to coast — from Bainbridge Island to Charleston — with a strong showing across the New York&nbsp;corridor.</p>
+    <table class="roster">
+      <tr><td class="nm">The Straus Group</td><td class="ct">Fort Lee, NJ</td></tr>
+      <tr><td class="nm">Evergreen Investment Company</td><td class="ct">Bainbridge Island, WA</td></tr>
+      <tr><td class="nm">PSP Partners</td><td class="ct">Chicago, IL</td></tr>
+      <tr><td class="nm">Global Asset Capital</td><td class="ct">Denver, CO</td></tr>
+      <tr><td class="nm">HRK Group</td><td class="ct">Saint Paul, MN</td></tr>
+      <tr><td class="nm">Maklin Holdings</td><td class="ct">New York, NY</td></tr>
+      <tr><td class="nm">Cercano Management</td><td class="ct">New York, NY</td></tr>
+      <tr><td class="nm">Beemok</td><td class="ct">Charleston, SC</td></tr>
+      <tr><td class="nm">PCW Management Center</td><td class="ct">Stonington, CT</td></tr>
+    </table>
+    <a href="https://www.2pwrn.com/dashboard" class="cta">View Member Profiles</a>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">II.</span><span class="name label-name">Deal Partner Program</span><span class="rule"></span></div>
+    <h2>Welcome Two Sigma — and a fresh name for the&nbsp;program.</h2>
+    <p><em>You may have noticed the label above. "Sponsor Members" are now <strong>Deal Partners</strong> — a name that better fits the role they play in the network. Everything else stays the same; just a fresh&nbsp;label.</em></p>
+    <p>We're glad to welcome <strong>Two Sigma</strong> as our newest deal&nbsp;partner.</p>
+    <p>And don't miss the new <strong>Deal Partner Spotlight</strong> on <strong>Fruition Partners</strong> — they've met many of our family office members and never fail to impress. Watch the short video to see&nbsp;why.</p>
+    <p style="margin-top:16px;"><a href="REPLACE-WITH-FRUITION-VIDEO-LINK" class="cta">Watch the Spotlight</a></p>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">III.</span><span class="name label-name">Deal Spotlight</span><span class="rule"></span></div>
+    <h2>Recent on the&nbsp;Marketplace.</h2>
+    <ol class="ledger">
+      <li><span class="idx">01</span><span class="nm">SK Slovan Bratislava</span><span class="sec">Football Club</span></li>
+      <li><span class="idx">02</span><span class="nm">Permian Basin Minerals</span><span class="sec">Energy · Minerals</span></li>
+      <li><span class="idx">03</span><span class="nm">Howard University Master Lease</span><span class="sec">Student Housing · DC</span></li>
+    </ol>
+    <p>Deals are the catalyst. In 2^n, a co-investment opportunity isn't just a transaction — it's the fastest, most natural reason for two families to get on a call and compare notes. That's one way relationships form&nbsp;here.</p>
+    <p>It's also how every family in this room effectively expands their deal flow: when you co-invest alongside another member, you're leveraging their network, their diligence, their conviction — and they're leveraging&nbsp;yours.</p>
+    <p>Use the <strong>+ button</strong> to post a co-invest you'd like to share; 2^n reviews every deal before it goes live. And use the action buttons — they&nbsp;matter. A thumbs up on a deal isn't just a like; it's a&nbsp;<strong>signal</strong>. Tap it and 2^n will facilitate a call with the family or sponsor who posted it. The more you engage, the better the marketplace gets at surfacing the kinds of deals this room actually wants to&nbsp;see.</p>
+
+    <div class="callout">
+      <p><em>Access to deals you won't find through traditional channels is one of the most valuable parts of being in&nbsp;2^n.</em></p>
+      <p><strong>Engagement is what unlocks&nbsp;it.</strong></p>
+    </div>
+
+    <p style="margin-top:18px;"><a href="https://www.2pwrn.com/dashboard/deals" class="cta">View Deal Marketplace</a></p>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">IV.</span><span class="name label-name"><img class="logo-inline" src="https://content.app-us1.com/MZZPE9/2025/11/27/70fbf0f9-a1c1-4c5c-86a2-1a76e1732cf9.png" alt="2^n"> Intelligence</span><span class="rule"></span></div>
+    <div class="pod">
+      <div class="ep">Exponential Podcast</div>
+      <div class="ep-title">Passing the mic on&nbsp;Exponential.</div>
+      <p>A quick thank-you to <strong>Brett Kaplan</strong>, who started <em>Exponential</em> and carried it through its first season. Brett's turning his focus to building the real estate strategy at Kloof — we're sending him off with real gratitude for getting the podcast off the&nbsp;ground.</p>
+      <p>Stepping in alongside <strong>Kyle Shoemaker</strong> is <strong>Matt Burskey</strong>, who's been in the co-host chair for a stretch and is now officially taking the&nbsp;reins.</p>
+      <p>We took a couple of months off as season one wrapped, and we've got episodes on the horizon with current members we're genuinely excited to put in front of the community. Be on the lookout later this month for new&nbsp;episodes.</p>
+      <p style="margin-top:18px;"><a href="https://www.2pwrn.com/dashboard/podcast" class="cta">Catch Up on Season One</a></p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">V.</span><span class="name label-name">Inside <img class="logo-inline" src="https://content.app-us1.com/MZZPE9/2025/11/27/70fbf0f9-a1c1-4c5c-86a2-1a76e1732cf9.png" alt="2^n"></span><span class="rule"></span></div>
+    <h2>Where we'll&nbsp;be.</h2>
+    <div class="events" style="grid-template-columns:1fr;">
+      <div class="ev featured">
+        <div class="city">Denver Summit</div>
+        <div class="date">June 10–11, 2026</div>
+        <div class="status">★ Inaugural — Next Week</div>
+      </div>
+    </div>
+    <p style="margin-top:8px;"><a href="https://app.2pwrn.com/dashboard/events/10" class="cta">RSVP for Denver Summit</a></p>
+
+    <h3 style="margin-top:32px;">New Platform&nbsp;Features</h3>
+    <div class="feat">
+      <div class="f">
+        <div class="icon" style="width:44px;height:44px;line-height:44px;border:1px solid #B8870A;border-radius:50%;text-align:center;box-sizing:border-box;font-size:22px;">⌂</div>
+        <h4>New Directory&nbsp;View</h4>
+        <p>The Directory got a real upgrade. Family offices, vendors, and deal partners now live under one roof — a single dropdown narrows you to whichever group you need, so finding someone takes seconds. You can also switch between organization-level and member-level search: know the firm, search the firm; after a specific person, flip to member view and look them up by&nbsp;name.</p>
+        <p style="margin: 14px 0 0;"><a href="https://www.2pwrn.com/dashboard/directory" class="cta cta-sm">Open the Directory</a></p>
+      </div>
+      <div class="f">
+        <div class="icon" style="width:44px;height:44px;line-height:44px;border:1px solid #B8870A;border-radius:50%;text-align:center;box-sizing:border-box;"><img src="https://content.app-us1.com/MZZPE9/2026/05/05/3a616cd4-ed14-4e24-8303-196104ce86c2.png" width="23" height="23" alt="Amplifier medal" style="vertical-align:middle;display:inline-block;width:23px;height:23px;"></div>
+        <h4>Amplifier&nbsp;Status</h4>
+        <p>Check your Amplifier status to see exactly how many points you've earned and where you stand alongside other members. Every tier you reach earns a trophy — so log in, check your standing, and start filling the trophy&nbsp;case.</p>
+        <p style="margin: 14px 0 0;"><a href="https://www.2pwrn.com/dashboard/amplifier" class="cta cta-sm">View Amplifier Status</a></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <img class="foot-mark" src="https://content.app-us1.com/MZZPE9/2026/05/05/7a056116-5ce7-460e-a9aa-0e536a3a8017.png" alt="2^n">
+    <div class="sigs">
+      <div class="sig"><div class="who">Matt Burskey</div><a href="mailto:mb@2pwrn.com">mb@2pwrn.com</a></div>
+      <div class="sig"><div class="who">Sydney Burskey</div><a href="mailto:sydneyb@2pwrn.com">sydneyb@2pwrn.com</a></div>
+    </div>
+    <div class="smol">
+      <a class="lnk" href="https://2pwrn.com">2pwrn.com</a> &nbsp;·&nbsp; <a class="lnk" href="https://linkedin.com/company/2-power-n">LinkedIn</a><br>
+      2 Power N, LLC &nbsp;·&nbsp; 3773 Cherry Creek North Drive, 8th Floor &nbsp;·&nbsp; Denver, Colorado 80209
+    </div>
+  </footer>
+
+</div></div>
+</body>
+</html>
