@@ -23,6 +23,17 @@ Then ask via `AskUserQuestion`:
 
 Capture from the chosen event record: `id`, `title`, `venue.city`, `date`, `eventType`.
 
+### 1b. Establish the guest-list source of truth
+
+**Always ask — never assume.** The authoritative roster source varies per event and CJ defines it each run. Before anything touches the guest list, ask via `AskUserQuestion`:
+- **Question:** "What's the source of truth for the guest list for this event?"
+- **Options:**
+  - `Event guest list in the platform (Recommended)` — pull the roster from `mcp__2n__findEventGuests` for this event (the default path; see Step 5).
+  - `Local file` — CJ provides an absolute path to a local spreadsheet (xlsx / csv). Ask for the path (free-text), then parse it for the roster plus any tier columns (`Member` / `Founding Member` / `Deal Partner` / `Vendor Sponsor` / `Amp Badge`), exactly as with the emailed master list ([[feedback_event_cards_master_list]]).
+  - `Google Drive link` — CJ provides a Drive file link or ID. Download it via the Drive REST API using gcloud ADC (same auth as Step 9), then parse it like the local file.
+
+Capture the choice — **Step 5 branches on it.** Whatever the source, you may still cross-reference the *other* sources for fields the chosen one lacks (e.g. a file gives tiers but the platform carries `user.status` amplifier; the platform gives registrations but the file is the authority on who actually attends). Surface every discrepancy to CJ before rendering, per the master-list reconciliation rules.
+
 ### 2. Ask what to generate
 
 `AskUserQuestion`:
@@ -62,6 +73,8 @@ Only proceed past this gate once every sponsor logo is either SVG or explicitly 
 - Their company field should be left empty (or ask the user).
 
 ### 5. Pull guest data
+
+**Branch on the Step 1b source of truth.** If CJ chose a **local file** or **Google Drive link**, build the roster from that file (name, company/firm, and any tier columns) and use the platform only to enrich tier/amplifier fields the file doesn't carry — then skip ahead to the status-field rules below for any platform enrichment. The `findEventGuests` pull below is the path **only when the source of truth is the platform guest list.**
 
 `mcp__2n__findEventGuests where={"event":{"equals":<eventId>}}` — paginate through all pages. The eventGuest record already inlines a fully-expanded `user` object including `user.company`, so a separate `findUsers` call is usually unnecessary; only fall back to `findUsers` if a field you need is missing from the embedded user.
 

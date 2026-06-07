@@ -87,7 +87,7 @@ def title_text(guest: dict) -> str | None:
     if guest.get("titleOverride"):
         return guest["titleOverride"]
     ms = guest.get("memberStatus")
-    if ms in ("Founding Member", "Member", "Sponsor Member"):
+    if ms in ("Founding Member", "Member", "Sponsor Member", "Deal Partner"):
         return ms
     return None
 
@@ -126,7 +126,7 @@ def sponsor_cells_html(sponsors: list[dict], manifest_dir: Path) -> str:
     return "".join(cells)
 
 
-def table_card_page(guest: dict, sponsors_html: str, assets: dict[str, str]) -> str:
+def table_card_page(guest: dict, sponsors_html: str, assets: dict[str, str], sponsors_cls: str = "sponsors") -> str:
     """One page per guest. Printer handles double-sided so back == front."""
     icons = pre_name_icons_html(guest, assets)
     t = title_text(guest)
@@ -157,13 +157,13 @@ def table_card_page(guest: dict, sponsors_html: str, assets: dict[str, str]) -> 
           </div>
           {status}
           <div class="company">{company}</div>
-          <div class="sponsors">{sponsors_html}</div>
+          <div class="{sponsors_cls}">{sponsors_html}</div>
         </div>
       </section>
     '''
 
 
-def name_badge_page(guest: dict, sponsors_html: str, assets: dict[str, str]) -> str:
+def name_badge_page(guest: dict, sponsors_html: str, assets: dict[str, str], sponsors_cls: str = "sponsors") -> str:
     icons = pre_name_icons_html(guest, assets)
     t = title_text(guest)
     status = ""
@@ -188,7 +188,7 @@ def name_badge_page(guest: dict, sponsors_html: str, assets: dict[str, str]) -> 
           </div>
           {status}
           <div class="company">{company}</div>
-          <div class="sponsors">{sponsors_html}</div>
+          <div class="{sponsors_cls}">{sponsors_html}</div>
         </div>
       </section>
     '''
@@ -275,6 +275,9 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
   margin-top: 0.18in;
   display: flex; align-items: flex-start; justify-content: center; gap: 0.4in;
 }}
+/* 4-sponsor row (Denver Summit 2026): tighten the gap so four 0.82in slots +
+   QR codes clear the 0.4in card margins. Logo slot size is unchanged. */
+.sponsors--4 {{ gap: 0.32in; }}
 .sponsor-cell {{
   display: flex; flex-direction: column; align-items: center; gap: 0.18in;
 }}
@@ -366,6 +369,9 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
   margin-top: 0.14in;
   display: flex; align-items: center; justify-content: center; gap: 0.32in;
 }}
+/* 4-sponsor badge row: 4x0.52in slots only clear the 3.1in usable width with a
+   tighter gap. Slot size unchanged. */
+.badge .sponsors--4 {{ gap: 0.22in; }}
 .badge .sponsor-slot {{
   width: 0.52in; height: 0.21in;
   display: flex; align-items: center; justify-content: center;
@@ -381,14 +387,20 @@ def build_html(manifest: dict, manifest_dir: Path, kind: str, assets: dict[str, 
     sponsors = manifest["sponsors"]
     guests = manifest["guests"]
 
+    # Count-based modifier: the canonical 3-sponsor row is locked, so only
+    # tag the container when there are 4+ sponsors. The --4 rules tighten the
+    # inter-cell gap (logos keep their canonical slot size) so the wider row
+    # still clears the card/badge margins. 3-sponsor output stays byte-identical.
+    sponsors_cls = "sponsors sponsors--4" if len(sponsors) >= 4 else "sponsors"
+
     if kind == "table-cards":
         css = TABLE_CSS
         s_html = sponsor_cells_html(sponsors, manifest_dir)
-        body_parts = [table_card_page(g, s_html, assets) for g in guests]
+        body_parts = [table_card_page(g, s_html, assets, sponsors_cls) for g in guests]
     elif kind == "name-badges":
         css = BADGE_CSS
         s_html = sponsor_logos_html(sponsors, manifest_dir, badge=True)
-        body_parts = [name_badge_page(g, s_html, assets) for g in guests]
+        body_parts = [name_badge_page(g, s_html, assets, sponsors_cls) for g in guests]
     else:
         raise ValueError(f"unknown kind: {kind}")
 
