@@ -55,3 +55,11 @@ logs
 exports/events/*/*.pdf
 exports/events/*/*.html
 exports/events/*/tmp/_preview/
+
+# Local-only workstreams (sensitive / separate projects — keep out of the repo)
+# - exports/master-list: attendee master lists (contain emails / PII)
+# - signal: 2n Signal private developer handoff
+# - backdrops: event backdrop (deployed separately on Vercel)
+exports/master-list/
+signal/
+backdrops/
