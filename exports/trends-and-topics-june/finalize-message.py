@@ -6,7 +6,7 @@ No test send. Leaves campaign #42 as draft (status 0).
 import json, urllib.request
 from pathlib import Path
 
-REPO = Path("/Users/christopherjames/Desktop/2n-brain")
+REPO = Path("/Users/christopherjames/Code/2n/2n-brain")
 HTML_PATH = REPO / "exports/trends-and-topics-june/trends-and-topics-june-v9.html"
 ENV_PATH = REPO / ".env"
 MESSAGE_ID = 53

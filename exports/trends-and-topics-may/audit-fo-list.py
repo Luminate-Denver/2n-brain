@@ -19,7 +19,7 @@ import urllib.request
 from datetime import datetime
 from pathlib import Path
 
-REPO = Path("/Users/christopherjames/Desktop/2n-brain")
+REPO = Path("/Users/christopherjames/Code/2n/2n-brain")
 ENV_PATH = REPO / ".env"
 MCP_PATH = REPO / ".mcp.json"
 OUT_PATH = REPO / "exports/trends-and-topics-may/fo-list-audit.md"

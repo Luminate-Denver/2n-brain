@@ -16,7 +16,7 @@ The user invokes `/idea <raw thought>`. Everything after `/idea` is the raw inpu
    - Longer ramblings → distill into 1–3 tight bullet points or a 1–2 sentence summary.
    - Preserve concrete details (names, numbers, references) — do not invent anything the user didn't say.
 2. **Generate a short title** — 3–7 words that capture the essence. Title Case.
-3. **Append** an entry to `/Users/christopherjames/Desktop/2n-brain/2n-brain/ideas.md` in the following format:
+3. **Append** an entry to `/Users/christopherjames/Code/2n/2n-brain/2n-brain/ideas.md` in the following format:
 
 ```markdown
 ## {Title}

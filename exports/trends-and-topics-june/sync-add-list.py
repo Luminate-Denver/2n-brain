@@ -8,7 +8,7 @@ Prints per-member results and the AC list-2 count before/after.
 import json, re, urllib.request
 from pathlib import Path
 
-REPO = Path("/Users/christopherjames/Desktop/2n-brain")
+REPO = Path("/Users/christopherjames/Code/2n/2n-brain")
 ENV_PATH = REPO / ".env"
 MCP_PATH = REPO / ".mcp.json"
 LIST_ID = 2

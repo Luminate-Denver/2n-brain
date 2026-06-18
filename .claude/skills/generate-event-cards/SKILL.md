@@ -240,7 +240,7 @@ Same content as the front of the table card, scaled down. All blocks horizontall
 
 ## Assets
 
-All paths relative to repo root (`/Users/christopherjames/Desktop/2n-brain/2n-brain/`):
+All paths relative to repo root (`/Users/christopherjames/Code/2n/2n-brain/2n-brain/`):
 
 - `assets/2^n_Logo_withCircle_transparent-V2.png` → brand mark (top of card)
 - `assets/2^n_Logo_v2.svg` → inline mini mark (next to "Founding Member" / "Member" / "Sponsor Member" text)

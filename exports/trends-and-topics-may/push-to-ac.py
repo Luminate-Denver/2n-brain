@@ -15,7 +15,7 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-REPO = Path("/Users/christopherjames/Desktop/2n-brain")
+REPO = Path("/Users/christopherjames/Code/2n/2n-brain")
 HTML_PATH = REPO / "exports/trends-and-topics-may/trends-and-topics-may-v4.html"
 ENV_PATH = REPO / ".env"
 LIST_ID = 2  # "Active Family Office Members" — verified from campaign 35

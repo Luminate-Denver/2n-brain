@@ -7,7 +7,7 @@ ADD genuinely active members). READ-ONLY — adds nobody. Prints the list + proj
 import json, re, urllib.request
 from pathlib import Path
 
-REPO = Path("/Users/christopherjames/Desktop/2n-brain")
+REPO = Path("/Users/christopherjames/Code/2n/2n-brain")
 ENV_PATH = REPO / ".env"
 MCP_PATH = REPO / ".mcp.json"
 OUT_MD = REPO / "exports/trends-and-topics-june/member-add-list.md"
