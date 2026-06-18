@@ -1,0 +1,45 @@
+{
+  "event": {
+    "title": "2^n Mile High Family Office Summit",
+    "city": "Denver",
+    "date": "2026_06_10",
+    "eventType": "Summit"
+  },
+  "sponsors": [
+    {
+      "name": "Battery Global Advisors",
+      "logoPath": "tmp/bga.svg",
+      "website": "https://bga.com/"
+    },
+    {
+      "name": "ARCH",
+      "logoPath": "tmp/arch.svg",
+      "website": "https://arch.co"
+    },
+    {
+      "name": "Monfort Companies",
+      "logoPath": "tmp/monfort.svg",
+      "website": "https://monfortcompanies.com/"
+    },
+    {
+      "name": "Holland & Knight",
+      "logoPath": "tmp/hollandknight.svg",
+      "website": "https://www.hklaw.com/",
+      "sizeScale": 1.2
+    }
+  ],
+  "guests": [
+    {
+      "name": "Krishna Kantheti",
+      "company": "Global Asset Capital",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    },
+    {
+      "name": "Sean Marshall",
+      "company": "Buster Ward Capital",
+      "memberStatus": "Member",
+      "amplifierStatus": null
+    }
+  ]
+}
