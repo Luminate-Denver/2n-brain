@@ -1,6 +1,6 @@
 ---
 name: generate-exponential-thumbnail
-description: Generate a new Exponential podcast episode thumbnail (8000×4500 JPG) that is visually identical to the shipped E1–E9 thumbnails — same background, "PRESENTED BY 2^n", "Exponential" wordmark, and hosts line; only the gold bottom band's episode title and guest subtitle change. Use when the user says "new Exponential thumbnail", "generate the Episode #N thumbnail", "make the podcast thumbnail for [guest/company]", or similar.
+description: Generate a new Exponential podcast episode thumbnail (8000×4500 JPG) that is visually identical to the shipped E1–E9 thumbnails — same background, "PRESENTED BY 2^n", "Exponential" wordmark, and hosts line; only the gold bottom band's episode title and guest subtitle change. After approval, saves to the local Thumbnails folder and uploads to the Exponential thumbnails Google Drive folder. Use when the user says "new Exponential thumbnail", "generate the Episode #N thumbnail", "make the podcast thumbnail for [guest/company]", or similar.
 ---
 
 # Generate Exponential Thumbnail
@@ -84,6 +84,34 @@ If they want changes, re-render. Only after sign-off, save to the series folder
 ```
 
 Do not overwrite an existing episode file without confirming.
+
+## Upload to Drive (after approval)
+
+Once the thumbnail is **approved**, upload it — in addition to saving it locally
+above — to the Exponential thumbnails Google Drive folder:
+
+- **Folder:** https://drive.google.com/drive/folders/1yMgTRgCjOYWNow2AS4nMvGQgD0lKB5uT
+- **Folder ID:** `1yMgTRgCjOYWNow2AS4nMvGQgD0lKB5uT`
+
+Upload via the Drive REST API using gcloud Application Default Credentials, **not**
+the MCP `create_file` tool (that needs the whole ~3–4 MB JPG as a base64 param,
+which is too large for a tool call). The ADC for `cj@przm.studio` already carry
+the `drive` scope (same setup the `generate-event-cards` skill uses).
+
+1. Token: `TOKEN=$(gcloud auth application-default print-access-token)`
+2. Check whether `Exponential-Thumbnail-E<N>.jpg` already exists in the folder
+   (re-upload after a revision):
+   `GET https://www.googleapis.com/drive/v3/files?q=<urlencoded: name='Exponential-Thumbnail-E<N>.jpg' and '1yMgTRgCjOYWNow2AS4nMvGQgD0lKB5uT' in parents and trashed=false>&supportsAllDrives=true&includeItemsFromAllDrives=true&fields=files(id,name)`
+3. **If it exists** → replace its contents (keep the same file/link):
+   `PATCH https://www.googleapis.com/upload/drive/v3/files/<fileId>?uploadType=media&supportsAllDrives=true` with the JPG bytes and `Content-Type: image/jpeg`.
+   **If not** → create it:
+   multipart `POST https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&supportsAllDrives=true&fields=id,name,webViewLink` with metadata `{"name":"Exponential-Thumbnail-E<N>.jpg","parents":["1yMgTRgCjOYWNow2AS4nMvGQgD0lKB5uT"]}` + the JPG part (`image/jpeg`).
+4. Report the `webViewLink` back to the user.
+
+`supportsAllDrives=true` is included so it works whether the folder lives in My
+Drive or a Shared Drive. If the token comes back without the Drive scope, ask the
+user to run `gcloud auth login --enable-gdrive-access --update-adc` once, then
+retry.
 
 ## Calibration (how the constants were derived)
 
