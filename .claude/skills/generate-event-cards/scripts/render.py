@@ -102,12 +102,23 @@ def _logo_style(sponsor: dict) -> str:
     return f' style="transform: scale({float(scale)}); transform-origin: center center;"'
 
 
+# The Exponential podcast mark is the ONLY logo allowed to keep its native colors
+# (its gold accents are part of the 2N brand family). Every other sponsor gets the
+# black-fill filter regardless of any manifest flag.
+COLOR_KEEP_SPONSORS = {"exponential", "exponential podcast"}
+
+
+def _logo_cls(sponsor: dict) -> str:
+    name = (sponsor.get("name") or "").strip().lower()
+    return "sponsor-logo sponsor-logo--colored" if name in COLOR_KEEP_SPONSORS else "sponsor-logo"
+
+
 def sponsor_logos_html(sponsors: list[dict], manifest_dir: Path, *, badge: bool = False) -> str:
     slot_cls = "sponsor-slot sponsor-slot--badge" if badge else "sponsor-slot"
     tags = []
     for s in sponsors:
         uri = data_uri(manifest_dir / s["logoPath"])
-        tags.append(f'<div class="{slot_cls}"><img class="sponsor-logo" src="{uri}" alt=""{_logo_style(s)}/></div>')
+        tags.append(f'<div class="{slot_cls}"><img class="{_logo_cls(s)}" src="{uri}" alt=""{_logo_style(s)}/></div>')
     return "".join(tags)
 
 
@@ -119,7 +130,7 @@ def sponsor_cells_html(sponsors: list[dict], manifest_dir: Path) -> str:
         qr = qr_data_uri(s["website"])
         cells.append(
             f'<div class="sponsor-cell">'
-            f'  <div class="sponsor-slot"><img class="sponsor-logo" src="{logo}" alt=""{_logo_style(s)}/></div>'
+            f'  <div class="sponsor-slot"><img class="{_logo_cls(s)}" src="{logo}" alt=""{_logo_style(s)}/></div>'
             f'  <img class="sponsor-qr" src="{qr}" alt=""/>'
             f'</div>'
         )
@@ -278,6 +289,9 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
 /* 4-sponsor row (Denver Summit 2026): tighten the gap so four 0.82in slots +
    QR codes clear the 0.4in card margins. Logo slot size is unchanged. */
 .sponsors--4 {{ gap: 0.32in; }}
+/* Single-sponsor row: one lone logo at the canonical slot size reads as an
+   afterthought, so the slot grows ~1.8x linear (CJ, SF 2026). QR unchanged. */
+.sponsors--1 .sponsor-slot {{ width: 1.48in; height: 0.49in; }}
 .sponsor-cell {{
   display: flex; flex-direction: column; align-items: center; gap: 0.18in;
 }}
@@ -289,6 +303,7 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
   max-width: 100%; max-height: 100%;
   object-fit: contain; filter: brightness(0) invert(20%);
 }}
+.sponsor-logo--colored {{ filter: none; }}
 .sponsor-qr {{
   width: 0.34in; height: 0.34in;
   display: block;
@@ -372,6 +387,7 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
 /* 4-sponsor badge row: 4x0.52in slots only clear the 3.1in usable width with a
    tighter gap. Slot size unchanged. */
 .badge .sponsors--4 {{ gap: 0.22in; }}
+.badge .sponsors--1 .sponsor-slot {{ width: 0.94in; height: 0.38in; }}
 .badge .sponsor-slot {{
   width: 0.52in; height: 0.21in;
   display: flex; align-items: center; justify-content: center;
@@ -380,6 +396,7 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
   max-width: 100%; max-height: 100%;
   object-fit: contain; filter: brightness(0) invert(20%);
 }}
+.badge .sponsor-logo--colored {{ filter: none; }}
 """
 
 
@@ -391,7 +408,12 @@ def build_html(manifest: dict, manifest_dir: Path, kind: str, assets: dict[str, 
     # tag the container when there are 4+ sponsors. The --4 rules tighten the
     # inter-cell gap (logos keep their canonical slot size) so the wider row
     # still clears the card/badge margins. 3-sponsor output stays byte-identical.
-    sponsors_cls = "sponsors sponsors--4" if len(sponsors) >= 4 else "sponsors"
+    if len(sponsors) >= 4:
+        sponsors_cls = "sponsors sponsors--4"
+    elif len(sponsors) == 1:
+        sponsors_cls = "sponsors sponsors--1"
+    else:
+        sponsors_cls = "sponsors"
 
     if kind == "table-cards":
         css = TABLE_CSS
