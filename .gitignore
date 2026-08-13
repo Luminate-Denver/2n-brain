@@ -63,3 +63,6 @@ exports/events/*/tmp/_preview/
 exports/master-list/
 signal/
 backdrops/
+
+# Confidential value-proposition deck (deployed from the separate local Vercel project)
+exports/deck/
