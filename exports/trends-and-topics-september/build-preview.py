@@ -1,7 +1,7 @@
 from pathlib import Path
 import re,html
 root=Path('/Users/christopherjames/Code/2n/2n-brain'); out=root/'exports/trends-and-topics-september'
-s=(root/'.agents/skills/generate-trends-topics/templates/trends-and-topics-template.html').read_text()
+s=(out/'template-base.html').read_text()
 parts=re.split(r'(<!-- ================= .*? ================= -->)',s)
 z={parts[i]:parts[i+1] for i in range(1,len(parts),2)}
 keys=list(z)
