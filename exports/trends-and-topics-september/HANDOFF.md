@@ -1,10 +1,10 @@
 # September Trends & Topics handoff
 
-Date: September 9, 2026. Next action: CJ/Matt approve and send campaign 46 from ActiveCampaign after final review. This closeout does not authorize a broadcast.
+Date: September 9, 2026. COMPLETE: CJ manually sent campaign 46. ActiveCampaign verified status 5 (completed), 273 sent, September 9 at 7:42:52 a.m. MT; completed at 7:43:07 a.m. MT. No broadcast action remains.
 
 ## Current state
 
-- Campaign 46, message 57, list 2; canonical subject: `2^n Family Office Brief: September 2026`.
+- Completed campaign 46, message 57, list 2; canonical subject: `2^n Family Office Brief: September 2026`.
 - Final preview: `trends-and-topics-september-v1.html`. The filename stayed v1 throughout review; email test subjects advanced separately through preview v6.
 - Latest test v6 sent successfully to CJ, Matt, and Sydney. Canonical subject restored after each round.
 - All six Matt revisions from September 9 at 4:53 a.m. MT applied. Latest event wording: “Suggest or host in-person events and see which members are attending.” CJ explicitly retained the single sentence.
@@ -19,7 +19,7 @@ Full-width roster dotted lines, location tracking 0.5px, 18px list-to-button gap
 
 ## Workflow and caveats
 
-`build-preview.py` reproduces the final artifact; do not overwrite it with an older template. `update-draft.py` checks campaign status 0, updates message 57, verifies HTML, and never sends. Never rerun historic send/sync scripts: they performed external actions and are not generally idempotent. A new test needs a unique subject, then canonical subject restoration. No production broadcast endpoint is provided.
+`build-preview.py` reproduces the final artifact; do not overwrite it with an older template. `update-draft.py` checks campaign status 0 and now intentionally refuses the completed campaign. Do not modify or resend campaign 46. Never rerun historic send/sync scripts: they performed external actions and are not generally idempotent. A new test needs a unique subject, then canonical subject restoration. No production broadcast endpoint is provided.
 
 Browser tooling blocked local-file rendering. CJ reviewed the local artifact and supplied screenshots across phone/tablet widths. HTML structure/compliance checks passed; automated viewport-overflow matrix remains unverified. Footer retains AC address/unsubscribe merge tags. CJ changed the AC default address before test v5; actual delivered address was not independently verified.
 
