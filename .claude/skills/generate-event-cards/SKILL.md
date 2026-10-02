@@ -202,19 +202,19 @@ If they confirm, delete both the rendered PDF files and their matching `.html` i
 - Status: brand gold, sans (Overused Grotesk), weight 400
 - Company / family-office name: **name navy** (`#0A1A3A`), **Instrument Serif**, weight 400 — matches the guest name color (switched from brand gold on 2026-05-15 per Matt's NY 2026 review).
 - **2N logo aspect ratio is locked everywhere.** Every `<img>` rendering the 2N mark (`.brand` on the card/badge, `.mini-2n` inside the status line) must set explicit `width` and `height` to the same value plus `flex-shrink: 0` + `object-fit: contain`. Setting only `height` lets a flex container squash the width without losing height, which distorts the circle. If you add a new place that renders the 2N mark, apply the same pattern.
-- **Horizontal centering**: every block on the front of the card and on the badge (brand mark, name, status line, company, sponsor row) is horizontally centered. The silver/gold amplifier check (when present) hangs left of the name via absolute positioning (`right: 100%` relative to the inline-block `.name`) so the name itself stays optically centered on the card.
+- **Horizontal centering**: every block on the front of the card and on the badge (brand mark, name, status line, company, sponsor row) is horizontally centered. The silver/gold amplifier check (when present) hangs **right** of the name, verified-badge style, via absolute positioning (`left: 100%` + `margin-left` relative to the inline-block `.name`; moved from the left on 2026-10-01, Chicago Oct 2026 V3, per CJ) so the name itself stays optically centered on the card.
 - **Vertical centering**: the entire content group (`.stack` = brand mark + name-row + status + company + sponsors) is vertically centered on the page via page-level flex (`.page { display: flex; flex-direction: column; justify-content: center; align-items: center; }`). No absolute positioning of the brand mark or sponsor row — everything flows in the stack.
-- **Pre-name icon**: only the silver/gold amplifier check is rendered as a pre-name icon. **Founding members no longer carry a caret pre-icon** (removed 2026-04-27) — their tier shows up only in the status line below the name. So a guest who is both Founding Member *and* gold amplifier renders with one pre-icon (the gold check) and "Founding Member" in the status line.
+- **Pre-name icon** (legacy name; it now renders *after* the name, on the right): only the silver/gold amplifier check is rendered as a name icon. **Founding members no longer carry a caret pre-icon** (removed 2026-04-27) — their tier shows up only in the status line below the name. So a guest who is both Founding Member *and* gold amplifier renders with one pre-icon (the gold check) and "Founding Member" in the status line.
 - **Pre-icon rendering**: the icon is a `<span class="pre-icon">` with the asset set as `background-image`, locked square via min/max width+height, `flex-shrink: 0`. Table cards use `background-size: contain` (assets are 2818×2816, near-square). Name badges use `background-size: 100% 100%` because at the 0.11" badge size, Chromium's sub-pixel rounding under `contain` clips the right edge of the icon — `100% 100%` forces full fill (the assets are square enough that this introduces no visible distortion).
 
 ### Table card — single design, printed double-sided (6in × 4in, landscape)
 There is **only one design** for the table card. The printer prints it on both sides, so the back is identical to the front — the renderer emits one page per guest, no separate back PDF or back layout.
 
-All blocks are horizontally centered. The silver/gold check (when present) sits absolutely positioned to the left of the centered name, so the name itself stays optically centered on the card.
+All blocks are horizontally centered. The silver/gold check (when present) sits absolutely positioned to the right of the centered name, so the name itself stays optically centered on the card.
 ```
           [2^n brand mark, centered, 0.55" tall]
 
-      [silver/gold check 0.245" (if any)] [ NAME, 40pt, weight 400, navy #0A1A3A, letter-spacing -0.07rem, centered ]
+      [ NAME, 40pt, weight 400, navy #0A1A3A, letter-spacing -0.07rem, centered ] [silver/gold check 0.245" (if any)]
 
                 [2^n mini, 0.22"] Founding Member | Member | Sponsor Member | Founder | Associate
                               (14pt, gold sans)
@@ -230,7 +230,7 @@ Each sponsor cell is a vertical stack: logo on top, then the sponsor's QR code (
 Guests with no `memberStatus` and no `titleOverride`: skip the status line entirely.
 
 ### Name badge (3.5in × 2in, landscape)
-Same content as the front of the table card, scaled down. All blocks horizontally centered; pre-icons absolute-positioned to the left of the centered name.
+Same content as the front of the table card, scaled down. All blocks horizontally centered; name icons absolute-positioned to the right of the centered name.
 - 2^n brand mark 0.28" tall at top
 - Pre-icons 0.11" square (background-size: 100% 100% — see shared tokens)
 - Name 18pt, weight 400, navy #0A1A3A, letter-spacing -0.038rem
@@ -257,8 +257,8 @@ Drive: one folder per event named `<City> <EventType> - MM/YYYY` (e.g. `Chicago 
 ## Edge cases & notes
 
 - **Long names**: if name > 24 chars, drop font size to ~30pt on table cards / 14pt on badges.
-- **Long company names**: wrap up to 2 lines, same rule.
-- **Single sponsor (locked 2026-07-31, SF 2026)**: center the one logo / QR cell and grow the logo slot **1.8× linear** (table cards `1.48in × 0.49in`, badges `0.94in × 0.38in`; QR size unchanged). Baked into `render.py` via the `sponsors--1` modifier — applied automatically when the manifest has exactly one sponsor. 1.6× left the logo's fine print illegible; 2.0× competed with the company line.
+- **Long company names (locked 2026-10-01, Chicago Oct 2026)**: the company / family-office line **never wraps**. A 2-line company pushes the stack into the top/bottom card margins. `render.py` (`fit_company_lines`) renders it `nowrap` and shrinks the font in 0.5pt steps until it fits the usable width: table cards 5.0in wide, 22pt default, 14pt floor. Name badges 3.0in wide, 12pt default, 8pt floor. Each shrink prints to stderr (e.g. Callahan Family Investments/Callahan Capital Partners -> 19pt cards / 11pt badges). Only a name still too wide at the floor wraps, logged as `WRAPPED at floor`; flag it to CJ and propose a shorter display name in the manifest rather than shipping the wrap. Do not trim or abbreviate company names on your own.
+- **Single sponsor (locked 2026-07-31, SF 2026)**: center the one logo / QR cell and grow the logo slot **1.8× linear** (table cards `1.48in × 0.49in`, badges `0.94in × 0.38in`; QR size unchanged). Baked into `render.py` via the `sponsors--1` modifier — applied automatically when the manifest has exactly one sponsor. 1.6× left the logo's fine print illegible; 2.0× competed with the company line. **Wide wordmarks are the exception (locked 2026-10-01, Chicago Oct 2026):** a lone logo with aspect ratio ≥ 3.5:1 (e.g. ARCH at 5:1) runs the full 1.48in width and dominates the card, so `render.py` adds `sponsors--wide` automatically (aspect is read from the SVG viewBox or raster pixels) and uses a ~70% slot: table cards `1.04in × 0.30in`, badges `0.66in × 0.22in`.
 - **Two sponsors**: the 3-sponsor sizing below leaves the row looking sparse — bump the slot up (~1.2× linear) and reduce the inter-cell gap so the row reads as intentional rather than empty. Confirm with CJ before locking new dimensions.
 - **Three sponsors (canonical layout — locked 2026-05-15 after the NY 2026 V4 print review)**: this is the most common case (BGA / ARCH / sponsor #3). The values below are baked into `render.py` CSS and have been signed off by CJ. **Do not change them when you have 3 sponsors — only adjust if the event has a different count.**
   - **Table cards**: slot `0.82in × 0.27in`, QR `0.34in × 0.34in`, vertical gap `0.18in` between logo and QR, horizontal gap `0.4in` between cells.

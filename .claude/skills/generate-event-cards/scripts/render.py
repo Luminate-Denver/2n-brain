@@ -14,6 +14,7 @@ import base64
 import io
 import json
 import mimetypes
+import re
 import sys
 from pathlib import Path
 
@@ -92,25 +93,30 @@ def title_text(guest: dict) -> str | None:
     return None
 
 
-def _logo_style(sponsor: dict) -> str:
+def _logo_style(sponsor: dict, *, badge: bool = False) -> str:
     """Optional per-sponsor visual size tweak via manifest field `sizeScale` (float, default 1.0).
     Applied as CSS transform: scale() so the slot's layout box stays unchanged and neighboring
-    logos / QR codes stay aligned."""
+    logos / QR codes stay aligned. `badgeSizeScale` overrides it on name badges only."""
     scale = sponsor.get("sizeScale")
+    if badge and sponsor.get("badgeSizeScale") is not None:
+        scale = sponsor.get("badgeSizeScale")
     if scale is None or float(scale) == 1.0:
         return ""
     return f' style="transform: scale({float(scale)}); transform-origin: center center;"'
 
 
-# The Exponential podcast mark is the ONLY logo allowed to keep its native colors
+# The Exponential podcast mark is the ONLY logo that keeps its native colors by default
 # (its gold accents are part of the 2N brand family). Every other sponsor gets the
-# black-fill filter regardless of any manifest flag.
+# black-fill filter unless the manifest sets `"keepColor": true` on that sponsor entry —
+# a per-event, CJ-approved override (first used LA 2026-09-16: Xsolla mark recolored to
+# brand gold #a77a33 in the SVG itself, then rendered unfiltered).
 COLOR_KEEP_SPONSORS = {"exponential", "exponential podcast"}
 
 
 def _logo_cls(sponsor: dict) -> str:
     name = (sponsor.get("name") or "").strip().lower()
-    return "sponsor-logo sponsor-logo--colored" if name in COLOR_KEEP_SPONSORS else "sponsor-logo"
+    keep = name in COLOR_KEEP_SPONSORS or sponsor.get("keepColor") is True
+    return "sponsor-logo sponsor-logo--colored" if keep else "sponsor-logo"
 
 
 def sponsor_logos_html(sponsors: list[dict], manifest_dir: Path, *, badge: bool = False) -> str:
@@ -118,7 +124,7 @@ def sponsor_logos_html(sponsors: list[dict], manifest_dir: Path, *, badge: bool 
     tags = []
     for s in sponsors:
         uri = data_uri(manifest_dir / s["logoPath"])
-        tags.append(f'<div class="{slot_cls}"><img class="{_logo_cls(s)}" src="{uri}" alt=""{_logo_style(s)}/></div>')
+        tags.append(f'<div class="{slot_cls}"><img class="{_logo_cls(s)}" src="{uri}" alt=""{_logo_style(s, badge=badge)}/></div>')
     return "".join(tags)
 
 
@@ -164,7 +170,7 @@ def table_card_page(guest: dict, sponsors_html: str, assets: dict[str, str], spo
         <div class="stack">
           <div class="brand" style="background-image:url({assets["two_n_brand"]})"></div>
           <div class="name-row">
-            <h1 class="{name_class}">{icons_block}{guest["name"]}</h1>
+            <h1 class="{name_class}">{guest["name"]}{icons_block}</h1>
           </div>
           {status}
           <div class="company">{company}</div>
@@ -195,7 +201,7 @@ def name_badge_page(guest: dict, sponsors_html: str, assets: dict[str, str], spo
         <div class="stack">
           <div class="brand" style="background-image:url({assets["two_n_brand"]})"></div>
           <div class="name-row">
-            <h1 class="{name_class}">{icons_block}{guest["name"]}</h1>
+            <h1 class="{name_class}">{guest["name"]}{icons_block}</h1>
           </div>
           {status}
           <div class="company">{company}</div>
@@ -244,12 +250,14 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
 }}
 .name--mid {{ font-size: 36pt; }}
 .name--long {{ font-size: 32pt; }}
+/* Amplifier check hangs RIGHT of the name, verified-badge style (CJ, Chicago Oct
+   2026 V3); absolute so the name itself stays optically centered. */
 .pre-icons {{
   position: absolute;
-  right: 100%;
+  left: 100%;
   top: 50%;
   transform: translateY(calc(-50% + 0.032in));
-  margin-right: 0.1in;
+  margin-left: 0.1in;
   display: flex;
   align-items: center;
   gap: 0.08in;
@@ -281,6 +289,7 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
   font-family: 'Instrument Serif', 'Times New Roman', Georgia, serif;
   color: {NAME_NAVY}; font-size: 22pt; font-weight: 400;
   margin-top: 0.25in; text-align: center;
+  white-space: nowrap; line-height: 1.15;
 }}
 .sponsors {{
   margin-top: 0.18in;
@@ -292,6 +301,9 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
 /* Single-sponsor row: one lone logo at the canonical slot size reads as an
    afterthought, so the slot grows ~1.8x linear (CJ, SF 2026). QR unchanged. */
 .sponsors--1 .sponsor-slot {{ width: 1.48in; height: 0.49in; }}
+/* Single wide wordmark (aspect >= 3.5:1, e.g. ARCH): the 1.48in slot lets it run
+   full width and dominate the card, so cap it ~70% (CJ, Chicago Oct 2026). */
+.sponsors--1.sponsors--wide .sponsor-slot {{ width: 1.04in; height: 0.30in; }}
 .sponsor-cell {{
   display: flex; flex-direction: column; align-items: center; gap: 0.18in;
 }}
@@ -346,10 +358,10 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
 .badge .name--long {{ font-size: 18pt; }}
 .badge .pre-icons {{
   position: absolute;
-  right: 100%;
+  left: 100%;
   top: 50%;
   transform: translateY(calc(-50% + 0.024in));
-  margin-right: 0.05in;
+  margin-left: 0.05in;
   display: flex;
   align-items: center;
   gap: 0.04in;
@@ -379,6 +391,7 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
 .badge .company {{
   font-family: 'Instrument Serif', 'Times New Roman', Georgia, serif;
   color: {NAME_NAVY}; font-size: 12pt; margin-top: 0.10in; text-align: center;
+  white-space: nowrap; line-height: 1.15;
 }}
 .badge .sponsors {{
   margin-top: 0.14in;
@@ -388,6 +401,7 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
    tighter gap. Slot size unchanged. */
 .badge .sponsors--4 {{ gap: 0.22in; }}
 .badge .sponsors--1 .sponsor-slot {{ width: 0.94in; height: 0.38in; }}
+.badge .sponsors--1.sponsors--wide .sponsor-slot {{ width: 0.66in; height: 0.22in; }}
 .badge .sponsor-slot {{
   width: 0.52in; height: 0.21in;
   display: flex; align-items: center; justify-content: center;
@@ -398,6 +412,30 @@ html, body {{ margin: 0; padding: 0; font-family: 'Overused Grotesk', 'Inter', -
 }}
 .badge .sponsor-logo--colored {{ filter: none; }}
 """
+
+
+def logo_aspect(path: Path) -> float | None:
+    """Width / height of a sponsor logo (SVG viewBox or raster pixels); None if unreadable."""
+    try:
+        if path.suffix.lower() == ".svg":
+            head = path.read_text(errors="ignore")[:4000]
+            m = re.search(r'viewBox\s*=\s*["\']\s*[-\d.]+[\s,]+[-\d.]+[\s,]+([\d.]+)[\s,]+([\d.]+)', head)
+            if m:
+                return float(m.group(1)) / float(m.group(2))
+            w = re.search(r'\swidth\s*=\s*["\']([\d.]+)', head)
+            h = re.search(r'\sheight\s*=\s*["\']([\d.]+)', head)
+            return float(w.group(1)) / float(h.group(1)) if w and h else None
+        from PIL import Image
+        with Image.open(path) as im:
+            return im.width / im.height
+    except Exception:
+        return None
+
+
+# A lone wordmark at or above this aspect ratio fills the full 1.8x single-sponsor
+# slot width and reads oversized (CJ, Chicago Oct 2026: ARCH at 5:1), so it gets
+# the narrower `sponsors--wide` slot instead.
+WIDE_LOGO_ASPECT = 3.5
 
 
 def build_html(manifest: dict, manifest_dir: Path, kind: str, assets: dict[str, str]) -> str:
@@ -412,6 +450,9 @@ def build_html(manifest: dict, manifest_dir: Path, kind: str, assets: dict[str, 
         sponsors_cls = "sponsors sponsors--4"
     elif len(sponsors) == 1:
         sponsors_cls = "sponsors sponsors--1"
+        aspect = logo_aspect(manifest_dir / sponsors[0]["logoPath"])
+        if aspect is not None and aspect >= WIDE_LOGO_ASPECT:
+            sponsors_cls += " sponsors--wide"
     else:
         sponsors_cls = "sponsors"
 
@@ -431,6 +472,55 @@ def build_html(manifest: dict, manifest_dir: Path, kind: str, assets: dict[str, 
 <body>{"".join(body_parts)}</body></html>"""
 
 
+# Company / family-office names always stay on ONE line (CJ, Chicago Oct 2026: a
+# 2-line wrap pushed the stack into the top/bottom margins). Long names shrink in
+# 0.5pt steps until they fit the usable width; the floor keeps them legible. Only a
+# name too long even at the floor is allowed to wrap, and it is reported.
+COMPANY_FIT = {
+    "table-cards": {"max_in": 5.0, "floor_pt": 14},
+    "name-badges": {"max_in": 3.0, "floor_pt": 8},
+}
+
+FIT_JS = """
+({maxPx, floorPt}) => {
+  const report = [];
+  for (const el of document.querySelectorAll('.company')) {
+    if (!el.textContent.trim()) continue;
+    const span = document.createElement('span');
+    span.style.whiteSpace = 'nowrap';
+    while (el.firstChild) span.appendChild(el.firstChild);
+    el.appendChild(span);
+    const startPt = parseFloat(getComputedStyle(el).fontSize) * 0.75;
+    let pt = startPt;
+    while (span.getBoundingClientRect().width > maxPx && pt > floorPt) {
+      pt = Math.max(floorPt, pt - 0.5);
+      el.style.fontSize = pt + 'pt';
+    }
+    if (span.getBoundingClientRect().width > maxPx) {
+      el.style.whiteSpace = 'normal';
+      el.style.maxWidth = maxPx + 'px';
+      report.push({text: el.textContent.trim(), pt, wrapped: true});
+    } else if (pt < startPt) {
+      report.push({text: el.textContent.trim(), pt, wrapped: false});
+    }
+  }
+  return report;
+}
+"""
+
+
+def fit_company_lines(page, kind: str) -> None:
+    cfg = COMPANY_FIT[kind]
+    report = page.evaluate(FIT_JS, {"maxPx": cfg["max_in"] * 96, "floorPt": cfg["floor_pt"]})
+    seen = set()
+    for r in report:
+        if r["text"] in seen:
+            continue
+        seen.add(r["text"])
+        tag = "WRAPPED at floor" if r["wrapped"] else "shrunk"
+        print(f"  company {tag}: {r['text']!r} -> {round(r['pt'], 1)}pt", file=sys.stderr)
+
+
 def render_pdf(html: str, out: Path, kind: str) -> None:
     width, height = ("6in", "4in") if kind == "table-cards" else ("3.5in", "2in")
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -439,6 +529,7 @@ def render_pdf(html: str, out: Path, kind: str) -> None:
         page = browser.new_page()
         page.set_content(html, wait_until="networkidle")
         page.evaluate("document.fonts.ready")
+        fit_company_lines(page, kind)
         page.pdf(
             path=str(out),
             width=width,
